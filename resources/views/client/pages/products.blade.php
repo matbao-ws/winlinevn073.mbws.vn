@@ -1,0 +1,653 @@
+@extends('client.layouts.app')
+
+@section('title', 'Quạt cây công nghiệp | Winline.vn')
+
+@push('styles')
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root{
+  /* Đồng bộ đúng hệ màu mới nhất (v11, từ chi-tiet-san-pham.html) — 1 hue xanh
+     #004e7d, 1 mã đỏ #d41e3d duy nhất. Trước đây file này còn dùng bảng màu
+     cũ (#0d1f33/#e2600f) trong khi chi-tiet-san-pham.html đã đổi — nay gộp lại. */
+  --navy-950:#00354f; --navy-800:#004e7d; --navy-700:#1f6690; --navy-100:#e6eef3;
+  --paper:#f7f8fa; --white:#ffffff; --ink:#1a2230; --ink-soft:#5c6773; --line:#dde3ea;
+  --orange:#d41e3d; --orange-dark:#a71830; --orange-100:#f4e6e9; --green:#1e8a5f;
+  --radius:6px; --shadow:0 2px 10px rgba(13,31,51,.08);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);background:var(--paper);font-size:15px;line-height:1.5;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;}
+
+/* ---------- utility / header / nav (đồng bộ) ---------- */
+
+
+ 
+
+
+
+
+.logo{font-weight:800;font-size:24px;letter-spacing:.5px;color:var(--navy-950);display:flex;align-items:baseline;gap:2px;flex-shrink:0;}
+.logo span{color:var(--orange);}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.breadcrumb{max-width:1240px;margin:0 auto;padding:14px 20px 0;font-size:12.5px;color:var(--ink-soft);}
+.breadcrumb a:hover{color:var(--navy-800);text-decoration:underline;}
+
+.page-head{max-width:1240px;margin:0 auto;padding:14px 20px 0;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;}
+.page-head h1{font-size:22px;color:var(--navy-950);margin:0 0 4px;}
+.page-head .count{font-size:12.5px;color:var(--ink-soft);}
+.sort-wrap{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-soft);}
+.sort-wrap select{padding:8px 10px;border:1.5px solid var(--line);border-radius:5px;font-family:inherit;font-size:13px;color:var(--navy-950);background:#fff;}
+
+/* ---------- layout: sidebar lọc + lưới sản phẩm ---------- */
+.listing{max-width:1240px;margin:0 auto;padding:18px 20px 60px;display:grid;grid-template-columns:250px 1fr;gap:26px;position:relative;z-index:1;}
+@media(max-width:880px){.listing{grid-template-columns:1fr;}}
+
+.filters{background:#fff;border:1px solid var(--line);border-radius:9px;padding:18px;align-self:start;position:sticky;top:80px;z-index:5;}
+@media(max-width:880px){.filters{position:static;}}
+.filter-group{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--line);}
+.filter-group:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.filter-title{font-size:13px;font-weight:700;color:var(--navy-950);margin-bottom:11px;}
+.filter-opt{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);margin-bottom:9px;cursor:pointer;}
+.filter-opt input{accent-color:var(--navy-800);width:15px;height:15px;flex-shrink:0;}
+.filter-opt .fcount{margin-left:auto;color:#9aa7b4;font-size:11.5px;}
+.price-presets{display:flex;flex-direction:column;gap:8px;}
+.price-chip{
+  border:1.5px solid var(--line);border-radius:6px;padding:8px 10px;font-size:12.5px;
+  text-align:left;background:#fff;color:var(--ink);
+}
+.price-chip.active{border-color:var(--orange);background:var(--orange-100);color:var(--orange-dark);font-weight:700;}
+.filter-clear{font-size:12px;color:var(--navy-800);font-weight:700;text-decoration:underline;}
+
+/* ---------- product grid + card (đồng bộ trang chủ) ---------- */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:16px;}
+.prod-card{background:#fff;border:1px solid var(--line);border-radius:9px;overflow:hidden;position:relative;}
+.prod-card .p-img{aspect-ratio:1/1;background:var(--paper);display:flex;align-items:center;justify-content:center;color:#9aa7b4;font-size:11px;text-align:center;padding:10px;position:relative;}
+.prod-card .p-badge{position:absolute;top:9px;left:9px;background:var(--navy-950);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px;}
+.prod-card .p-badge.low{background:var(--orange);}
+.prod-card .p-body{padding:12px 13px 13px;}
+.prod-card .p-brand{font-size:10.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin-bottom:3px;}
+.prod-card .p-name{font-size:13.5px;font-weight:600;color:var(--navy-950);line-height:1.35;min-height:37px;margin-bottom:6px;}
+.prod-card .p-specs{list-style:none;margin:0 0 8px;padding:0;font-size:11px;color:var(--ink-soft);line-height:1.6;}
+.prod-card .p-specs li::before{content:"• ";color:var(--orange);}
+.prod-card .p-price{font-weight:700;color:var(--navy-950);font-family:'IBM Plex Mono',monospace;font-size:15.5px;}
+.prod-card .p-bulk{font-size:10.5px;color:var(--navy-800);margin-top:3px;}
+.prod-card .p-rating{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--orange);margin-top:6px;}
+.prod-card .p-rating span{color:var(--ink-soft);}
+.prod-card .p-stock{font-size:10.5px;color:var(--green);font-weight:600;margin-top:6px;display:flex;align-items:center;gap:4px;}
+.prod-card .p-stock.out{color:#b3392c;}
+.prod-card .p-stock .d{width:5px;height:5px;border-radius:50%;background:var(--green);}
+.prod-card .p-stock.out .d{background:#b3392c;}
+
+.pagination{display:flex;justify-content:center;gap:6px;margin-top:30px;}
+.pagination a{width:34px;height:34px;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-soft);background:#fff;}
+.pagination a.active{background:var(--navy-950);color:#fff;border-color:var(--navy-950);}
+
+/* ---------- 
+.msb-icon{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;flex:1;background:none;border:none;font-family:inherit;}
+.msb-circle{
+  width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;box-shadow:0 2px 7px rgba(0,0,0,.14);
+}
+.msb-icon.menu .msb-circle{background:var(--navy-800);}
+.msb-icon.zalo .msb-circle{background:#0068ff;}
+.msb-icon.call .msb-circle{background:var(--green);}
+.msb-icon.quote .msb-circle{background:var(--orange);}
+.msb-label{font-size:10px;font-weight:700;color:var(--ink-soft);}
+.msb-icon.menu .msb-label{color:var(--navy-800);}
+.msb-icon.zalo .msb-label{color:#0068ff;}
+.msb-icon.call .msb-label{color:var(--green);}
+.msb-icon.quote .msb-label{color:var(--orange-dark);}
+@media(max-width:640px){
+  .mobile-sticky{display:flex;}
+  body{padding-bottom:80px;}
+  .quick-specs{grid-template-columns:1fr;}
+}
+
+
+/* ---------- desktop float call ---------- */
+.float-contact{
+  position:fixed;right:22px;bottom:90px;display:flex;flex-direction:column;gap:10px;z-index:45;
+}
+@media(max-width:640px){.float-contact{display:none;}}
+.float-contact a{
+  width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+.float-contact .fc-zalo{background:#0068ff;}
+.float-contact .fc-call{background:var(--green);}
+/* ---------- lớp phủ danh mục dạng lưới — mobile "Danh mục" ---------- */
+.menu-sheet-overlay{
+  display:none;position:fixed;inset:0;background:rgba(13,31,51,.55);z-index:110;
+  align-items:flex-end;justify-content:center;
+}
+.menu-sheet-overlay.open{display:flex;}
+.menu-sheet{
+  background:#fff;border-radius:16px 16px 0 0;width:100%;max-width:520px;
+  padding:20px 20px calc(20px + env(safe-area-inset-bottom));
+  max-height:80vh;overflow-y:auto;position:relative;
+}
+.menu-sheet-handle{width:38px;height:4px;background:var(--line);border-radius:3px;margin:0 auto 14px;}
+.menu-sheet h3{margin:0 0 16px;font-size:16px;color:var(--navy-950);}
+.menu-sheet .ms-close{position:absolute;top:16px;right:18px;background:none;border:none;font-size:20px;color:var(--ink-soft);}
+.ms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.ms-tile{
+  display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+  border:1px solid var(--line);border-radius:12px;padding:16px 8px;background:var(--paper);
+  text-decoration:none;
+}
+.ms-tile .ms-icon{
+  width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:20px;box-shadow:0 2px 6px rgba(13,31,51,.1);
+}
+.ms-tile span:last-child{font-size:11.5px;font-weight:600;color:var(--navy-950);line-height:1.3;}
+
+
+
+
+
+
+
+
+
+
+@media(max-width:960px){
+  
+}
+
+
+/* Dual Range Price Slider (Yêu cầu bổ sung của khách hàng) */
+.price-slider-wrap {
+  margin-top: 14px;
+  padding: 10px 0;
+}
+.price-slider-track {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: #dde3ea;
+  border-radius: 999px;
+}
+.price-slider-range {
+  position: absolute;
+  height: 100%;
+  background: #26a69a;
+  border-radius: 999px;
+}
+.range-inputs {
+  position: relative;
+}
+.range-inputs input[type="range"] {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  top: -6px;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+}
+.range-inputs input[type="range"]::-webkit-slider-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #64748b;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  pointer-events: auto;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.range-inputs input[type="range"]::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #64748b;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  pointer-events: auto;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+.btn-filter-teal {
+  background: #26a69a;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 5px 18px;
+  font-size: 12px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(38,166,154,0.25);
+  transition: all 0.2s;
+}
+.btn-filter-teal:hover {
+  background: #00897b;
+}
+
+
+/* ==========================================================================
+   ENHANCED RESPONSIVE & UX/UI ADDITIONS
+   ========================================================================== */
+
+/* Logo styling */
+
+
+
+/* Mobile Nav Toggle Button */
+.nav-toggle-btn {
+  display: none;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* Mobile Bottom Floating Bar */
+.mobile-floating-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+  z-index: 999;
+  padding: 8px 12px;
+}
+.mobile-floating-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.mobile-action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  gap: 3px;
+}
+.mobile-action-item .m-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #fff;
+}
+.m-icon.call { background: var(--orange); }
+.m-icon.zalo { background: #0068ff; }
+.m-icon.calc { background: #eab308; }
+.m-icon.home { background: var(--navy-800); }
+
+/* Responsive Media Queries */
+@media (max-width: 900px) {
+  .nav-toggle-btn {
+    display: block;
+  }
+  .catnav {
+    display: none;
+  }
+  .catnav.show-mobile {
+    display: block;
+    background: var(--navy-950);
+  }
+  .listing {
+    grid-template-columns: 1fr !important;
+  }
+  .mobile-filter-btn {
+    display: block !important;
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 10px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+  .filters {
+    display: none;
+  }
+  .filters.show-mobile-filter {
+    display: block !important;
+    margin-bottom: 20px;
+  }
+
+  .mobile-floating-bar {
+    display: block;
+  }
+  body {
+    padding-bottom: 60px;
+  }
+}
+</style>
+@endpush
+
+@section('content')
+<div class="breadcrumb">
+  <a href="#">Trang chủ</a> › <a href="#">Quạt công nghiệp</a> › Quạt cây công nghiệp
+</div>
+
+<div class="page-head">
+  <div>
+    <h1>Quạt cây công nghiệp</h1>
+    <div class="count">42 sản phẩm — Komasu, Tico, Senko, Nedfon, Kyungjin</div>
+  </div>
+  <div class="sort-wrap">
+    Sắp xếp:
+    <select>
+      <option>Bán chạy nhất</option>
+      <option>Giá thấp đến cao</option>
+      <option>Giá cao đến thấp</option>
+      <option>Đánh giá cao nhất</option>
+    </select>
+  </div>
+</div>
+
+<button id="btn-toggle-filters" class="mobile-filter-btn" style="display:none;">☰ Mở bộ lọc sản phẩm</button>
+<div class="listing">
+  <aside class="filters" id="filtersSection">
+    <div class="filter-group">
+      <div class="filter-title">Theo nhu cầu</div>
+      <label class="filter-opt"><input type="checkbox"> Gia đình <span class="fcount">6</span></label>
+      <label class="filter-opt"><input type="checkbox" checked> Công nghiệp — nhà xưởng <span class="fcount">31</span></label>
+      <label class="filter-opt"><input type="checkbox"> Công trình <span class="fcount">18</span></label>
+    </div>
+    <div class="filter-group">
+      <div class="filter-title">Lọc theo giá</div>
+      <div class="price-slider-wrap">
+        <div class="price-slider-track">
+          <div id="price-slider-range" class="price-slider-range" style="left:0%; width:100%;"></div>
+        </div>
+        <div class="range-inputs">
+          <input type="range" id="price-min" min="0" max="10000000" step="50000" value="0">
+          <input type="range" id="price-max" min="0" max="10000000" step="50000" value="10000000">
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
+          <button type="button" id="btn-apply-price" class="btn-filter-teal">LỌC</button>
+          <div id="price-label" style="font-size:12px; color:var(--ink-soft); text-align:right;">
+            Giá: <strong style="color:var(--ink);">0₫</strong> — <strong style="color:var(--ink);">10.000.000₫</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-title">Thương hiệu</div>
+      <label class="filter-opt"><input type="checkbox" checked> Komasu <span class="fcount">14</span></label>
+      <label class="filter-opt"><input type="checkbox"> Tico <span class="fcount">9</span></label>
+      <label class="filter-opt"><input type="checkbox"> Senko <span class="fcount">7</span></label>
+      <label class="filter-opt"><input type="checkbox"> Nedfon <span class="fcount">6</span></label>
+      <label class="filter-opt"><input type="checkbox"> Nanyoo <span class="fcount">3</span></label>
+      <label class="filter-opt"><input type="checkbox"> Kyungjin <span class="fcount">3</span></label>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-title">Chất liệu vỏ</div>
+      <label class="filter-opt"><input type="checkbox"> Nhựa ABS <span class="fcount">28</span></label>
+      <label class="filter-opt"><input type="checkbox"> Kim loại / thép <span class="fcount">14</span></label>
+    </div>
+    <a class="filter-clear" href="#">Xoá tất cả bộ lọc</a>
+  </aside>
+
+  <div class="results">
+    <div class="prod-grid">
+
+      <div class="prod-card">
+        <div class="p-img" style="background:#fff; display:flex; align-items:center; justify-content:center; height:180px; position:relative; padding:10px; border-bottom:1px solid #f0f2f5;"><span class="p-badge">Bán chạy</span><img src="{{ asset('client-assets/images/km750s.jpg') }}" alt="Sản phẩm" style="max-height:160px; max-width:100%; object-fit:contain; margin:auto;" onerror="this.src="{{ asset('client-assets/images/km750s.jpg') }}""></div>
+        <div class="p-body">
+          <div class="p-brand">Komasu</div>
+          <div class="p-name"><a href="{{ route('client.products') }}" style="color:inherit; text-decoration:none;">Quạt cây công nghiệp Komasu KM-750S</a></div>
+          <ul class="p-specs"><li>Công suất 250W</li><li>Sải cánh 750mm · 3 tốc độ</li></ul>
+          <div class="p-price">2.630.000đ</div>
+          <div class="p-bulk">Giá tốt hơn khi mua từ 6 sản phẩm</div>
+          <div class="p-rating">★★★★★ <span>4.8 (36)</span></div>
+          <div class="p-stock"><span class="d"></span>Còn hàng</div>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="p-img" style="background:#fff; display:flex; align-items:center; justify-content:center; height:180px; position:relative; padding:10px; border-bottom:1px solid #f0f2f5;"><img src="{{ asset('client-assets/images/km750s.jpg') }}" alt="Sản phẩm" style="max-height:160px; max-width:100%; object-fit:contain; margin:auto;" onerror="this.src="{{ asset('client-assets/images/km750s.jpg') }}""></div>
+        <div class="p-body">
+          <div class="p-brand">Tico</div>
+          <div class="p-name"><a href="{{ route('client.products') }}" style="color:inherit; text-decoration:none;">Quạt cây công nghiệp Tico TC-750</a></div>
+          <ul class="p-specs"><li>Công suất 220W</li><li>Sải cánh 750mm · 3 tốc độ</li></ul>
+          <div class="p-price">2.480.000đ</div>
+          <div class="p-bulk">Giá tốt hơn khi mua từ 6 sản phẩm</div>
+          <div class="p-rating">★★★★★ <span>4.7 (18)</span></div>
+          <div class="p-stock"><span class="d"></span>Còn hàng</div>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="p-img" style="background:#fff; display:flex; align-items:center; justify-content:center; height:180px; position:relative; padding:10px; border-bottom:1px solid #f0f2f5;"><img src="{{ asset('client-assets/images/km750s.jpg') }}" alt="Sản phẩm" style="max-height:160px; max-width:100%; object-fit:contain; margin:auto;" onerror="this.src="{{ asset('client-assets/images/km750s.jpg') }}""></div>
+        <div class="p-body">
+          <div class="p-brand">Komasu</div>
+          <div class="p-name"><a href="{{ route('client.products') }}" style="color:inherit; text-decoration:none;">Quạt cây công nghiệp Komasu KM-650S</a></div>
+          <ul class="p-specs"><li>Công suất 200W</li><li>Sải cánh 650mm · 3 tốc độ</li></ul>
+          <div class="p-price">2.180.000đ</div>
+          <div class="p-bulk">Giá tốt hơn khi mua từ 6 sản phẩm</div>
+          <div class="p-rating">★★★★★ <span>4.7 (24)</span></div>
+          <div class="p-stock"><span class="d"></span>Còn hàng</div>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="p-img" style="background:#fff; display:flex; align-items:center; justify-content:center; height:180px; position:relative; padding:10px; border-bottom:1px solid #f0f2f5;"><span class="p-badge low">Sắp hết</span><img src="{{ asset('client-assets/images/km750s.jpg') }}" alt="Sản phẩm" style="max-height:160px; max-width:100%; object-fit:contain; margin:auto;" onerror="this.src="{{ asset('client-assets/images/km750s.jpg') }}""></div>
+        <div class="p-body">
+          <div class="p-brand">Senko</div>
+          <div class="p-name"><a href="{{ route('client.products') }}" style="color:inherit; text-decoration:none;">Quạt cây công nghiệp Senko SK-700</a></div>
+          <ul class="p-specs"><li>Công suất 210W</li><li>Sải cánh 700mm</li></ul>
+          <div class="p-price">2.350.000đ</div>
+          <div class="p-bulk">Giá tốt hơn khi mua từ 6 sản phẩm</div>
+          <div class="p-rating">★★★★☆ <span>4.3 (12)</span></div>
+          <div class="p-stock"><span class="d"></span>Còn 4 sản phẩm</div>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="p-img" style="background:#fff; display:flex; align-items:center; justify-content:center; height:180px; position:relative; padding:10px; border-bottom:1px solid #f0f2f5;"><img src="{{ asset('client-assets/images/km750s.jpg') }}" alt="Sản phẩm" style="max-height:160px; max-width:100%; object-fit:contain; margin:auto;" onerror="this.src="{{ asset('client-assets/images/km750s.jpg') }}""></div>
+        <div class="p-body">
+          <div class="p-brand">Nedfon</div>
+          <div class="p-name"><a href="{{ route('client.products') }}" style="color:inherit; text-decoration:none;">Quạt cây công nghiệp Nedfon NF-750</a></div>
+          <ul class="p-specs"><li>Công suất 230W</li><li>Sải cánh 750mm</li></ul>
+          <div class="p-price">2.590.000đ</div>
+          <div class="p-bulk">Giá tốt hơn khi mua từ 6 sản phẩm</div>
+          <div class="p-rating">★★★★★ <span>4.6 (15)</span></div>
+          <div class="p-stock"><span class="d"></span>Còn hàng</div>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="p-img" style="background:#fff; display:flex; align-items:center; justify-content:center; height:180px; position:relative; padding:10px; border-bottom:1px solid #f0f2f5;"><img src="{{ asset('client-assets/images/km750s.jpg') }}" alt="Sản phẩm" style="max-height:160px; max-width:100%; object-fit:contain; margin:auto;" onerror="this.src="{{ asset('client-assets/images/km750s.jpg') }}""></div>
+        <div class="p-body">
+          <div class="p-brand">Komasu</div>
+          <div class="p-name"><a href="{{ route('client.products') }}" style="color:inherit; text-decoration:none;">Quạt cây công nghiệp Komasu KM-500S</a></div>
+          <ul class="p-specs"><li>Công suất 150W</li><li>Sải cánh 500mm</li></ul>
+          <div class="p-price">1.780.000đ</div>
+          <div class="p-bulk">Giá tốt hơn khi mua từ 6 sản phẩm</div>
+          <div class="p-rating">★★★★☆ <span>4.5 (19)</span></div>
+          <div class="p-stock"><span class="d"></span>Còn hàng</div>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="p-img" style="background:#fff; display:flex; align-items:center; justify-content:center; height:180px; position:relative; padding:10px; border-bottom:1px solid #f0f2f5;"><img src="{{ asset('client-assets/images/km750s.jpg') }}" alt="Sản phẩm" style="max-height:160px; max-width:100%; object-fit:contain; margin:auto;" onerror="this.src="{{ asset('client-assets/images/km750s.jpg') }}""></div>
+        <div class="p-body">
+          <div class="p-brand">Kyungjin</div>
+          <div class="p-name"><a href="{{ route('client.products') }}" style="color:inherit; text-decoration:none;">Quạt cây công nghiệp Kyungjin KJ-750</a></div>
+          <ul class="p-specs"><li>Công suất 240W</li><li>Sải cánh 750mm · có điều khiển</li></ul>
+          <div class="p-price">2.890.000đ</div>
+          <div class="p-bulk">Giá tốt hơn khi mua từ 6 sản phẩm</div>
+          <div class="p-rating">★★★★★ <span>4.8 (8)</span></div>
+          <div class="p-stock"><span class="d"></span>Còn hàng</div>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="p-img" style="background:#fff; display:flex; align-items:center; justify-content:center; height:180px; position:relative; padding:10px; border-bottom:1px solid #f0f2f5;"><img src="{{ asset('client-assets/images/km750s.jpg') }}" alt="Sản phẩm" style="max-height:160px; max-width:100%; object-fit:contain; margin:auto;" onerror="this.src="{{ asset('client-assets/images/km750s.jpg') }}""></div>
+        <div class="p-body">
+          <div class="p-brand">Tico</div>
+          <div class="p-name"><a href="{{ route('client.products') }}" style="color:inherit; text-decoration:none;">Quạt cây công nghiệp Tico TC-650</a></div>
+          <ul class="p-specs"><li>Công suất 190W</li><li>Sải cánh 650mm</li></ul>
+          <div class="p-price">2.050.000đ</div>
+          <div class="p-bulk">Giá tốt hơn khi mua từ 6 sản phẩm</div>
+          <div class="p-rating">★★★★☆ <span>4.4 (10)</span></div>
+          <div class="p-stock out"><span class="d"></span>Hết hàng — báo còn hàng</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pagination">
+      <a href="#" class="active">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#">›</a>
+    </div>
+  </div>
+</div>
+
+<!-- UNIVERSAL MASTER FOOTER (COMPACT & MODERN - WINLINE.VN STANDARD) -->
+<!-- EXACT 100% FOOTER WINLINE.VN -->
+<!-- EXACT 100% FOOTER WINLINE.VN WITH OFFICIAL SOCIAL & LEGAL LINKS -->
+
+<!-- ================= KHỐI MÔ TẢ & HƯỚNG DẪN CHỌN MUA SẢN PHẨM ================= -->
+<div class="category-desc-wrap">
+  <article class="category-desc-box">
+    <header class="cdb-header">
+      <i class="fas fa-book-open"></i>
+      <h2>Tư Vấn Chọn Mua Quạt Điện Dân Dụng &amp; Quạt Công Nghiệp Chính Hãng Tại Winline.vn</h2>
+    </header>
+
+    <div class="cdb-body">
+      <p>
+        <strong>Winline Việt Nam</strong> tự hào là tổng đại lý phân phối cấp 1 chính hãng các dòng quạt điện, quạt công nghiệp và thiết bị thông gió làm mát hàng đầu tại thị trường miền Bắc. Chúng tôi cung ứng giải pháp làm mát toàn diện cho mọi quy mô công trình từ căn hộ gia đình, văn phòng, nhà hàng, quán ăn đến kho hàng logistic, nhà xưởng may, cơ khí và trang trại chăn nuôi.
+      </p>
+
+      <div class="cdb-grid-cards">
+        <div class="cdb-card-item">
+          <h4><i class="fas fa-fan"></i> Quạt Cây &amp; Quạt Đứng</h4>
+          <p>Sải cánh 400mm – 750mm, công suất 55W – 250W. Chân đế gang đúc chống rung, 3 cấp tốc độ gió mạnh mẽ, linh hoạt di chuyển trong mọi không gian.</p>
+        </div>
+        <div class="cdb-card-item">
+          <h4><i class="fas fa-wind"></i> Quạt Treo &amp; Quạt Đảo Trần</h4>
+          <p>Tiết kiệm 100% diện tích sàn, góc quay 90° – 360°, có tuốc năng đảo chiều hoặc điều khiển từ xa thông minh cho quán cafe, lớp học, hội trường.</p>
+        </div>
+        <div class="cdb-card-item">
+          <h4><i class="fas fa-industry"></i> Quạt Hút Vuông Công Nghiệp</h4>
+          <p>Lưu lượng gió cực đại 8.000 – 44.000 m³/h, cánh inox 430 chống rỉ, chớp che mưa tự động, chuyên dụng làm mát áp suất âm với tấm Cooling Pad.</p>
+        </div>
+        <div class="cdb-card-item">
+          <h4><i class="fas fa-fire-extinguisher"></i> Quạt Ly Tâm &amp; PCCC</h4>
+          <p>Quạt ly tâm hút bụi gỗ, bụi sơn, hút khói sự cố PCCC đạt tiêu chuẩn kiểm định PCCC và TCVN 5687:2010, chịu nhiệt 280°C – 300°C trong 2 giờ.</p>
+        </div>
+      </div>
+
+      <div class="cdb-collapse-content" id="sp-more-desc">
+        <h3><i class="fas fa-check-circle"></i> Tiêu Chí Kỹ Thuật Khi Lựa Chọn Quạt Theo Nhu Cầu</h3>
+        <ul>
+          <li><strong>Xác định thể tích không gian (V = Dài x Rộng x Cao):</strong> Với nhà xưởng hoặc kho bãi, cần tính toán số lần trao đổi khí mỗi giờ (từ 30 – 60 lần/giờ) theo tiêu chuẩn <em>TCVN 5687:2010</em> để chọn tổng lưu lượng ($Q$) phù hợp, tránh lãng phí điện hoặc thiếu gió.</li>
+          <li><strong>Độ ồn cho phép:</strong> Đối với không gian dân dụng, văn phòng nên chọn quạt có độ ồn dưới 55dB; đối với môi trường sản xuất công nghiệp cho phép độ ồn từ 65dB – 75dB.</li>
+          <li><strong>Điện áp sử dụng:</strong> Quạt dân dụng dùng điện 1 pha 220V/50Hz. Các dòng quạt hút công nghiệp sải cánh từ 900mm – 1380mm thường yêu cầu nguồn điện 3 pha 380V để đảm bảo mô-men xoắn và độ bền motor.</li>
+        </ul>
+
+        <div class="cdb-highlight-box">
+          <strong><i class="fas fa-shield-halved"></i> Cam kết chất lượng tại Winline:</strong> 100% sản phẩm phân phối có xuất hóa đơn VAT 10%, giấy chứng nhận xuất xưởng (CQ), chứng nhận nguồn gốc xuất xứ (CO), kiểm định Quatest và phiếu bảo hành chính hãng từ 12 – 24 tháng (hư gì đổi nấy trong 30 ngày).
+        </div>
+      </div>
+
+      <div class="cdb-toggle-wrap">
+        <button type="button" class="cdb-toggle-btn" onclick="toggleCategoryDesc('sp-more-desc', this)">
+          <span>Xem thêm hướng dẫn &amp; thông số</span> <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- Footer -->
+@endsection
+
+@push('scripts')
+<script>
+>
+function toggleCategoryDesc(id, btn) {
+  const content = document.getElementById(id);
+  if (!content) return;
+  const isOpen = content.classList.contains('open');
+  if (isOpen) {
+    content.classList.remove('open');
+    btn.querySelector('span').textContent = btn.getAttribute('data-text-more') || 'Xem thêm';
+    btn.querySelector('i').className = 'fas fa-chevron-down';
+  } else {
+    content.classList.add('open');
+    if (!btn.getAttribute('data-text-more')) {
+      btn.setAttribute('data-text-more', btn.querySelector('span').textContent);
+    }
+    btn.querySelector('span').textContent = 'Thu gọn nội dung';
+    btn.querySelector('i').className = 'fas fa-chevron-up';
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQ = urlParams.get('search');
+  if (searchQ) {
+    const searchInputs = document.querySelectorAll('.header-search-input, .search-box');
+    searchInputs.forEach(i => i.value = searchQ);
+    const normQ = (typeof normalizeVN === 'function') 
+      ? normalizeVN(searchQ) 
+      : searchQ.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').trim();
+    const cards = document.querySelectorAll('.prod-card, .product-card, .card, .item-product');
+    let matchCount = 0;
+    cards.forEach(card => {
+      const text = (card.textContent || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+      if (text.includes(normQ)) {
+        card.style.display = '';
+        matchCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    const headTitle = document.querySelector('.page-head h1, .cat-title h1, h1');
+    if (headTitle) headTitle.textContent = `Kết quả tìm kiếm: "${searchQ}"`;
+  }
+});
+</script>
+@endpush
+

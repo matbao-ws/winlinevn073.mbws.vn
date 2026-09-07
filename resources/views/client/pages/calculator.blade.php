@@ -1,0 +1,984 @@
+@extends('client.layouts.app')
+
+@section('title', 'Công cụ tính chọn quạt công nghiệp &amp; thông gió TCVN 5687:2010 | Winline.vn')
+
+@push('styles')
+<style>
+/* ========== Calculator Page ========== */
+    .calc-hero {
+      background: linear-gradient(135deg, #00354f 0%, #00354f 60%, #004e7d 100%);
+      color: #ffffff;
+      padding: 44px 0 36px;
+      margin-bottom: 28px;
+    }
+    .calc-hero .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fbd38d;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.08);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .calc-hero .tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+    }
+    .calc-hero h1 {
+      font-size: 30px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .calc-hero p {
+      color: #cbd5e1;
+      font-size: 14.5px;
+      max-width: 680px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--line);
+    }
+    .tab-btn {
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 24px;
+      border-radius: 8px 8px 0 0;
+      border: 1px solid var(--line);
+      border-bottom: none;
+      background: #eef4f9;
+      color: var(--ink-soft);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: #ffffff;
+      color: var(--navy-950);
+      box-shadow: 0 -3px 0 var(--brand-blue) inset;
+      border-color: var(--line);
+    }
+    .tab-btn:hover:not(.active) {
+      background: #e2ecf5;
+      color: var(--brand-blue);
+    }
+
+    /* Grid Layout */
+    .calc-grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .calc-grid-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Cards */
+    .calc-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .calc-card h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--navy-950);
+      margin: 0 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .calc-card h3 .n {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: var(--navy-950);
+      color: #fff;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      flex-shrink: 0;
+    }
+
+    /* Inputs */
+    .input-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy-950);
+      margin: 14px 0 6px;
+    }
+    .input-label:first-of-type { margin-top: 0; }
+    .calc-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--navy-950);
+      background: var(--paper);
+      transition: all 0.15s;
+    }
+    .calc-input:focus {
+      outline: none;
+      border-color: var(--brand-blue);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(0,96,182,0.12);
+    }
+
+    /* Preset Chips */
+    .preset-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .preset-chip {
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .preset-chip.active, .preset-chip:hover {
+      background: var(--brand-blue);
+      color: #ffffff;
+      border-color: var(--brand-blue);
+    }
+
+    /* Results Dashboard */
+    .results-dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .metric-box {
+      background: var(--brand-blue-light, #eef4fb);
+      border: 1px solid rgba(0,96,182,0.15);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: left;
+    }
+    .metric-box .m-lbl {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--brand-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .metric-box .m-val {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--navy-950);
+      margin-top: 4px;
+    }
+    .metric-box .m-val small {
+      font-size: 13px;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    /* Pool Tag */
+    .pool-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-blue);
+      background: #eef4fb;
+      border: 1px solid rgba(0,96,182,0.15);
+      padding: 8px 14px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+    }
+
+    /* Browse Controls */
+    .browse-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .browse-controls .calc-input { flex: 1; min-width: 160px; }
+
+    /* Fan Scroll List */
+    .fan-scroll {
+      max-height: 280px;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+    .fan-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      gap: 12px;
+      transition: background 0.1s;
+    }
+    .fan-row:last-child { border-bottom: none; }
+    .fan-row:hover { background: #f8fafc; }
+    .fan-row.active { background: #eef4fb; }
+    .fan-row .fr-main { flex: 1; min-width: 0; }
+    .fan-row .fr-name {
+      font-weight: 700;
+      color: var(--navy-950);
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .fan-row .fr-meta {
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      margin-top: 2px;
+    }
+    .fan-row .fr-count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--navy-950);
+      white-space: nowrap;
+    }
+
+    /* Pick Button */
+    .pick-btn {
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink-soft);
+      cursor: pointer;
+      white-space: nowrap;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .pick-btn:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
+    .pick-btn.active { background: var(--brand-blue); border-color: var(--brand-blue); color: #fff; }
+
+    /* Copy Button */
+    .copy-btn {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .copy-btn:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
+
+    /* Reco Block */
+    .reco { border: 1.5px solid var(--brand-blue); border-radius: 10px; padding: 14px 16px; background: #eef4fb; margin-bottom: 14px; }
+    .reco.empty { border: 1.5px dashed var(--line); background: var(--paper); text-align: center; color: var(--ink-soft); font-size: 13px; padding: 16px; }
+
+    /* Cooling Pad Banner */
+    .cooling-pad-banner {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Cooling Pad Table */
+    .table-cooling-pad {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+    .table-cooling-pad th {
+      background: var(--navy-950);
+      color: #ffffff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+    }
+    .table-cooling-pad td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .table-cooling-pad tr:hover { background: var(--brand-blue-light, #eef4fb); }
+
+    /* Accordion */
+    .acc { margin-top: 24px; }
+    .acc-h {
+      background: #ffffff;
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      transition: background 0.15s;
+    }
+    .acc-h:hover { background: #f8fafc; }
+    .acc-h .chev { transition: transform 0.2s; color: var(--ink-soft); }
+    .acc-h.open .chev { transform: rotate(180deg); }
+    .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+    .acc-body.open { max-height: 2000px; }
+    .acc-inner { padding: 0 20px 20px; }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .tabs { flex-direction: column; gap: 4px; }
+      .tab-btn { font-size: 12.5px; padding: 10px 14px; }
+      .results-dashboard { grid-template-columns: 1fr; }
+      .cooling-pad-banner > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+      .metric-box .m-val { font-size: 20px; }
+    }
+</style>
+@endpush
+
+@section('content')
+<!-- HERO SECTION -->
+<div class="calc-hero">
+  <div class="wrap">
+    <div class="tag">WINLINE &middot; CÔNG CỤ TÍNH KỸ THUẬT HVAC</div>
+    <h1>Tính chọn quạt công nghiệp &amp; Thông gió</h1>
+    <p>Nhập diện tích và chiều cao không gian để tự động tính lưu lượng gió cần thiết theo tiêu chuẩn <strong>TCVN 5687:2010</strong>, gợi ý model quạt tối ưu và diện tích tấm làm mát Cooling Pad.</p>
+
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="cooling"><i class="fas fa-snowflake"></i> 1. Hệ thống làm mát áp suất âm (Nhà xưởng &amp; Trang trại)</button>
+    <button class="tab-btn" data-tab="exhaust"><i class="fas fa-wind"></i> 2. Thông gió &amp; Hút khói / Hút bụi</button>
+  </div>
+
+  <!-- TAB 1: COOLING -->
+  <div class="panel active" id="panel-cooling">
+    <div class="calc-grid-layout">
+      <!-- Cột trái: Input -->
+      <div class="calc-card">
+        <h3><span class="n">1</span> Thông số không gian nhà xưởng</h3>
+        
+        <label class="input-label">Diện tích sàn cần làm mát (m&sup2;)</label>
+        <input type="number" class="calc-input" id="c_area" value="200" min="1" step="10">
+        
+        <label class="input-label">Chiều cao trần trung bình (m)</label>
+        <input type="number" class="calc-input" id="c_height" value="6" min="1" step="0.5">
+        
+        <label class="input-label">Loại công trình / Nhu cầu nhiệt</label>
+        <div class="preset-chips" id="c_presets">
+          <span class="preset-chip active" data-v="50">Xưởng thông thoáng (50 lần/h)</span>
+          <span class="preset-chip" data-v="60">Xưởng nóng, đông người (60 lần/h)</span>
+          <span class="preset-chip" data-v="40">Trang trại khép kín (40 lần/h)</span>
+          <span class="preset-chip" data-v="70">Xưởng ép nhựa / Hóa chất (70 lần/h)</span>
+        </div>
+        
+        <label class="input-label">Bội số trao đổi khí (lần/giờ)</label>
+        <input type="number" class="calc-input" id="c_boiso" value="50" min="10" max="120">
+        <div style="font-size:12px; color:var(--ink-soft); margin-top:8px; line-height:1.5;">
+          * Theo TCVN 5687:2010: Nhà xưởng may mặc: 40–50 lần/h; Xưởng cơ khí: 45–60 lần/h; Xưởng sinh nhiệt cao: 60–80 lần/h.
+        </div>
+      </div>
+
+      <!-- Cột phải: Output & Recommendation -->
+      <div class="calc-card">
+        <h3><span class="n">2</span> Kết quả tính &amp; Quạt đề xuất tối ưu</h3>
+        <div class="results-dashboard">
+          <div class="metric-box">
+            <div class="m-lbl">Thể tích không gian</div>
+            <div class="m-val" id="c_vol">1.200 <small>m&sup3;</small></div>
+          </div>
+          <div class="metric-box" style="background:#fdebee; border-color:rgba(212,30,61,0.2);">
+            <div class="m-lbl" style="color:var(--orange);">Tổng lưu lượng gió cần thiết (m³/h)</div>
+            <div class="m-val" id="c_flow" style="color:var(--orange);">60.000 <small>m&sup3;/h</small></div>
+          </div>
+        </div>
+
+
+        
+        <div class="pool-tag" id="c_pooltag"><i class="fas fa-check-circle"></i> Nhóm quạt đề xuất: Quạt hút công nghiệp vuông (900 &ndash; 1380mm)</div>
+        
+        <div id="c_reco"></div>
+
+        <div class="browse-controls" style="margin-top:16px;">
+          <input type="text" id="c_search" class="calc-input" style="font-size:13px; padding:8px 12px;" placeholder="Tìm theo kích thước: 1380, 1220, 1100, 900...">
+          <select id="c_sort" class="calc-input" style="font-size:13px; padding:8px 12px; max-width:180px;">
+            <option value="fit">Sát nhu cầu nhất</option>
+            <option value="flow_desc">Lưu lượng: Cao &rarr; Thấp</option>
+            <option value="flow_asc">Lưu lượng: Thấp &rarr; Cao</option>
+          </select>
+        </div>
+        
+        <div class="fan-scroll" id="c_fanlist" style="margin-top:10px; max-height:260px;"></div>
+      </div>
+    </div>
+
+    <!-- KHỐI TÍNH TOÁN COOLING PAD ĐỒNG BỘ -->
+    <div class="cooling-pad-banner">
+      <h3 style="font-size:16px; font-weight:800; color:var(--navy-950); margin:0 0 14px; display:flex; align-items:center; gap:10px;">
+        <span style="width:24px; height:24px; border-radius:6px; background:var(--green); color:#fff; font-size:12px; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace;">3</span>
+        Tính toán diện tích &amp; số lượng tấm làm mát Cooling Pad
+      </h3>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:center;">
+        <div>
+          <label class="input-label">Vận tốc gió tiêu chuẩn qua tấm (m³/h trên mỗi m² tấm)</label>
+          <input type="number" class="calc-input" id="c_padrate" value="9000" min="5000" max="10000" step="100">
+          <div style="font-size:12px; color:var(--ink-soft); margin-top:6px;">
+            Khuyến nghị TCVN: 7.200 &ndash; 9.000 m&sup3;/h trên mỗi m&sup2; tấm.
+          </div>
+        </div>
+        <div class="metric-box" style="background:#e6f4ee; border-color:rgba(30,138,95,0.25);">
+          <div class="m-lbl" style="color:var(--green);">Tổng diện tích tấm cần trang bị (m²)</div>
+          <div class="m-val" id="c_padarea" style="color:var(--green);">&mdash; <small>m&sup2;</small></div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;">
+        <div style="font-weight:700; font-size:13.5px; color:var(--navy-950); margin-bottom:8px;">Bảng quy đổi số tấm theo kích thước tiêu chuẩn nhà máy:</div>
+        <table class="table-cooling-pad" id="c_padtable"></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: EXHAUST -->
+  <div class="panel" id="panel-exhaust">
+    <div class="calc-grid-layout">
+      <div class="calc-card">
+        <h3><span class="n">1</span> Thông số không gian cần thông gió</h3>
+        <label class="input-label">Diện tích phòng (m&sup2;)</label>
+        <input type="number" class="calc-input" id="e_area" value="100" min="1">
+        
+        <label class="input-label">Chiều cao trung bình (m)</label>
+        <input type="number" class="calc-input" id="e_height" value="3.5" min="1" step="0.1">
+        
+        <label class="input-label">Mục đích sử dụng (TCVN 5687:2010)</label>
+        <select id="e_use" class="calc-input" style="font-size:13px;"></select>
+        
+        <label class="input-label">Bội số trao đổi khí (lần/giờ)</label>
+        <input type="number" class="calc-input" id="e_boiso" value="20" min="1">
+        
+        <label class="input-label">Dạng quạt yêu cầu</label>
+        <div class="preset-chips" id="e_group">
+          <span class="preset-chip active" data-v="normal">Thông gió, hút bụi gắn tường / ống gió</span>
+          <span class="preset-chip" data-v="portable">Quạt hút xách tay di động</span>
+        </div>
+        <div class="group-note" id="e_groupnote" style="font-size:12px; color:var(--ink-soft); margin-top:8px;"></div>
+      </div>
+
+      <div class="calc-card">
+        <h3><span class="n">2</span> Kết quả tính toán &amp; Quạt đề xuất</h3>
+        <div class="results-dashboard">
+          <div class="metric-box">
+            <div class="m-lbl">Thể tích phòng</div>
+            <div class="m-val" id="e_vol">&mdash;</div>
+          </div>
+          <div class="metric-box" style="background:#fdebee; border-color:rgba(212,30,61,0.2);">
+            <div class="m-lbl" style="color:var(--orange);">Tổng lưu lượng cần</div>
+            <div class="m-val" id="e_flow" style="color:var(--orange);">&mdash;</div>
+          </div>
+        </div>
+        
+
+        <div class="pool-tag" id="e_pooltag"></div>
+        <div id="e_reco"></div>
+
+        <div class="browse-controls" style="margin-top:16px;">
+          <input type="text" id="e_search" class="calc-input" style="font-size:13px; padding:8px 12px;" placeholder="Tìm theo tên, mã, thương hiệu...">
+          <select id="e_sort" class="calc-input" style="font-size:13px; padding:8px 12px; max-width:180px;">
+            <option value="fit">Sát nhu cầu nhất</option>
+            <option value="flow_desc">Lưu lượng: Cao &rarr; Thấp</option>
+            <option value="flow_asc">Lưu lượng: Thấp &rarr; Cao</option>
+          </select>
+        </div>
+        
+        <div class="fan-scroll" id="e_fanlist" style="margin-top:10px; max-height:280px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BẢNG TRA CỨU TCVN 5687:2010 -->
+  <div class="acc" style="margin-top:28px;">
+    <div class="acc-h" id="accToggle" style="background:#ffffff; padding:18px 24px; border:1px solid var(--line); border-radius:12px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+      <span style="font-weight:800; font-size:15px; color:var(--navy-950); display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-book-open" style="color:var(--brand-blue);"></i> Bảng tra cứu bội số trao đổi khí &ndash; Phụ lục G, Tiêu chuẩn TCVN 5687:2010
+      </span>
+      <span class="chev" style="font-size:18px; color:var(--ink-soft);">&#9662;</span>
+    </div>
+    <div class="acc-body" id="accBody">
+      <div class="acc-inner" style="background:#ffffff; border:1px solid var(--line); border-top:none; border-radius:0 0 12px 12px; padding:20px;">
+        <table class="table-cooling-pad" id="refTable"></table>
+        <div style="font-size:12px; color:var(--ink-soft); margin-top:12px;">* Áp dụng với chiều cao phòng tiêu chuẩn 2,5m; phòng cao hơn tính theo tỷ lệ thể tích thực tế.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALL TO ACTION BANNER KỸ THUẬT -->
+  <div class="cta-band" style="margin-top:32px;">
+    <div class="cta-inner">
+      <h3 style="font-size:22px; font-weight:800; margin:0 0 8px;">Cần tư vấn thiết kế &amp; báo giá trọn gói hệ thống thông gió làm mát?</h3>
+      <p style="margin:0 0 18px; color:#cbd5e1;">Đội ngũ kỹ sư kỹ thuật Winline hơn 20 năm kinh nghiệm sẵn sàng khảo sát thực tế và lên dự toán chi tiết miễn phí.</p>
+      <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+        <a href="tel:0949761893" style="background:var(--orange); color:#ffffff; padding:10px 24px; border-radius:8px; font-weight:700; font-size:14px; display:inline-flex; align-items:center; gap:8px;"><i class="fas fa-phone-alt"></i> Hotline Kỹ Thuật: 0949.761.893</a>
+        <a href="https://zalo.me/0949761893" target="_blank" style="background:#0068ff; color:#ffffff; padding:10px 24px; border-radius:8px; font-weight:700; font-size:14px; display:inline-flex; align-items:center; gap:8px;"><i class="fas fa-comment-dots"></i> Chat Zalo Nhận Báo Giá</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MASTER UNIVERSAL FOOTER -->
+<!-- UNIVERSAL MASTER FOOTER (COMPACT & MODERN - WINLINE.VN STANDARD) -->
+<!-- EXACT 100% FOOTER WINLINE.VN -->
+<!-- EXACT 100% FOOTER WINLINE.VN WITH OFFICIAL SOCIAL & LEGAL LINKS -->
+<!-- Footer -->
+@endsection
+
+@push('scripts')
+<script>
+>
+const baseFans = [{"c": "2005290", "n": "Quạt thông gió tròn Nedfon GF(D)2-220V, Ø 20", "g": "Quạt thông gió CN", "f": 600, "u": "Cái", "w": "12 tháng", "b": "Nedfon", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003552", "n": "Quạt thông gió xách tay Haiki XT-20 (Tốc độ cao)-220V, Ø 20", "g": "Quạt thông gió CN", "f": 1330, "u": "Cái", "w": "12 tháng", "b": "Haiki", "s": "Trung quốc", "i": true, "j": false, "p": true, "v": "220V", "shape": "Tròn"}, {"c": "2004249", "n": "Quạt thông gió công nghiệp tròn Gale VF25-220V, Ø 25", "g": "Quạt thông gió CN", "f": 840, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2004244", "n": "Quạt thông gió công nghiệp tròn Gale SVF25-220V, Ø 25", "g": "Quạt thông gió CN", "f": 840, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003619", "n": "Quạt thông gió công nghiệp Haiki HK-25FA-220V, Ø 25", "g": "Quạt thông gió CN", "f": 840, "u": "Cái", "w": "12 tháng", "b": "Haiki", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003553", "n": "Quạt thông gió xách tay Haiki XT-25 (Tốc độ cao)-220V, Ø 25", "g": "Quạt thông gió CN", "f": 2340, "u": "Cái", "w": "12 tháng", "b": "Haiki", "s": "Trung quốc", "i": true, "j": false, "p": true, "v": "220V", "shape": "Tròn"}, {"c": "2005072", "n": "Quạt thông gió công nghiệp Superlite MAX SLHCV-25-220V, Ø 25", "g": "Quạt thông gió CN", "f": 2200, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002340", "n": "Quạt thông gió công nghiệp komasu tròn KM-25T-220V, Ø 25", "g": "Quạt thông gió CN", "f": 1180, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003352", "n": "Quạt hút công nghiệp Panasonic FV-25GS4-220V, Ø 25", "g": "Quạt thông gió CN", "f": 1150, "u": "Cái", "w": "12 tháng", "b": "Panasonic", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2005291", "n": "Quạt thông gió tròn Nedfon GF(D)25-2-220V, Ø 25", "g": "Quạt thông gió CN", "f": 1100, "u": "Cái", "w": "12 tháng", "b": "Nedfon", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003554", "n": "Quạt thông gió xách tay Haiki XT-30, (Tốc độ cao)-220V, Ø 30", "g": "Quạt thông gió CN", "f": 3460, "u": "Cái", "w": "12 tháng", "b": "Haiki", "s": "Việt nam", "i": true, "j": false, "p": true, "v": "220V", "shape": "Tròn"}, {"c": "2004250", "n": "Quạt thông gió công nghiệp tròn Gale VF30-220V, Ø 30", "g": "Quạt thông gió CN", "f": 2200, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2005073", "n": "Quạt thông gió công nghiệp Superlite MAX SLHCV-30-220V, Ø 30", "g": "Quạt thông gió CN", "f": 2200, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002348", "n": "Quạt thông gió công nghiệp komasu KM-30-1S-220V, Ø 30", "g": "Quạt thông gió CN", "f": 2090, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002341", "n": "Quạt thông gió công nghiệp komasu tròn KM-30T-220V, Ø 30", "g": "Quạt thông gió CN", "f": 2000, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003353", "n": "Quạt hút công nghiệp Panasonic FV-30GS4-220V, Ø 30", "g": "Quạt thông gió CN", "f": 1820, "u": "Cái", "w": "12 tháng", "b": "Panasonic", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003620", "n": "Quạt thông gió công nghiệp Haiki HK-30FA-220V, Ø 30", "g": "Quạt thông gió CN", "f": 1200, "u": "Cái", "w": "12 tháng", "b": "Haiki", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2004245", "n": "Quạt thông gió công nghiệp tròn Gale SVF30-220V, Ø 30", "g": "Quạt thông gió CN", "f": 1080, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003549", "n": "Quạt thông gió công suất cao Haiki HKS-35G điện áp 380V-380v, Ø 35", "g": "Quạt thông gió CN", "f": 3190, "u": "Cái", "w": "12 tháng", "b": "Haiki", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Tròn"}, {"c": "2005292", "n": "Quạt thông gió tròn Nedfon GF(D)35-220V, Ø 35", "g": "Quạt thông gió CN", "f": 3000, "u": "Cái", "w": "12 tháng", "b": "Nedfon", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002349", "n": "Quạt thông gió công nghiệp komasu KM-35-1S-220V, Ø 35", "g": "Quạt thông gió CN", "f": 2870, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2005074", "n": "Quạt thông gió công nghiệp Superlite MAX SLHCV-35-220V, Ø 35", "g": "Quạt thông gió CN", "f": 2800, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003354", "n": "Quạt hút công nghiệp Panasonic FV-35GS4-220V, Ø 35", "g": "Quạt thông gió CN", "f": 2670, "u": "Cái", "w": "12 tháng", "b": "Panasonic", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002342", "n": "Quạt thông gió công nghiệp komasu tròn KM-35T-220V, Ø 35", "g": "Quạt thông gió CN", "f": 2500, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003621", "n": "Quạt thông gió công nghiệp Haiki HK-35FA-220V, Ø 35", "g": "Quạt thông gió CN", "f": 1800, "u": "Cái", "w": "12 tháng", "b": "Haiki", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2005529", "n": "Quạt xách tay SHT-35 (Tốc độ cao)-220V, Ø 35", "g": "Quạt thông gió CN", "f": 9900, "u": "Cái", "w": "1 năm", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": true, "v": "220V", "shape": "Tròn"}, {"c": "2004252", "n": "Quạt thông gió công nghiệp tròn Gale VF40T 380V-380v, Ø 40", "g": "Quạt thông gió CN", "f": 4500, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "380V", "shape": "Tròn"}, {"c": "2004251", "n": "Quạt thông gió công nghiệp tròn Gale VF40-220V, Ø 40", "g": "Quạt thông gió CN", "f": 4500, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2005075", "n": "Quạt thông gió công nghiệp Superlite MAX SLHCV-40-220V, Ø 40", "g": "Quạt thông gió CN", "f": 4500, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002350", "n": "Quạt thông gió công nghiệp komasu KM-40-1S-220V, Ø 40", "g": "Quạt thông gió CN", "f": 4430, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002339", "n": "Quạt thông gió công nghiệp komasu tròn KM-40T-220V, Ø 40", "g": "Quạt thông gió CN", "f": 4000, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003355", "n": "Quạt hút công nghiệp Panasonic FV-40GS4-220V, Ø 40", "g": "Quạt thông gió CN", "f": 3780, "u": "Cái", "w": "12 tháng", "b": "Panasonic", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003541", "n": "Quạt thông gió công nghiệp Haiki HKV-40CL-220V, Ø 40", "g": "Quạt thông gió CN", "f": 3080, "u": "Cái", "w": "12 tháng", "b": "Haiki", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2003622", "n": "Quạt thông gió công nghiệp Haiki HK-40FA-220V, Ø 40", "g": "Quạt thông gió CN", "f": 3000, "u": "Cái", "w": "12 tháng", "b": "Haiki", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2004246", "n": "Quạt thông gió công nghiệp tròn Gale SVF40-220V, Ø 40", "g": "Quạt thông gió CN", "f": 2880, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002935", "n": "Quạt xách tay SHT-40 (Tốc độ cao)-220V, Ø 40", "g": "Quạt thông gió CN", "f": 11100, "u": "Cái", "w": "1 năm", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": true, "v": "220V", "shape": "Tròn"}, {"c": "2002351", "n": "Quạt thông gió công nghiệp komasu KM-50-1S-220V, Ø 50", "g": "Quạt thông gió CN", "f": 8480, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002343", "n": "Quạt thông gió công nghiệp komasu tròn KM-50T-220V, Ø 50", "g": "Quạt thông gió CN", "f": 6560, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2004254", "n": "Quạt thông gió công nghiệp tròn Gale VF50T 380V-380v, Ø 50", "g": "Quạt thông gió CN", "f": 5800, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Tròn"}, {"c": "2004253", "n": "Quạt thông gió công nghiệp tròn Gale VF50-220V, Ø 50", "g": "Quạt thông gió CN", "f": 5800, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2005076", "n": "Quạt thông gió công nghiệp Superlite MAX SLHCV-50-220V, Ø 50", "g": "Quạt thông gió CN", "f": 5800, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2004247", "n": "Quạt thông gió công nghiệp tròn Gale SVF50-220V, Ø 50", "g": "Quạt thông gió CN", "f": 5700, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2004256", "n": "Quạt thông gió công nghiệp tròn Gale VF60T 380V-380v, Ø 60", "g": "Quạt thông gió CN", "f": 8700, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "380V", "shape": "Tròn"}, {"c": "2004255", "n": "Quạt thông gió công nghiệp tròn Gale VF60-220V, Ø 60", "g": "Quạt thông gió CN", "f": 8700, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2004248", "n": "Quạt thông gió công nghiệp tròn Gale SVF60-220V, Ø 60", "g": "Quạt thông gió CN", "f": 8500, "u": "Cái", "w": "12 tháng", "b": "Gale", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2005077", "n": "Quạt thông gió công nghiệp Superlite MAX SLHCV-60-220V, Ø 60", "g": "Quạt thông gió CN", "f": 8500, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002955", "n": "Quạt thông gió công nghiệp Omysu FA-60-C1-220V, Ø 60", "g": "Quạt thông gió CN", "f": 8500, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002344", "n": "Quạt thông gió công nghiệp komasu tròn KM-60T-220V, Ø 60", "g": "Quạt thông gió CN", "f": 8340, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2005293", "n": "Quạt thông gió tròn Nedfon GF(D)5-220V, Ø 60", "g": "Quạt thông gió CN", "f": 8000, "u": "Cái", "w": "12 tháng", "b": "Nedfon", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002337", "n": "Quạt thông gió công nghiệp komasu KM-60-2S-220V, Ø 60", "g": "Quạt thông gió CN", "f": 20000, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2002338", "n": "Quạt thông gió công nghiệp komasu KM-70-2S-220V, Ø 70", "g": "Quạt thông gió CN", "f": 24000, "u": "Cái", "w": "12 tháng", "b": "Komasu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Tròn"}, {"c": "2005047", "n": "Quạt hút công nghiệp vuông 400x400x400_380V", "g": "Quạt hút CN", "f": 8000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005048", "n": "Quạt hút công nghiệp vuông 400x400x400_220V", "g": "Quạt hút CN", "f": 8000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2003466", "n": "Quạt hút công nghiệp BMF 400x400x320 220V Cánh inox", "g": "Quạt hút CN", "f": 9000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005027", "n": "Quạt hút công nghiệp vuông 500x500x400 điện áp 380V", "g": "Quạt hút CN", "f": 10000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005028", "n": "Quạt hút công nghiệp vuông 500x500x400 điện áp 220V", "g": "Quạt hút CN", "f": 10000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2003592", "n": "Quạt hút công nghiệp BMF 500x500x350 220V Cánh inox", "g": "Quạt hút CN", "f": 10000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Panasonic Việt nam", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005029", "n": "Quạt hút công nghiệp vuông 600x600x400 điện áp 380V", "g": "Quạt hút CN", "f": 15000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005030", "n": "Quạt hút công nghiệp vuông 600x600x400 điện áp 220V", "g": "Quạt hút CN", "f": 15000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004374", "n": "Quạt hút công nghiệp BMF 600 Inox 430 toàn phần 380V", "g": "Quạt hút CN", "f": 16000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004583", "n": "Quạt hút công nghiệp BMF 600 Inox 430 toàn phần 220V", "g": "Quạt hút CN", "f": 16000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005363", "n": "Quạt hút công nghiệp BMF 700 Inox 430 toàn phần 380V", "g": "Quạt hút CN", "f": 17000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004584", "n": "Quạt hút công nghiệp BMF 700 Inox 430 toàn phần 220V", "g": "Quạt hút CN", "f": 17000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2003468", "n": "Quạt hút công nghiệp BMF 600x600x400 Cánh inox_380V", "g": "Quạt hút CN", "f": 18000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005623", "n": "Quạt hút công nghiệp BMF 600x600x400 Cánh inox_220V", "g": "Quạt hút CN", "f": 18000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005031", "n": "Quạt hút công nghiệp vuông 700x700x400 điện áp 380V", "g": "Quạt hút CN", "f": 19000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005032", "n": "Quạt hút công nghiệp vuông 700x700x400 điện áp 220V", "g": "Quạt hút CN", "f": 19000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2003500", "n": "Quạt hút công nghiệp BMF 700x700x400 Cánh inox_380V", "g": "Quạt hút CN", "f": 20000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005624", "n": "Quạt hút công nghiệp BMF 700x700x400 Cánh inox_220V", "g": "Quạt hút CN", "f": 20000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005033", "n": "Quạt hút công nghiệp vuông 800x800x400_380V", "g": "Quạt hút CN", "f": 22000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004654", "n": "Quạt hút công nghiệp vuông 800x800x400 điện áp 220V", "g": "Quạt hút CN", "f": 22000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2003474", "n": "Quạt hút công nghiệp BMF 800x800x400 Cánh inox_380V", "g": "Quạt hút CN", "f": 25000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005625", "n": "Quạt hút công nghiệp BMF 800x800x400 Cánh inox_220V", "g": "Quạt hút CN", "f": 25000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005362", "n": "Quạt hút công nghiệp BMF 800  Inox 430 toàn phần 380V", "g": "Quạt hút CN", "f": 25000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004585", "n": "Quạt hút công nghiệp BMF 800  Inox 430 toàn phần 220V", "g": "Quạt hút CN", "f": 25000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": false, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005035", "n": "Quạt hút công nghiệp vuông 900x900x400 điện áp 380V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005034", "n": "Quạt hút công nghiệp vuông 900x900x400 điện áp 220V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2003472", "n": "Quạt hút công nghiệp BMF 900x900x400 Cánh inox_380V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005626", "n": "Quạt hút công nghiệp BMF 900x900x400 Cánh inox_220V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005272", "n": "Quạt hút công nghiệp BMF 900x900x400  inox 304 toàn phần_380V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004359", "n": "Quạt hút công nghiệp BMF 900STD khung sơn tĩnh điện cánh inox_380V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004369", "n": "Quạt hút công nghiệp BMF 900STD khung sơn tĩnh điện cánh inox_220V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005361", "n": "Quạt hút công nghiệp BMF 900P Khung mạ kẽm cánh POM_380V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004361", "n": "Quạt hút công nghiệp BMF 900P Khung mạ kẽm cánh POM_220V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004365", "n": "Quạt hút công nghiệp BMF 900 Inox 430 toàn phần 380V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004586", "n": "Quạt hút công nghiệp BMF 900 Inox 430 toàn phần 220V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004203", "n": "Quạt hút công nghiệp BMF 900  inox 304 toàn phần_220V", "g": "Quạt hút CN", "f": 28000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004358", "n": "Quạt hút công nghiệp BMF 1000 cánh inox_380V", "g": "Quạt hút CN", "f": 32000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004373", "n": "Quạt hút công nghiệp BMF 1000 cánh inox_220V", "g": "Quạt hút CN", "f": 32000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005036", "n": "Quạt hút công nghiệp vuông 1100x1100x400_380V", "g": "Quạt hút CN", "f": 34000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005037", "n": "Quạt hút công nghiệp vuông 1100x1100x400 điện áp 220V", "g": "Quạt hút CN", "f": 34000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2003471", "n": "Quạt hút công nghiệp BMF 1100x1100x400 Cánh inox_380V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005627", "n": "Quạt hút công nghiệp BMF 1100x1100x400 Cánh inox_220V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005271", "n": "Quạt hút công nghiệp BMF 1100x1100x400  inox 304 toàn phần_380V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004357", "n": "Quạt hút công nghiệp BMF 1100STD khung sơn tĩnh điện cánh inox_380V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004370", "n": "Quạt hút công nghiệp BMF 1100STD khung sơn tĩnh điện cánh inox_220V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005355", "n": "Quạt hút công nghiệp BMF 1100PA Hiệu suất cao Cánh PA_380V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005360", "n": "Quạt hút công nghiệp BMF 1100P Khung mạ kẽm cánh POM_380V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004362", "n": "Quạt hút công nghiệp BMF 1100P Khung mạ kẽm cánh POM_220V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005364", "n": "Quạt hút công nghiệp BMF 1100 Inox 430 toàn phần 380V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004580", "n": "Quạt hút công nghiệp BMF 1100 Inox 430 toàn phần 220V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004205", "n": "Quạt hút công nghiệp BMF 1100  inox 304 toàn phần_220V", "g": "Quạt hút CN", "f": 35000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005038", "n": "Quạt hút công nghiệp vuông 1220x1220x400_380V", "g": "Quạt hút CN", "f": 37000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005039", "n": "Quạt hút công nghiệp vuông 1220x1220x400 điện áp 220V", "g": "Quạt hút CN", "f": 37000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005270", "n": "Quạt hút công nghiệp BMF 1220x1220x400 inox 304 toàn phần_380V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2003470", "n": "Quạt hút công nghiệp BMF 1220x1220x400 Cánh inox_380V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005628", "n": "Quạt hút công nghiệp BMF 1220x1220x400 Cánh inox_220V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004356", "n": "Quạt hút công nghiệp BMF 1220STD khung sơn tĩnh điện cánh inox_380V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004371", "n": "Quạt hút công nghiệp BMF 1220STD khung sơn tĩnh điện cánh inox_220V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005356", "n": "Quạt hút công nghiệp BMF 1220PA Hiệu suất cao Cánh PA_380V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005359", "n": "Quạt hút công nghiệp BMF 1220P Khung mạ kẽm cánh POM_380V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004363", "n": "Quạt hút công nghiệp BMF 1220P Khung mạ kẽm cánh POM_220V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004367", "n": "Quạt hút công nghiệp BMF 1220 Inox 430 toàn phần 380V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004581", "n": "Quạt hút công nghiệp BMF 1220 Inox 430 toàn phần 220V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004206", "n": "Quạt hút công nghiệp BMF 1220  inox 304 toàn phần_220V", "g": "Quạt hút CN", "f": 40000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004622", "n": "Quạt hút công nghiệp SHRV 1380x1380x400 inox 380V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2003469", "n": "Quạt hút công nghiệp BMF 1380x1380x400 Cánh inox_380V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005629", "n": "Quạt hút công nghiệp BMF 1380x1380x400 Cánh inox_220V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2003473", "n": "Quạt hút công nghiệp BMF 1380x1380x400  inox 304 toàn phần_380V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004355", "n": "Quạt hút công nghiệp BMF 1380STD khung sơn tĩnh điện cánh inox_380V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004372", "n": "Quạt hút công nghiệp BMF 1380STD khung sơn tĩnh điện cánh inox_220V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005357", "n": "Quạt hút công nghiệp BMF 1380PA Hiệu suất cao Cánh PA_380V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005358", "n": "Quạt hút công nghiệp BMF 1380P Khung mạ kẽm cánh POM_380V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004364", "n": "Quạt hút công nghiệp BMF 1380P Khung mạ kẽm cánh POM_220V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Việt nam", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004368", "n": "Quạt hút công nghiệp BMF 1380 Inox 430 toàn phần 380V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2004582", "n": "Quạt hút công nghiệp BMF 1380 Inox 430 toàn phần 220V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2004207", "n": "Quạt hút công nghiệp BMF 1380  inox 304 toàn phần_220V", "g": "Quạt hút CN", "f": 45000, "u": "Cái", "w": "12 tháng", "b": "Omysu", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}, {"c": "2005040", "n": "Quạt hút công nghiệp vuông 1380x1380x400 điện áp 380v", "g": "Quạt hút CN", "f": 48000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "380V", "shape": "Vuông"}, {"c": "2005041", "n": "Quạt hút công nghiệp vuông 1380x1380x400 điện áp 220V", "g": "Quạt hút CN", "f": 48000, "u": "Cái", "w": "12 tháng", "b": "Superlite Max", "s": "Trung quốc", "i": true, "j": true, "p": false, "v": "220V", "shape": "Vuông"}];
+const pads = [{"c": "2004315", "n": "Tấm làm mát nâu 2000x600x150mm", "a": 1.2, "dim": "2000x600x150", "mat": "Nâu"}, {"c": "2004052", "n": "Tấm làm mát nâu 1800x600x150mm", "a": 1.08, "dim": "1800x600x150", "mat": "Nâu"}, {"c": "2004053", "n": "Tấm làm mát nâu 1500x600x150mm", "a": 0.9, "dim": "1500x600x150", "mat": "Nâu"}, {"c": "2005144", "n": "Tấm làm mát chống rêu 2000x600x150mm", "a": 1.2, "dim": "2000x600x150", "mat": "Chống rêu"}, {"c": "2003854", "n": "Tấm làm mát chống rêu 1800x600x150mm", "a": 1.08, "dim": "1800x600x150", "mat": "Chống rêu"}, {"c": "2003864", "n": "Tấm làm mát chống rêu 1500x600x150mm", "a": 0.9, "dim": "1500x600x150", "mat": "Chống rêu"}];
+
+const STORAGE_KEY = 'winline_fan_catalog_v1';
+let fans = [];
+
+function cloneFans(list){ return JSON.parse(JSON.stringify(list)); }
+
+function loadFans(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){ const parsed = JSON.parse(raw); if(Array.isArray(parsed) && parsed.length) return parsed; }
+  }catch(e){}
+  const seeded = cloneFans(baseFans);
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded)); }catch(e){}
+  return seeded;
+}
+fans = loadFans();
+
+const exhaustUses=[
+  {label:'Hút khói bếp gia đình, thông gió gia đình (10 lần/h)',boiso:10},
+  {label:'Hút khói, bụi nhà hàng, bếp nhà hàng, nhà kho (20 lần/h)',boiso:20},
+  {label:'Thông gió nhà xưởng sản xuất phổ thông (25 lần/h)',boiso:25},
+  {label:'Hút khói phòng sơn, nhà xưởng sinh nhiệt cao (40 lần/h)',boiso:40},
+  {label:'Thông gió đông người, mật độ máy móc cao (40 lần/h)',boiso:40},
+  {label:'Hút nhiệt nóng mức độ cao, đường ống, hầm lò (60 lần/h)',boiso:60},
+  {label:'Trang trại chăn nuôi khép kín (20 lần/h)',boiso:20},
+  {label:'Nhà màng nông nghiệp, trồng rau hoa (10 lần/h)',boiso:10}
+];
+
+const refG=[
+  ['Công sở, văn phòng làm việc','6'],['Nhà ở, phòng ngủ, phòng khách','2 - 3'],['Phòng ăn khách sạn, căng tin','10'],
+  ['Cửa hàng, siêu thị, trung tâm thương mại','6'],['Xí nghiệp, nhà máy công nghiệp','6 - 10'],['Phòng học, giảng đường','8'],
+  ['Phòng thí nghiệm hóa sinh','10 - 12'],['Thư viện, phòng đọc sách','5 - 6'],['Bệnh viện, phòng khám, phòng bệnh','6 - 8'],
+  ['Nhà hát, rạp chiếu phim, hội trường','8'],['Sảnh lớn, hành lang, cầu thang thoát hiểm','4'],
+  ['Phòng tắm, khu vệ sinh công cộng','10 - 15'],['Phòng bếp nhà hàng, bếp ăn tập thể','20 - 30'],
+  ['Ga ra để xe ô tô ngầm','6 - 8'],['Trung tâm cứu hỏa, trạm biến áp','6'],['Phòng máy bơm, phòng máy phát điện','8 - 10']
+];
+
+function fmt(n){ return Math.round(n).toLocaleString('vi-VN'); }
+
+function buildDuct(el,arrows){
+  if(!el) return;
+  el.innerHTML='';
+  for(let i=0;i<arrows*2;i++){
+    const s=document.createElement('span');
+    s.className='duct-arrow';
+    s.innerHTML='&#8594;';
+    el.appendChild(s);
+  }
+}
+function animateDuct(el,speedSec){
+  if(!el) return;
+  el.style.transition='none';
+  el.style.transform='translateX(-50%)';
+  el.getBoundingClientRect();
+  el.style.transition='transform '+speedSec+'s linear';
+  requestAnimationFrame(()=>{ el.style.transform='translateX(0%)'; });
+}
+let heroTimer=null;
+function runHero(flow){
+  const el=document.getElementById('heroDuct');
+  if(!el) return;
+  buildDuct(el,16);
+  const speed=Math.max(1.2, 6 - Math.min(flow,150000)/30000);
+  function loop(){ animateDuct(el,speed); }
+  loop();
+  if(heroTimer) clearInterval(heroTimer);
+  heroTimer=setInterval(loop, speed*1000);
+}
+function runFlowBar(id,flow,timerRef){
+  const el=document.getElementById(id);
+  if(!el) return;
+  buildDuct(el,10);
+  const speed=Math.max(1,5.5-Math.min(flow,150000)/30000);
+  function loop(){ animateDuct(el,speed); }
+  loop();
+  if(timerRef.t) clearInterval(timerRef.t);
+  timerRef.t=setInterval(loop,speed*1000);
+}
+const cFlowTimer={t:null}, eFlowTimer={t:null};
+
+function copyCode(code,btn){
+  navigator.clipboard.writeText(code).then(()=>{
+    const old=btn.textContent;
+    btn.textContent='Đã chép ✓';
+    setTimeout(()=>{ btn.textContent=old; },1500);
+  });
+}
+
+function scoreFans(list,total){
+  return list.map(f=>{
+    const exact=total/f.f;
+    const count=Math.max(1,Math.ceil(exact));
+    const achieved=count*f.f;
+    const diff=achieved-total;
+    return Object.assign({},f,{count,achieved,diff,adequate:diff>=0});
+  });
+}
+function sortFit(list){
+  return list.slice().sort((a,b)=>{
+    if(a.adequate!==b.adequate) return a.adequate? -1:1;
+    return Math.abs(a.diff)-Math.abs(b.diff);
+  });
+}
+
+function recoBlock(chosen){
+  if(!chosen){
+    return `<div class="reco empty" style="border:1.5px dashed var(--line); background:var(--paper); text-align:center; padding:16px; border-radius:10px; color:var(--ink-soft); font-size:13px;">
+      <i class="fas fa-info-circle" style="color:var(--brand-blue); margin-right:4px;"></i> Chưa chọn model quạt &mdash; hệ thống đang xếp model sát nhu cầu nhất ở đầu danh sách bên dưới. Bấm nút <b>"Chọn"</b> để gán vào báo cáo.
+    </div>`;
+  }
+  const isOk = chosen.adequate;
+  const descLine = isOk
+    ? `Tổng lưu lượng thực tế đạt <b>${fmt(chosen.achieved)} m³/h</b> (dư ${fmt(chosen.diff)} m³/h &mdash; đạt tiêu chuẩn an toàn TCVN).`
+    : `Tổng lưu lượng thực tế đạt <b>${fmt(chosen.achieved)} m³/h</b> (thiếu ${fmt(-chosen.diff)} m³/h so với thiết kế).`;
+    
+  return `<div style="background:${isOk?'#eef6fd':'#fdebee'}; border:1.5px solid ${isOk?'var(--brand-blue)':'var(--orange)'}; border-radius:10px; padding:16px; margin-bottom:14px;">
+      <div style="display:inline-block; font-size:10.5px; font-weight:800; text-transform:uppercase; color:#fff; background:${isOk?'var(--brand-blue)':'var(--orange)'}; padding:3px 8px; border-radius:4px; margin-bottom:6px;">
+        Model đề xuất: ${chosen.count} Quạt ${chosen.n}
+      </div>
+      <div style="font-size:14.5px; font-weight:800; color:var(--navy-950); margin-bottom:4px;">
+        ${chosen.count} × ${chosen.n}
+      </div>
+      <div style="font-size:12.5px; color:var(--ink); margin-bottom:4px;">
+        ${fmt(chosen.f)} m³/h / quạt &middot; Thương hiệu: <strong>${chosen.b}</strong> &middot; Điện áp: ${chosen.v}
+      </div>
+      <div style="font-size:12.5px; color:var(--ink-soft); line-height:1.4;">${descLine}</div>
+      <div style="display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap;">
+        <span style="font-size:12px; color:var(--ink-soft);">Mã sản phẩm: <b class="mono" style="color:var(--navy-950);">${chosen.c}</b></span>
+        <button class="copy-btn" onclick="copyCode('${chosen.c}',this)"><i class="fas fa-copy"></i> Sao chép mã</button>
+        <button class="copy-btn" style="color:var(--orange); border-color:rgba(212,30,61,0.3);" onclick="clearPick('${chosen._prefix}')">Bỏ chọn</button>
+      </div>
+    </div>`;
+}
+
+const picks={c:null,e:null};
+let eGroup='normal';
+
+function clearPick(prefix){
+  picks[prefix]=null;
+  prefix==='c' ? renderCooling() : renderExhaust();
+}
+function pickFan(prefix,code){
+  picks[prefix]=code;
+  prefix==='c' ? renderCooling() : renderExhaust();
+}
+
+function uniqueSorted(arr){
+  return Array.from(new Set(arr.filter(Boolean))).sort((a,b)=>a.localeCompare(b,'vi'));
+}
+const FILTER_LABELS={origin:'Xuất xứ',brand:'Thương hiệu',shape:'Hình dạng',volt:'Điện áp'};
+function syncFilterOptions(prefix,pool){
+  const fields=[['origin','s'],['brand','b'],['shape','shape'],['volt','v']];
+  fields.forEach(([key,prop])=>{
+    const el=document.getElementById(prefix+'_f_'+key);
+    if(!el) return;
+    const prev=el.value;
+    const values=uniqueSorted(pool.map(f=>f[prop]));
+    el.innerHTML = `<option value="">${FILTER_LABELS[key]}: Tất cả</option>` + values.map(v=>`<option value="${v}">${v}</option>`).join('');
+    el.value = values.includes(prev) ? prev : '';
+  });
+}
+
+function renderFanList(prefix,pool,total){
+  syncFilterOptions(prefix,pool);
+  const searchEl=document.getElementById(prefix+'_search');
+  const sortEl=document.getElementById(prefix+'_sort');
+  const originEl=document.getElementById(prefix+'_f_origin');
+  const brandEl=document.getElementById(prefix+'_f_brand');
+  const shapeEl=document.getElementById(prefix+'_f_shape');
+  const voltEl=document.getElementById(prefix+'_f_volt');
+  const q=(searchEl ? searchEl.value : '').trim().toLowerCase();
+  
+  let scored=scoreFans(pool,total);
+  let list=scored.filter(f=>
+    (!q || f.n.toLowerCase().includes(q) || f.c.toLowerCase().includes(q) || f.b.toLowerCase().includes(q) || String(f.f).includes(q)) &&
+    (!originEl || !originEl.value || f.s===originEl.value) &&
+    (!brandEl || !brandEl.value || f.b===brandEl.value) &&
+    (!shapeEl || !shapeEl.value || f.shape===shapeEl.value) &&
+    (!voltEl || !voltEl.value || f.v===voltEl.value)
+  );
+  
+  if(sortEl && sortEl.value==='flow_desc') list=list.slice().sort((a,b)=>b.f-a.f);
+  else if(sortEl && sortEl.value==='flow_asc') list=list.slice().sort((a,b)=>a.f-b.f);
+  else list=sortFit(list);
+  
+  const el=document.getElementById(prefix+'_fanlist');
+  if(!el) return;
+  if(list.length===0){ el.innerHTML='<div style="padding:14px; color:var(--ink-soft); font-size:13px; text-align:center;">Không tìm thấy model quạt nào khớp điều kiện lọc.</div>'; return; }
+  
+  el.innerHTML=list.map(f=>{
+    const active=picks[prefix]===f.c;
+    return `<div class="fan-row ${active?'active':''}" style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--line); gap:12px;">
+      <div class="fr-main" style="flex:1;">
+        <div class="fr-name" style="font-weight:700; color:var(--navy-950); font-size:13px;">${f.n}</div>
+        <div class="fr-meta" style="font-size:11.5px; color:var(--ink-soft); margin-top:2px;">
+          Mã: <b class="mono">${f.c}</b> &middot; Hãng: ${f.b} &middot; Lưu lượng: <strong class="mono" style="color:var(--brand-blue);">${fmt(f.f)} m³/h</strong> &middot; Điện: ${f.v}
+        </div>
+      </div>
+      <div class="fr-count" style="font-family:'IBM Plex Mono',monospace; font-weight:800; font-size:13px; color:var(--navy-950);">${total>0? f.count+' quạt':''}</div>
+      <button class="pick-btn ${active?'active':''}" onclick="pickFan('${prefix}','${f.c}')">${active?'Đang chọn ✓':'Chọn'}</button>
+    </div>`;
+  }).join('');
+}
+
+function getChosen(prefix,pool,total){
+  const code=picks[prefix];
+  if(!code) {
+    // Auto suggest best fitting model if user hasn't manually picked
+    const sorted = sortFit(scoreFans(pool,total));
+    if(sorted.length > 0) {
+      const best = sorted[0];
+      best._prefix = prefix;
+      return best;
+    }
+    return null;
+  }
+  const f=pool.find(x=>x.c===code);
+  if(!f) return null;
+  const scored=scoreFans([f],total)[0];
+  scored._prefix=prefix;
+  return scored;
+}
+
+function renderCooling(){
+  const areaEl = document.getElementById('c_area');
+  const heightEl = document.getElementById('c_height');
+  const boisoEl = document.getElementById('c_boiso');
+  if(!areaEl || !heightEl || !boisoEl) return;
+  
+  const area=parseFloat(areaEl.value)||0;
+  const height=parseFloat(heightEl.value)||0;
+  const boiso=parseFloat(boisoEl.value)||0;
+  const vol=area*height;
+  const flow=vol*boiso;
+  
+  document.getElementById('c_vol').innerHTML=fmt(vol)+' <small>m&sup3;</small>';
+  document.getElementById('c_flow').innerHTML=fmt(flow)+' <small>m&sup3;/h</small>';
+  runFlowBar('c_flowAnim',flow,cFlowTimer);
+  runHero(flow);
+
+  const pool=fans.filter(f=>f.j);
+  const chosen=getChosen('c',pool,flow);
+  document.getElementById('c_reco').innerHTML = recoBlock(chosen);
+  renderFanList('c',pool,flow);
+
+  const padRateEl = document.getElementById('c_padrate');
+  const padrate=parseFloat(padRateEl ? padRateEl.value : 9000)||9000;
+  const padArea=flow/padrate;
+  document.getElementById('c_padarea').innerHTML=(flow>0? padArea.toFixed(2):'0')+' <small>m&sup2;</small>';
+  
+  const padOpts=pads.map(p=>{
+    const count=Math.max(1,Math.ceil(padArea/p.a));
+    return Object.assign({},p,{count});
+  });
+  const padRows=padOpts.map(p=>`<tr>
+    <td class="mono" style="font-weight:700; color:var(--navy-950);">${p.c}</td>
+    <td>${p.n}</td>
+    <td class="mono">${p.a} m²/tấm (${p.dim} mm)</td>
+    <td class="mono" style="font-weight:800; color:var(--green); font-size:14px;">${flow>0? p.count+' tấm':'0 tấm'}</td>
+  </tr>`).join('');
+  
+  document.getElementById('c_padtable').innerHTML= flow>0
+    ? `<tr><th>Mã SP</th><th>Tên tấm làm mát</th><th>Quy cách / Diện tích</th><th>Số lượng tấm cần</th></tr>${padRows}`
+    : '<tr><td colspan="4" style="text-align:center; padding:12px; color:var(--ink-soft);">Vui lòng nhập diện tích để tính toán số lượng tấm.</td></tr>';
+}
+
+function renderExhaust(){
+  const areaEl = document.getElementById('e_area');
+  const heightEl = document.getElementById('e_height');
+  const boisoEl = document.getElementById('e_boiso');
+  if(!areaEl || !heightEl || !boisoEl) return;
+  
+  const area=parseFloat(areaEl.value)||0;
+  const height=parseFloat(heightEl.value)||0;
+  const boiso=parseFloat(boisoEl.value)||0;
+  const vol=area*height;
+  const flow=vol*boiso;
+  
+  document.getElementById('e_vol').innerHTML=fmt(vol)+' <small>m&sup3;</small>';
+  document.getElementById('e_flow').innerHTML=fmt(flow)+' <small>m&sup3;/h</small>';
+  runFlowBar('e_flowAnim',flow,eFlowTimer);
+  runHero(flow);
+
+  const pool = fans.filter(f=> eGroup==='portable' ? f.p : (f.i && !f.p));
+  const poolTagEl = document.getElementById('e_pooltag');
+  if(poolTagEl){
+    poolTagEl.innerHTML = eGroup==='portable'
+      ? '<i class="fas fa-check-circle"></i> Nhóm quạt phù hợp: Quạt hút di động xách tay tốc độ cao (đường ống, hầm lò, nơi cần áp suất cao)'
+      : '<i class="fas fa-check-circle"></i> Nhóm quạt phù hợp: Quạt thông gió gắn tường, hút khói bụi công nghiệp phổ thông';
+  }
+  const groupNoteEl = document.getElementById('e_groupnote');
+  if(groupNoteEl){
+    groupNoteEl.textContent = eGroup==='portable'
+      ? 'Tốc độ vòng quay cao, áp suất đẩy mạnh — phù hợp nối ống gió mềm để cấp/hút khí cho tầng hầm, công trình ngầm, hàn xì.'
+      : 'Gồm quạt vuông và tròn công nghiệp, vận hành bền bỉ liên tục để lưu thông không khí nhà xưởng, bếp công nghiệp.';
+  }
+  const chosen=getChosen('e',pool,flow);
+  document.getElementById('e_reco').innerHTML = recoBlock(chosen);
+  renderFanList('e',pool,flow);
+}
+
+// Initialize DOM Event Listeners
+document.addEventListener('DOMContentLoaded', ()=>{
+  // Tab Switching
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      const targetPanel = document.getElementById('panel-'+btn.dataset.tab);
+      if(targetPanel) targetPanel.classList.add('active');
+      if(btn.dataset.tab==='cooling') renderCooling(); else renderExhaust();
+    });
+  });
+
+  // Presets Cooling
+  document.querySelectorAll('#c_presets .preset-chip').forEach(p=>{
+    p.addEventListener('click', ()=>{
+      document.querySelectorAll('#c_presets .preset-chip').forEach(x=>x.classList.remove('active'));
+      p.classList.add('active');
+      if(p.dataset.v){
+        const boisoEl = document.getElementById('c_boiso');
+        if(boisoEl) boisoEl.value = p.dataset.v;
+        renderCooling();
+      }
+    });
+  });
+
+  // Inputs Cooling
+  ['c_area','c_height','c_boiso','c_padrate','c_search'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', renderCooling);
+  });
+  const cSortEl = document.getElementById('c_sort');
+  if(cSortEl) cSortEl.addEventListener('change', renderCooling);
+  ['c_f_origin','c_f_brand','c_f_volt'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('change', renderCooling);
+  });
+
+  // Presets Exhaust
+  document.querySelectorAll('#e_group .preset-chip').forEach(p=>{
+    p.addEventListener('click', ()=>{
+      document.querySelectorAll('#e_group .preset-chip').forEach(x=>x.classList.remove('active'));
+      p.classList.add('active');
+      eGroup = p.dataset.v;
+      picks.e = null;
+      renderExhaust();
+    });
+  });
+
+  // Exhaust Uses Dropdown
+  const eUse = document.getElementById('e_use');
+  if(eUse){
+    eUse.innerHTML = '';
+    exhaustUses.forEach(u=>{
+      const opt = document.createElement('option');
+      opt.value = u.boiso;
+      opt.textContent = u.label;
+      eUse.appendChild(opt);
+    });
+    const customOpt = document.createElement('option');
+    customOpt.value = '';
+    customOpt.textContent = 'Tuỳ chỉnh (tự nhập bội số bên dưới)';
+    eUse.appendChild(customOpt);
+    eUse.addEventListener('change', ()=>{
+      if(eUse.value!==''){
+        const boisoEl = document.getElementById('e_boiso');
+        if(boisoEl) boisoEl.value = eUse.value;
+        renderExhaust();
+      }
+    });
+  }
+
+  // Inputs Exhaust
+  ['e_area','e_height','e_boiso','e_search'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', renderExhaust);
+  });
+  const eSortEl = document.getElementById('e_sort');
+  if(eSortEl) eSortEl.addEventListener('change', renderExhaust);
+  ['e_f_origin','e_f_brand','e_f_shape','e_f_volt'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('change', renderExhaust);
+  });
+
+  // Reference Table Accordion
+  const accToggle = document.getElementById('accToggle');
+  const accBody = document.getElementById('accBody');
+  if(accToggle && accBody){
+    accToggle.addEventListener('click', ()=>{
+      accToggle.classList.toggle('open');
+      accBody.classList.toggle('open');
+    });
+  }
+  const refTableEl = document.getElementById('refTable');
+  if(refTableEl){
+    refTableEl.innerHTML = '<tr><th>Loại phòng / Công trình tiêu biểu</th><th style="text-align:right;">Bội số trao đổi khí (lần/h)</th></tr>' +
+      refG.map(r=>`<tr><td><strong>${r[0]}</strong></td><td class="mono" style="text-align:right; font-weight:700; color:var(--brand-blue);">${r[1]}</td></tr>`).join('');
+  }
+
+  // Initial Calculation Run
+  renderCooling();
+});
+</script>
+@endpush
+

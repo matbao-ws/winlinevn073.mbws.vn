@@ -1,0 +1,498 @@
+@extends('client.layouts.app')
+
+@section('title', 'Dự án &amp; Đơn hàng tiêu biểu | Winline.vn')
+
+@push('styles')
+<style>
+.project-hero {
+      background: linear-gradient(135deg, #00354f 0%, #00354f 60%, #004e7d 100%);
+      color: #ffffff;
+      padding: 44px 0 36px;
+      margin-bottom: 28px;
+    }
+    .project-hero .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fbd38d;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.08);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .project-hero .tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+    }
+    .project-hero h1 {
+      font-size: 30px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .project-hero p {
+      color: #cbd5e1;
+      font-size: 14.5px;
+      max-width: 720px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Stats Dashboard */
+    .stat-dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 860px) {
+      .stat-dashboard { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .stat-dashboard { grid-template-columns: 1fr; }
+    }
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .stat-card .num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy-950);
+      margin-bottom: 4px;
+    }
+    .stat-card .lbl {
+      font-size: 12px;
+      color: var(--ink-soft);
+      font-weight: 600;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .f-chip {
+      border: 1.5px solid var(--line);
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .f-chip .chip-count {
+      font-size: 11px;
+      background: #e2e8f0;
+      color: var(--navy-950);
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .f-chip.active, .f-chip:hover {
+      background: var(--navy-950);
+      color: #ffffff;
+      border-color: var(--navy-950);
+    }
+    .f-chip.active .chip-count {
+      background: var(--orange);
+      color: #ffffff;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 480px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    .project-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .project-img-wrap {
+      aspect-ratio: 16/10;
+      position: relative;
+      overflow: hidden;
+      background: #0f172a;
+    }
+    .project-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .project-card:hover .project-img-wrap img {
+      transform: scale(1.05);
+    }
+    .project-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(7, 34, 66, 0.9);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .project-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .project-cat {
+      font-size: 11px;
+      color: var(--orange);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .project-title {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: var(--navy-950);
+      margin: 0 0 12px;
+      line-height: 1.45;
+      height: 44px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Structured 3-Column Metrics */
+    .project-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: #f8fafc;
+      padding: 10px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .project-metrics .m-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .project-metrics .m-col:not(:last-child) {
+      border-right: 1px solid var(--line);
+    }
+    .project-metrics b {
+      display: block;
+      color: var(--navy-950);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+      margin-bottom: 2px;
+    }
+    .project-metrics span {
+      font-size: 10.5px;
+      color: var(--ink-soft);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin: 0 0 16px;
+      height: 62px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .project-footer-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      margin-top: auto;
+    }
+    .project-footer-action a {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--brand-blue);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .project-footer-action a:hover {
+      color: var(--orange);
+    }
+</style>
+@endpush
+
+@section('content')
+<!-- HERO SECTION -->
+<div class="project-hero">
+  <div class="wrap">
+    <div class="tag">HỒ SƠ NĂNG LỰC &middot; DỰ ÁN &amp; ĐƠN HÀNG THỰC TẾ</div>
+    <h1>Dự án &amp; Đơn hàng tiêu biểu</h1>
+    <p>Winline Việt Nam là đối tác phân phối chính hãng quạt điện dân dụng &amp; quạt công nghiệp cho hàng ngàn nhà máy, nhà thầu cơ điện (M&amp;E), tòa nhà văn phòng và chuỗi nhà hàng trên toàn quốc. Đầy đủ hóa đơn VAT 10% và chứng nhận CQ/CO xuất xưởng.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- STATS DASHBOARD -->
+  <div class="stat-dashboard">
+    <div class="stat-card">
+      <div class="num">5.500+</div>
+      <div class="lbl">Đơn hàng xử lý mỗi năm</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">~500</div>
+      <div class="lbl">Đơn dự án &gt; 10 triệu VNĐ</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">73+</div>
+      <div class="lbl">Đơn quy mô &gt; 35 triệu VNĐ</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">100%</div>
+      <div class="lbl">Đầy đủ hóa đơn VAT &amp; CQ/CO</div>
+    </div>
+  </div>
+
+  <!-- FILTER CHIPS -->
+  <div class="filter-bar">
+    <span class="f-chip active" data-filter="all">Tất cả dự án <span class="chip-count">6</span></span>
+    <span class="f-chip" data-filter="factory">Nhà xưởng &amp; Kho bãi <span class="chip-count">2</span></span>
+    <span class="f-chip" data-filter="mne">Công trình &amp; Nhà thầu M&amp;E <span class="chip-count">1</span></span>
+    <span class="f-chip" data-filter="commercial">Nhà hàng &amp; Siêu thị <span class="chip-count">1</span></span>
+    <span class="f-chip" data-filter="hospital">Bệnh viện &amp; Trường học <span class="chip-count">1</span></span>
+    <span class="f-chip" data-filter="farm">Trang trại chăn nuôi <span class="chip-count">1</span></span>
+  </div>
+
+  <!-- PROJECTS GRID -->
+  <div class="projects-grid">
+
+    <!-- Card 1: Xưởng may Đông Anh -->
+    <div class="project-card" data-cat="factory">
+      <div class="project-img-wrap">
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop&q=80" alt="Xưởng may mặc Đông Anh Hà Nội" loading="lazy">
+        <span class="project-badge">Kho - Xưởng</span>
+      </div>
+      <div class="project-body">
+        <div class="project-cat">Xưởng may &middot; Đông Anh, Hà Nội</div>
+        <h3 class="project-title">Cung cấp 18 quạt cây công nghiệp Komasu &amp; hệ thống thông gió xưởng</h3>
+        <div class="project-metrics">
+          <div class="m-col"><b>~92 Tr</b><span>Giá trị đơn</span></div>
+          <div class="m-col"><b>18 Cái</b><span>Số lượng SP</span></div>
+          <div class="m-col"><b>15 Phút</b><span>Duyệt giá</span></div>
+        </div>
+        <p class="project-desc">Đơn hàng cung cấp quạt cây công nghiệp KM-750 lồng sơn tĩnh điện kết hợp quạt hút vuông BMF-1380 giúp làm mát công nhân và lưu thông không khí. Giao hàng trong 24h, xuất hóa đơn VAT đầy đủ.</p>
+        <div class="project-footer-action">
+          <span style="font-size:12px; color:var(--green); font-weight:700;"><i class="fas fa-check-circle"></i> Đã bàn giao</span>
+          <a href="{{ route('client.products') }}">Xem sản phẩm <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Nhà thầu cơ điện Lotte Tây Hồ -->
+    <div class="project-card" data-cat="mne">
+      <div class="project-img-wrap">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=80" alt="Tòa nhà thương mại Tây Hồ Hà Nội" loading="lazy">
+        <span class="project-badge">Công trình M&amp;E</span>
+      </div>
+      <div class="project-body">
+        <div class="project-cat">Tòa nhà thương mại &middot; Tây Hồ, Hà Nội</div>
+        <h3 class="project-title">Cung cấp 12 bộ quạt cắt gió Nedfon &amp; Quạt Kruger kèm hồ sơ CQ/CO</h3>
+        <div class="project-metrics">
+          <div class="m-col"><b>12 Bộ</b><span>Số lượng</span></div>
+          <div class="m-col"><b>Trong Ngày</b><span>Hồ sơ CQ/CO</span></div>
+          <div class="m-col"><b>VAT 10%</b><span>Hoá đơn</span></div>
+        </div>
+        <p class="project-desc">Cung cấp đúng tiến độ cho hạng mục nghiệm thu HVAC của tổng thầu cơ điện. Bộ hồ sơ chứng nhận xuất xứ CO và chất lượng CQ từ nhà máy Nedfon &amp; Kruger được Winline xử lý chuẩn chỉnh 100%.</p>
+        <div class="project-footer-action">
+          <span style="font-size:12px; color:var(--green); font-weight:700;"><i class="fas fa-check-circle"></i> Đạt chuẩn PCCC</span>
+          <a href="{{ route('client.products') }}">Xem sản phẩm <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Nhà máy Chế biến Thực phẩm VSIP Bắc Ninh -->
+    <div class="project-card" data-cat="factory">
+      <div class="project-img-wrap">
+        <img src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&auto=format&fit=crop&q=80" alt="Nhà máy thực phẩm KCN VSIP Bắc Ninh" loading="lazy">
+        <span class="project-badge">Nhà máy KCN</span>
+      </div>
+      <div class="project-body">
+        <div class="project-cat">KCN VSIP &middot; Bắc Ninh</div>
+        <h3 class="project-title">Hệ thống 24 quạt thông gió vuông Inox 304 &amp; Dàn tấm làm mát Cooling Pad</h3>
+        <div class="project-metrics">
+          <div class="m-col"><b>~145 Tr</b><span>Giá trị dự án</span></div>
+          <div class="m-col"><b>24 Quạt</b><span>Quy mô máy</span></div>
+          <div class="m-col"><b>3 Ngày</b><span>Giao hàng</span></div>
+        </div>
+        <p class="project-desc">Đơn hàng trang bị quạt hút vuông inox 304 chống rỉ sét môi trường độ ẩm cao của nhà máy chế biến thực phẩm, kết hợp dàn Cooling Pad nâu chống rêu 1800x600x150mm giúp hạ nhiệt xưởng từ 5–8°C.</p>
+        <div class="project-footer-action">
+          <span style="font-size:12px; color:var(--green); font-weight:700;"><i class="fas fa-check-circle"></i> Vận hành 24/7</span>
+          <a href="{{ route('client.calculator') }}">Tính công suất <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Chuỗi Nhà hàng Lẩu nướng BBQ Hà Đông -->
+    <div class="project-card" data-cat="commercial">
+      <div class="project-img-wrap">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80" alt="Chuỗi nhà hàng ẩm thực BBQ Hà Đông" loading="lazy">
+        <span class="project-badge">Nhà hàng - Siêu thị</span>
+      </div>
+      <div class="project-body">
+        <div class="project-cat">Chuỗi ẩm thực BBQ &middot; Hà Đông, Hà Nội</div>
+        <h3 class="project-title">Cung cấp 8 quạt hút khói ly tâm cao áp &amp; quạt cấp gió tươi chống ám mùi</h3>
+        <div class="project-metrics">
+          <div class="m-col"><b>~48 Tr</b><span>Giá trị đơn</span></div>
+          <div class="m-col"><b>8 Cụm</b><span>Quạt ly tâm</span></div>
+          <div class="m-col"><b>12 Tháng</b><span>Bảo hành</span></div>
+        </div>
+        <p class="project-desc">Giải pháp thông gió hút khói bếp nướng chuyên dụng với áp suất cao, động cơ đồng nguyên chất chịu nhiệt. Hỗ trợ nhà hàng khai trương đúng tiến độ với đầy đủ phụ kiện nối ống mềm.</p>
+        <div class="project-footer-action">
+          <span style="font-size:12px; color:var(--green); font-weight:700;"><i class="fas fa-check-circle"></i> Đã bàn giao</span>
+          <a href="{{ route('client.products') }}">Xem quạt ly tâm <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: Bệnh viện Đa khoa Quốc tế & Phòng khám -->
+    <div class="project-card" data-cat="hospital">
+      <div class="project-img-wrap">
+        <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800&auto=format&fit=crop&q=80" alt="Bệnh viện đa khoa quốc tế Hà Nội" loading="lazy">
+        <span class="project-badge">Y tế - Giáo dục</span>
+      </div>
+      <div class="project-body">
+        <div class="project-cat">Bệnh viện Quốc tế &middot; Cầu Giấy, Hà Nội</div>
+        <h3 class="project-title">Cung cấp 36 quạt thông gió âm trần Nedfon &amp; Quạt thu hồi nhiệt ERV</h3>
+        <div class="project-metrics">
+          <div class="m-col"><b>36 Bộ</b><span>Quạt âm trần</span></div>
+          <div class="m-col"><b>&lt;35 dB</b><span>Độ ồn siêu êm</span></div>
+          <div class="m-col"><b>Nedfon</b><span>Chính hãng</span></div>
+        </div>
+        <p class="project-desc">Trang bị hệ thống quạt thông gió âm trần ống nối Nedfon DPT series vận hành siêu tĩnh âm cho khu vực phòng mổ, phòng bệnh nội trú và hành lang bệnh viện tiêu chuẩn quốc tế.</p>
+        <div class="project-footer-action">
+          <span style="font-size:12px; color:var(--green); font-weight:700;"><i class="fas fa-check-circle"></i> Chuẩn phòng sạch</span>
+          <a href="{{ route('client.products') }}">Xem quạt âm trần <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6: Trang trại Chăn nuôi Heo & Gia cầm Ba Vì -->
+    <div class="project-card" data-cat="farm">
+      <div class="project-img-wrap">
+        <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=800&auto=format&fit=crop&q=80" alt="Trang trại chăn nuôi công nghệ cao Ba Vì" loading="lazy">
+        <span class="project-badge">Trang trại</span>
+      </div>
+      <div class="project-body">
+        <div class="project-cat">Trang trại công nghệ cao &middot; Ba Vì, Hà Nội</div>
+        <h3 class="project-title">Cung cấp 28 quạt hút vuông trang trại 1380 &amp; Dàn tấm làm mát nâu chống rêu</h3>
+        <div class="project-metrics">
+          <div class="m-col"><b>~118 Tr</b><span>Giá trị đơn</span></div>
+          <div class="m-col"><b>28 Quạt</b><span>Model 1380</span></div>
+          <div class="m-col"><b>380V</b><span>3 Pha CN</span></div>
+        </div>
+        <p class="project-desc">Hệ thống thông gió chuồng trại khép kín sử dụng quạt hút vuông Superlite Max cánh inox 430 kết hợp dàn Cooling Pad chống rêu 2000x600x150mm giúp duy trì nhiệt độ 26–28°C cho vật nuôi trong mùa nắng nóng.</p>
+        <div class="project-footer-action">
+          <span style="font-size:12px; color:var(--green); font-weight:700;"><i class="fas fa-check-circle"></i> Hạ nhiệt 6–8°C</span>
+          <a href="{{ route('client.calculator') }}">Tính trang trại <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CALL TO ACTION BANNER -->
+  <div class="cta-band" style="background:#ffffff; border:1px solid var(--line); border-radius:12px; padding:32px; text-align:center; margin-bottom:48px; box-shadow:var(--shadow-sm);">
+    <h3 style="font-size:22px; font-weight:800; color:var(--navy-950); margin:0 0 8px;">Bạn là chủ đầu tư, nhà thầu M&amp;E hoặc đại lý cần báo giá dự án?</h3>
+    <p style="font-size:14px; color:var(--ink-soft); max-width:600px; margin:0 auto 20px; line-height:1.6;">Winline cam kết mức chiết khấu tốt nhất thị trường miền Bắc cho đơn hàng số lượng, hỗ trợ trọn bộ hồ sơ nghiệm thu CQ/CO và hóa đơn VAT 10% ngay trong ngày.</p>
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <a href="tel:0949761893" style="background:var(--orange); color:#ffffff; padding:12px 28px; border-radius:8px; font-weight:700; font-size:14px; display:inline-flex; align-items:center; gap:8px;"><i class="fas fa-phone-alt"></i> Hotline Dự Án: 0949.761.893</a>
+      <a href="https://zalo.me/0949761893" target="_blank" style="background:#0068ff; color:#ffffff; padding:12px 28px; border-radius:8px; font-weight:700; font-size:14px; display:inline-flex; align-items:center; gap:8px;"><i class="fas fa-comment-dots"></i> Chat Zalo Nhận Chiết Khấu</a>
+    </div>
+  </div>
+</div>
+
+<!-- UNIVERSAL MASTER FOOTER -->
+<!-- UNIVERSAL MASTER FOOTER (COMPACT & MODERN - WINLINE.VN STANDARD) -->
+<!-- EXACT 100% FOOTER WINLINE.VN -->
+<!-- EXACT 100% FOOTER WINLINE.VN WITH OFFICIAL SOCIAL & LEGAL LINKS -->
+<!-- Footer -->
+@endsection
+
+@push('scripts')
+<script>
+>
+  // Filter functionality
+  document.querySelectorAll('.f-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.f-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+      document.querySelectorAll('.project-card').forEach(card => {
+        if (filter === 'all' || card.dataset.cat === filter) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+@endpush
+

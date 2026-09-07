@@ -1,72 +1,70 @@
-# Winline Việt Nam - Website Phân Phối Quạt Công Nghiệp & Thiết Bị Thông Gió
+# Ecommerce Admin Core
 
-> Website giới thiệu sản phẩm và công cụ tính toán lưu lượng thông gió chuyên nghiệp dành cho **Công ty TNHH Winline Việt Nam** (MST: 0106085370).  
-> Xây dựng chuẩn mực theo thiết kế mẫu khách hàng gửi, tối ưu UX/UI hiện đại, chuẩn SEO và Production-Ready.
+Laravel 12 admin core for catalog, orders, inventory, payments, shipping settings, CMS, and configurable integrations. The customer storefront is intentionally not included; another project can consume the public API or provide its own frontend.
 
----
+## What is included
 
-## 🌟 Tính Năng Nổi Bật
+- Data-driven roles and permissions, activity logs, and encrypted sensitive settings.
+- Product and variant inventory ledger with idempotent stock deduction and restoration.
+- Order state/history, partial refunds, payment transaction audit, VNPAY IPN handling, and shipping integration configuration.
+- Feature configuration controlled by support. No feature or addon purchase flow is enforced in the application.
+- Admin-only Blade interface at `/{locale}/admin` (default: `/vi/admin`).
 
-1. **Hệ Thống 7 Menu Chuẩn Yêu Cầu**:
-   - `Trang chủ` (`index.html`)
-   - `Giới thiệu` (`gioi-thieu.html`)
-   - `Sản phẩm` (`san-pham.html`) - **Trọng tâm chuẩn 100% theo file mẫu `Sản phẩm.jpg`**
-   - `Giải pháp` (`giai-phap.html`)
-   - `Thương hiệu` (`thuong-hieu.html`)
-   - `Công cụ tính quạt` (`cong-cu-tinh-quat.html`) - **Tính toán HVAC $Q = V \times T$**
-   - `Dự án` (`du-an.html`)
-   - `Liên hệ & Báo giá` (`lien-he.html`)
+## Local installation
 
-2. **Trang Danh Mục Sản Phẩm Chuẩn Mockup (`san-pham.html`)**:
-   - **Accordion Sidebar**: Danh mục nhiều cấp, vạch đỏ chỉ báo active.
-   - **Bộ lọc Thương hiệu & Công suất**: Lọc theo thời gian thực (Komasu, Vinawind, Deton, Dasin, Chinghai, Hatari, Panasonic...).
-   - **Bộ lọc Giá Dual Range Slider**: Kéo trượt 2 đầu min/max mượt mà kèm nút **LỌC** màu Teal và hiển thị giá trực tiếp.
-   - **Lưới sản phẩm**: Card chuẩn mẫu, hiển thị Công suất, Lưu lượng, giá đỏ, nút *Xem chi tiết*, *Quick View*, *So sánh thông số*.
-   - **Chuyển đổi Chế độ xem**: Hỗ trợ Grid View và List View.
-   - **Khối Nội dung SEO**: Hiển thị mặc định 3 dòng với hiệu ứng mờ gradient và nút bấm mở rộng/thu gọn *Xem thêm ▾ / Thu gọn ▴*.
-
-3. **Công Cụ Tính Toán Lưu Lượng Quạt Chuẩn HVAC ($Q = V \times T$)**:
-   - Tính thể tích xưởng $V = D \times R \times C$ ($m^3$) theo từng ngành nghề (Dệt may, Cơ khí, Kho hàng, Bếp ăn, Trang trại...).
-   - Đề xuất chính xác số lượng Quạt vuông 1380, Quạt cây 750, Máy làm mát Air Cooler 18000 và Diện tích tấm Cooling Pad.
-
-4. **Trải Nghiệm Mua Hàng & Tương Tác Hiện Đại**:
-   - **Cart Drawer**: Giỏ hàng trượt từ bên phải, cập nhật số lượng, đặt hàng nhanh, yêu cầu hóa đơn VAT.
-   - **Quick View Modal**: Popup phóng to hình ảnh độ phân giải cao và bảng thông số kỹ thuật.
-   - **Product Comparison Drawer**: So sánh đối chiếu 2-3 model quạt song song.
-   - **Live Search**: Tìm kiếm nhanh gợi ý tức thì hình ảnh và giá cả trên thanh Header.
-
----
-
-## 🛠 Công Nghệ Sử Dụng
-
-- **Frontend**: HTML5, TailwindCSS, Vanilla JavaScript (ES6+).
-- **Typography**: Google Fonts `Be Vietnam Pro` & `Inter` (Hỗ trợ 100% tiếng Việt có dấu, sắc nét).
-- **Icons**: FontAwesome 6 Pro CDN.
-- **Data & Images**: Toàn bộ dữ liệu thực tế và hình ảnh sản phẩm được đóng gói cục bộ trong `assets/images/` đảm bảo tốc độ tải trang nhanh và không bao giờ bị lỗi ảnh.
-
----
-
-## 🚀 Hướng Dẫn Cài Đặt & Chạy Cục Bộ
-
-Bạn có thể mở trực tiếp bất kỳ tệp `.html` nào trên trình duyệt hoặc khởi chạy máy chủ HTTP:
+Requirements: PHP 8.2+, Composer, and MySQL/MariaDB or SQLite. Configure the database values in `.env` before running the installer.
 
 ```bash
-# Sử dụng Python HTTP Server
-python3 -m http.server 8080
-
-# Hoặc sử dụng Node.js npx serve
-npx serve .
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan core:install
+php artisan serve
 ```
 
-Truy cập: `http://localhost:8080/index.html` hoặc `http://localhost:8080/san-pham.html`.
+`core:install` asks for the initial superadmin name, email, and a password of at least 12 characters. For CI or non-interactive deployment, provide the values explicitly:
 
----
+```bash
+php artisan core:install --no-interaction \
+  --admin-name="Operations Admin" \
+  --admin-email="admin@example.com" \
+  --admin-password="use-a-strong-secret"
+```
 
-## 🏢 Thông Tin Pháp Lý Đơn Vị
+The command only runs `migrate` and the idempotent `FoundationSeeder`; it never uses `migrate:fresh` and never inserts demo catalog/order data.
 
-- **Chủ quản**: Công ty TNHH Winline Việt Nam
-- **Mã số thuế**: `0106085370` (Cấp ngày 15/01/2013 bởi Sở KH&ĐT TP Hà Nội)
-- **Showroom**: Số 17 Ngõ 46 Quan Nhân, Phường Thanh Xuân, TP. Hà Nội
-- **Hotline**: 0949.761.893 - 1900 099 806 - 0963.230.665
-- **Email**: Winlinevietnam@gmail.com
-- **Website chính thức**: https://winline.vn/
+## Demo data
+
+Demo data is deliberately separate because some old demo seeders truncate their target tables. Use it only in a disposable local database:
+
+```bash
+php artisan db:seed --class=Database\\Seeders\\DemoSeeder
+```
+
+Do not run that command against a customer database.
+
+## Production deployment
+
+Set `APP_ENV=production`, `APP_DEBUG=false`, a unique `APP_KEY`, correct database credentials, and mail/integration secrets through the deployment environment. Then run:
+
+```bash
+php artisan core:install --force --no-interaction \
+  --admin-name="Operations Admin" \
+  --admin-email="admin@example.com" \
+  --admin-password="use-a-strong-secret"
+php artisan core:check
+php artisan optimize
+```
+
+`core:check` verifies the application key, database connection, required core schema, active administrators, and seeded foundation configuration. It performs no writes.
+
+Order, invoice, and store notifications are queued. Run a supervised worker in production (for example, `php artisan queue:work --tries=3`) and keep `QUEUE_AFTER_COMMIT=true`. Schedule `php artisan schedule:run` every minute; it deactivates expired vouchers daily at 00:10. Point the web server document root to `public/`.
+
+## Verification
+
+```bash
+php artisan test
+php composer.phar validate --no-check-publish
+```
+
+The project keeps old package/subscription tables for backwards-compatible historic data, but they do not gate core features or addons.
