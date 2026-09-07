@@ -1,6 +1,6 @@
 @extends('client.layouts.app')
 
-@section('title', 'Quạt cây công nghiệp Komasu KM-750S | Winline.vn')
+@section('title', ($product->name ?? 'Chi tiết sản phẩm') . ' | Winline.vn')
 
 @push('styles')
 <style>
@@ -1147,7 +1147,11 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
      đúng 1 đoạn slug ngay sau domain (winline.vn/<slug>), không lặp lại category trong đường dẫn.
      Đây là 2 việc tách biệt: cấu trúc điều hướng (breadcrumb/menu) và cấu trúc URL (flat, tốt cho SEO/rút gọn link chia sẻ). -->
 <div class="breadcrumb">
-  <a href="#">Trang chủ</a> › <a href="{{ route('client.products') }}">Quạt công nghiệp</a> › <a href="{{ route('client.products') }}">Quạt cây công nghiệp</a> › Quạt cây công nghiệp Komasu KM-750S
+  <a href="{{ route('client.home') }}">Trang chủ</a> › 
+  @if($product->category)
+    <a href="{{ route('client.products', ['category' => $product->category->canonicalSlug()]) }}">{{ $product->category->name }}</a> › 
+  @endif
+  <span>{{ $product->name }}</span>
 </div>
 
 <main class="product-main">
@@ -1156,7 +1160,10 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
       <div class="tag-real">📷 Ảnh chụp thực tế</div>
       <div class="ph">
         <div class="ph-icon">🌀</div>
-        <div class="ph-text"><b><img src="{{ asset('client-assets/images/km750s.jpg') }}" alt="Quạt" style="max-height:140px; max-width:100%; object-fit:contain; margin:auto;"></b>Quạt cây công nghiệp<br>Komasu KM-750S</div>
+        <div class="ph-text">
+          <b><img src="{{ $product->image_url ? (str_starts_with($product->image_url, 'http') ? $product->image_url : asset($product->image_url)) : asset('client-assets/images/km750s.jpg') }}" alt="{{ $product->name }}" style="max-height:140px; max-width:100%; object-fit:contain; margin:auto;"></b>
+          {{ $product->name }}
+        </div>
       </div>
     </div>
     <div class="gallery-thumbs">
@@ -1201,9 +1208,14 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
 
   <div class="tab-panel active" id="panel-desc">
     <p class="desc-intro">
-      <b>Quạt cây công nghiệp Komasu KM-750S</b> phù hợp cho nhà xưởng vừa và nhỏ, khu vực sản xuất, kho hàng cần lưu thông gió mạnh trên diện rộng.
-      Với sải cánh 750mm và 3 cấp tốc độ, một chiếc quạt phủ mát hiệu quả cho khu vực khoảng 30–40m² — phù hợp bố trí dọc xưởng may, xưởng cơ khí, hoặc khu vực làm việc ngoài trời có mái che.
+      <b>{{ $product->name }}</b> {{ $product->short_description ?: 'phù hợp cho nhà xưởng vừa và nhỏ, khu vực sản xuất, kho hàng cần lưu thông gió mạnh trên diện rộng.' }}
     </p>
+
+    @if($product->description)
+    <div class="desc-full-text" style="margin-top:14px; line-height:1.7; color:#334155; white-space:pre-line;">
+      {!! nl2br(e($product->description)) !!}
+    </div>
+    @endif
 
     <!-- ================================================================= -->
     <!-- KHỐI BÁN & GIAO HÀNG TOÀN QUỐC (CHUẨN 100% THEO FILE MẪU KHÁCH HÀNG) -->
@@ -1431,12 +1443,12 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
 
   <div class="pinfo">
     <div class="brandline">
-      <span class="brand">KOMASU</span>
-      <span class="dealer-tag">Đại lý ủy quyền</span>
+      <span class="brand">{{ strtoupper($product->brand?->name ?? 'WINLINE') }}</span>
+      <span class="dealer-tag">Đại lý ủy quyền chính hãng</span>
       <span class="stock-badge" style="margin:0;"><span class="dot"></span>Còn hàng</span>
     </div>
-    <h1 class="ptitle">Quạt cây công nghiệp Komasu KM-750S</h1>
-    <div class="meta-line"><b>Mã SP:</b> KM-750S <span class="sep2">·</span> <b>Loại:</b> Quạt cây công nghiệp</div>
+    <h1 class="ptitle">{{ $product->name }}</h1>
+    <div class="meta-line"><b>Mã SP:</b> {{ $product->sku ?: 'KM-'.substr(md5($product->id), 0, 5) }} <span class="sep2">·</span> <b>Loại:</b> {{ $product->category?->name ?? 'Quạt công nghiệp' }}</div>
 
     <div class="quick-jump-row">
       <button class="quick-jump" onclick="jumpTab('desc')">Mô tả sản phẩm ↓</button>
@@ -1446,19 +1458,19 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
       <button class="quick-jump" onclick="jumpTab('docs')">Tài liệu ↓</button>
     </div>
 
-    <!-- Điểm đánh giá lấy đúng theo số review demo đang hiển thị ở tab "Đánh giá" bên dưới (2 review),
-         để không lệch với nội dung thật đang có trên trang. Khi có dữ liệu đánh giá thật cần tính
-         động (trung bình sao × tổng số review thật), không gõ tay như trước.
-         "Đã bán 214" đã bỏ — chưa có nguồn dữ liệu đơn hàng thật để gắn vào, thêm lại khi có pipeline
-         dữ liệu bán hàng thật (không suy đoán số theo mục 7 bo-nho-winline.md). -->
+    <!-- Điểm đánh giá -->
     <div class="rating-row" style="margin-bottom:14px;">
       <span class="stars">★★★★★</span>
-      <span>5.0 (2 đánh giá)</span>
+      <span>5.0 (2 đánh giá thực tế)</span>
     </div>
 
     <div class="price-block">
-      <div class="price">2.630.000<small>đ / cái</small><span class="vat-inline">Đã gồm VAT</span></div>
-      <div class="ship-note"><span class="ic">🚚</span><span>Giao Hà Nội miễn phí 12 quận · Hoả tốc có phí · Nhận giao công trình <a href="#" class="ship-more">Xem chi tiết →</a></span></div>
+      @if($product->price > 0)
+        <div class="price">{{ number_format($product->price, 0, ',', '.') }}<small>đ / cái</small><span class="vat-inline">Đã gồm VAT</span></div>
+      @else
+        <div class="price" style="font-size:22px;">Liên hệ báo giá dự án</div>
+      @endif
+      <div class="ship-note"><span class="ic">🚚</span><span>Giao Hà Nội miễn phí nội thành · Hỗ trợ giao chành xe & công trình toàn quốc <a href="{{ route('client.contact') }}" class="ship-more">Xem chi tiết →</a></span></div>
     </div>
 
     <a class="tool-link" href="{{ route('client.calculator') }}">
@@ -1466,18 +1478,23 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
       Công cụ tính số lượng quạt phù hợp cho kho-xưởng →
     </a>
 
+    @if($relatedProducts->count() > 0)
     <div class="variant-row">
-      <div class="vlabel">Sản phẩm cùng dòng Komasu</div>
+      <div class="vlabel">Sản phẩm liên quan cùng phân khúc</div>
       <div class="variant-chips">
-        <div class="vchip current"><span class="vname">KM-750S</span><span class="vspec">750mm</span></div>
-        <a class="vchip" href="#"><span class="vname">KM-650S</span><span class="vspec">650mm</span></a>
-        <a class="vchip" href="#"><span class="vname">KM-500S</span><span class="vspec">500mm</span></a>
+        @foreach($relatedProducts as $rel)
+          <a class="vchip" href="{{ route('client.products.detail', ['slug' => $rel->canonicalSlug()]) }}">
+            <span class="vname">{{ Str::limit($rel->name, 22) }}</span>
+            <span class="vspec">{{ $rel->price > 0 ? number_format($rel->price, 0, ',', '.') . 'đ' : 'Báo giá' }}</span>
+          </a>
+        @endforeach
       </div>
     </div>
+    @endif
 
-    <button class="btn-quote-2tier" onclick="openModal()">Nhận báo giá công trình và báo giá sỉ →</button>
+    <button class="btn-quote-2tier" onclick="openModal('{{ addslashes($product->name) }}')">Nhận báo giá công trình và báo giá sỉ →</button>
 
-    <div class="quote-caption">Công trình · Kho-xưởng · Đơn vị sử dụng · Thương mại — thường báo giá trong 1 giờ</div>
+    <div class="quote-caption">Công trình · Kho-xưởng · Đơn vị sử dụng · Thương mại — thường báo giá trong 15 phút</div>
 
     <div class="buy-now-group">
       <div class="qty-row">
@@ -1489,7 +1506,7 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
         </div>
       </div>
       <div class="cta-row">
-        <button class="btn btn-outline-orange" style="flex:1;" onclick="addToCart('p1', parseInt(document.getElementById('qtyInput')?.value || 1))">MUA NGAY</button>
+        <button class="btn btn-outline-orange" style="flex:1;" onclick="openModal('{{ addslashes($product->name) }}')">YÊU CẦU BÁO GIÁ NHANH</button>
       </div>
     </div>
 

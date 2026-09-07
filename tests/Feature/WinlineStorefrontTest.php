@@ -77,4 +77,79 @@ class WinlineStorefrontTest extends TestCase
     {
         $this->get('/vi/admin/login')->assertOk()->assertSee('admin');
     }
+
+    public function test_admin_can_login_with_winline_credentials_and_access_dashboard(): void
+    {
+        $response = $this->postJson('/vi/admin/login', [
+            'email' => 'winlinevietnam@gmail.com',
+            'password' => 'Admin@Winline2026!',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonFragment(['success' => true]);
+
+        $admin = \App\Models\User::where('email', 'winlinevietnam@gmail.com')->first();
+        $this->assertAuthenticatedAs($admin);
+
+        // Verify access to key admin sections
+        $adminSections = [
+            '/vi/admin',
+            '/vi/admin/products',
+            '/vi/admin/categories',
+            '/vi/admin/brands',
+            '/vi/admin/orders',
+            '/vi/admin/posts',
+            '/vi/admin/pages',
+            '/vi/admin/contact-submissions',
+            '/vi/admin/settings',
+        ];
+
+        foreach ($adminSections as $section) {
+            $this->actingAs($admin)->get($section)->assertOk();
+        }
+    }
+
+    public function test_all_seeded_products_render_in_detail_pages(): void
+    {
+        $products = Product::query()->where('is_active', true)->get();
+        $this->assertGreaterThan(0, $products->count());
+
+        foreach ($products as $product) {
+            $slug = $product->canonicalSlug('vi');
+            $this->get('/vi/san-pham/' . $slug)
+                ->assertOk()
+                ->assertSee($product->name);
+        }
+    }
+
+    public function test_all_seeded_posts_render_in_detail_pages(): void
+    {
+        $posts = \App\Models\Post::query()->where('is_active', true)->get();
+        $this->assertGreaterThan(0, $posts->count());
+
+        foreach ($posts as $post) {
+            $slug = $post->canonicalSlug('vi');
+            $this->get('/vi/tin-tuc/' . $slug)
+                ->assertOk()
+                ->assertSee($post->title);
+        }
+    }
+
+    public function test_ajax_modal_quote_submission(): void
+    {
+        $response = $this->postJson('/vi/lien-he', [
+            'name' => 'Khách hàng dự án',
+            'phone' => '0912345678',
+            'subject' => 'Báo giá: Quạt ly tâm hút khói PCCC',
+            'message' => 'Yêu cầu báo giá nhanh qua modal website',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonFragment(['success' => true]);
+        $this->assertDatabaseHas('contact_submissions', [
+            'phone' => '0912345678',
+            'name' => 'Khách hàng dự án',
+        ]);
+    }
 }
+

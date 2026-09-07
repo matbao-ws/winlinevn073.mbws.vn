@@ -450,54 +450,86 @@ button { font-family: inherit; cursor: pointer; }
 
 <div class="news-nav-wrap">
   <div class="news-nav-inner" id="newsCatTabs">
-    <button class="news-cat-btn active" onclick="filterCategory('all', this)"><i class="fas fa-border-all"></i> Tất cả bài viết</button>
-    <button class="news-cat-btn" onclick="filterCategory('Kỹ thuật HVAC', this)"><i class="fas fa-drafting-compass"></i> Kỹ thuật HVAC</button>
-    <button class="news-cat-btn" onclick="filterCategory('Giải pháp nhà xưởng', this)"><i class="fas fa-industry"></i> Giải pháp nhà xưởng</button>
-    <button class="news-cat-btn" onclick="filterCategory('PCCC & Khí động học', this)"><i class="fas fa-fire-extinguisher"></i> PCCC & Khí động học</button>
-    <button class="news-cat-btn" onclick="filterCategory('Tư vấn chọn mua', this)"><i class="fas fa-comments"></i> Tư vấn chọn mua</button>
-    <button class="news-cat-btn" onclick="filterCategory('Bảo dưỡng & Vận hành', this)"><i class="fas fa-wrench"></i> Bảo dưỡng & Vận hành</button>
+    <a href="{{ route('client.news') }}" class="news-cat-btn {{ empty($currentCategorySlug) ? 'active' : '' }}"><i class="fas fa-border-all"></i> Tất cả bài viết</a>
+    @foreach($categories as $cat)
+      <a href="{{ route('client.news', ['category' => $cat->canonicalSlug()]) }}" class="news-cat-btn {{ $currentCategorySlug === $cat->canonicalSlug() ? 'active' : '' }}"><i class="fas fa-layer-group"></i> {{ $cat->name }}</a>
+    @endforeach
   </div>
 </div>
 
 <main class="news-layout">
   <div class="news-main-col">
-    <!-- Featured Top Article -->
-    <article class="featured-card">
-      <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80" alt="Tính toán lưu lượng thông gió" class="fc-img">
-      <div class="fc-body">
-        <div class="fc-badge">Tiêu chuẩn kỹ thuật HVAC</div>
-        <h2 class="fc-title">
-          <a href="chi-tiet-tin-tuc.html?id=art-1">Hướng dẫn tính toán lưu lượng thông gió nhà xưởng theo tiêu chuẩn TCVN 5687:2010</a>
-        </h2>
-        <p class="fc-excerpt">Công thức chuẩn Q = V x T giúp tính toán chính xác tổng lưu lượng khí cần trao đổi mỗi giờ, xác định số lượng quạt vuông 1380 và dàn mát Cooling Pad phù hợp cho từng ngành nghề.</p>
-        <div class="fc-meta">
-          <span><i class="far fa-calendar-alt"></i> 12/08/2026</span>
-          <span><i class="far fa-clock"></i> 6 phút đọc</span>
-          <span><i class="far fa-user"></i> Ban Kỹ thuật Winline</span>
+    @if($posts->count() > 0)
+      @php $firstPost = $posts->first(); @endphp
+      <!-- Featured Top Article -->
+      <article class="featured-card">
+        <img src="{{ $firstPost->image_url ? (str_starts_with($firstPost->image_url, 'http') ? $firstPost->image_url : asset($firstPost->image_url)) : asset('client-assets/images/deton-lytam.jpg') }}" alt="{{ $firstPost->title }}" class="fc-img">
+        <div class="fc-body">
+          <div class="fc-badge">{{ $firstPost->category?->name ?? 'Tiêu chuẩn kỹ thuật HVAC' }}</div>
+          <h2 class="fc-title">
+            <a href="{{ route('client.news.detail', ['slug' => $firstPost->canonicalSlug()]) }}">{{ $firstPost->title }}</a>
+          </h2>
+          <p class="fc-excerpt">{{ $firstPost->summary ?: 'Công thức chuẩn và tài liệu kỹ thuật hướng dẫn tính toán lưu lượng thông gió cho các nhà xưởng cơ khí, may mặc...' }}</p>
+          <div class="fc-meta">
+            <span><i class="far fa-calendar-alt"></i> {{ $firstPost->published_at ? $firstPost->published_at->format('d/m/Y') : date('d/m/Y') }}</span>
+            <span><i class="far fa-user"></i> Ban Kỹ thuật Winline</span>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
 
-    <!-- Articles Grid -->
-    <div class="article-grid" id="articlesGrid">
-      <!-- Dynamically Rendered by JS -->
-    </div>
+      <!-- Articles Grid -->
+      <div class="article-grid" id="articlesGrid">
+        @foreach($posts as $art)
+          <article class="art-card">
+            <div class="art-thumb-wrap">
+              <img src="{{ $art->image_url ? (str_starts_with($art->image_url, 'http') ? $art->image_url : asset($art->image_url)) : asset('client-assets/images/air-cooler-18000.jpg') }}" alt="{{ $art->title }}" class="art-thumb" loading="lazy">
+              <span class="art-badge-tag">{{ $art->category?->name ?? 'Kỹ thuật' }}</span>
+            </div>
+            <div class="art-body">
+              <div class="art-meta-row">
+                <span><i class="far fa-calendar-alt"></i> {{ $art->published_at ? $art->published_at->format('d/m/Y') : date('d/m/Y') }}</span>
+              </div>
+              <h3 class="art-card-title">
+                <a href="{{ route('client.news.detail', ['slug' => $art->canonicalSlug()]) }}">{{ $art->title }}</a>
+              </h3>
+              <p class="art-card-desc">{{ Str::limit($art->summary, 120) }}</p>
+              <div class="art-card-footer">
+                <span style="font-size:11.5px; color:#64748b;"><i class="fas fa-user-edit"></i> Ban Kỹ thuật</span>
+                <a href="{{ route('client.news.detail', ['slug' => $art->canonicalSlug()]) }}" class="art-read-btn">Đọc chi tiết <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+        @endforeach
+      </div>
+
+      <div style="margin-top:24px;">
+        {{ $posts->links() }}
+      </div>
+    @else
+      <div style="text-align:center; padding:40px; background:#fff; border-radius:10px; color:#64748b;">
+        Chưa có bài viết nào trong chuyên mục này.
+      </div>
+    @endif
   </div>
 
   <aside class="news-sidebar">
-    <!-- Search Box Widget -->
-    <div class="widget-card">
-      <div class="widget-title"><i class="fas fa-search"></i> Tìm kiếm bài viết</div>
-      <div style="position:relative;">
-        <input type="text" id="articleSearchInput" placeholder="Nhập từ khóa (áp suất, cooling pad...)" oninput="handleArticleSearch(this.value)" style="width:100%; padding:10px 14px; border:1px solid var(--line); border-radius:6px; font-size:13px; outline:none;">
-      </div>
-    </div>
-
     <!-- Trending / Most Read Widget -->
     <div class="widget-card">
-      <div class="widget-title"><i class="fas fa-fire" style="color:var(--orange);"></i> Bài viết đọc nhiều</div>
+      <div class="widget-title"><i class="fas fa-fire" style="color:var(--orange);"></i> Bài viết mới nhất</div>
       <div class="trend-list" id="trendingList">
-        <!-- Rendered by JS -->
+        @foreach($recentPosts as $idx => $recent)
+          <div class="trend-item">
+            <div class="trend-num">0{{ $idx + 1 }}</div>
+            <div class="trend-info">
+              <h4 class="trend-title">
+                <a href="{{ route('client.news.detail', ['slug' => $recent->canonicalSlug()]) }}">{{ $recent->title }}</a>
+              </h4>
+              <div class="trend-meta">
+                <span>{{ $recent->category?->name ?? 'HVAC' }}</span> · <span>{{ $recent->published_at ? $recent->published_at->format('d/m/Y') : date('d/m/Y') }}</span>
+              </div>
+            </div>
+          </div>
+        @endforeach
       </div>
     </div>
 
@@ -518,104 +550,5 @@ button { font-family: inherit; cursor: pointer; }
     </div>
   </aside>
 </main>
-
-
-
-<!-- Footer -->
 @endsection
-
-@push('scripts')
-<script>
->
-function renderArticles(articlesToRender) {
-  const grid = document.getElementById("articlesGrid");
-  if (!grid) return;
-
-  if (!articlesToRender || articlesToRender.length === 0) {
-    grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:40px; background:#fff; border-radius:10px; color:#64748b;">Không tìm thấy bài viết nào phù hợp.</div>';
-    return;
-  }
-
-  grid.innerHTML = articlesToRender.map(art => `
-    <article class="art-card">
-      <div class="art-thumb-wrap">
-        <img src="${art.image || 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80'}" alt="${art.title}" class="art-thumb" loading="lazy">
-        <span class="art-badge-tag">${art.category}</span>
-      </div>
-      <div class="art-body">
-        <div class="art-meta-row">
-          <span><i class="far fa-calendar-alt"></i> ${art.date}</span>
-          <span><i class="far fa-clock"></i> ${art.readTime}</span>
-        </div>
-        <h3 class="art-card-title">
-          <a href="chi-tiet-tin-tuc.html?id=${art.id}">${art.title}</a>
-        </h3>
-        <p class="art-card-desc">${art.excerpt}</p>
-        <div class="art-card-footer">
-          <span style="font-size:11.5px; color:#64748b;"><i class="fas fa-user-edit"></i> ${(art.author || 'Kỹ sư Winline').split('-')[0]}</span>
-          <a href="chi-tiet-tin-tuc.html?id=${art.id}" class="art-read-btn">Đọc chi tiết <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </article>
-  `).join("");
-}
-
-function renderTrending(articles) {
-  const trendList = document.getElementById("trendingList");
-  if (!trendList || !articles) return;
-  const topArticles = articles.slice(0, 4);
-
-  trendList.innerHTML = topArticles.map((art, idx) => `
-    <div class="trend-item">
-      <div class="trend-num">0${idx + 1}</div>
-      <div class="trend-info">
-        <h4 class="trend-title">
-          <a href="chi-tiet-tin-tuc.html?id=${art.id}">${art.title}</a>
-        </h4>
-        <div class="trend-meta">
-          <span>${art.category}</span> · <span>${art.date}</span>
-        </div>
-      </div>
-    </div>
-  `).join("");
-}
-
-let currentCategory = 'all';
-
-function filterCategory(cat, btn) {
-  currentCategory = cat;
-  document.querySelectorAll('.news-cat-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-
-  const allArticles = (window.WINLINE_DATA && window.WINLINE_DATA.articles) || [];
-  if (cat === 'all') {
-    renderArticles(allArticles);
-  } else {
-    const filtered = allArticles.filter(a => a.category.toLowerCase().includes(cat.toLowerCase()));
-    renderArticles(filtered);
-  }
-}
-
-function handleArticleSearch(keyword) {
-  const q = keyword.trim().toLowerCase();
-  const allArticles = (window.WINLINE_DATA && window.WINLINE_DATA.articles) || [];
-  if (!q) {
-    filterCategory(currentCategory, null);
-    return;
-  }
-  const results = allArticles.filter(a => 
-    a.title.toLowerCase().includes(q) ||
-    a.excerpt.toLowerCase().includes(q) ||
-    (a.keywords && a.keywords.some(k => k.toLowerCase().includes(q)))
-  );
-  renderArticles(results);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const allArticles = (window.WINLINE_DATA && window.WINLINE_DATA.articles) || [];
-  renderArticles(allArticles);
-  renderTrending(allArticles);
-});
-</script>
-@endpush
 

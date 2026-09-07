@@ -1,6 +1,6 @@
 @extends('client.layouts.app')
 
-@section('title', 'Chi tiết bài viết | Tin tức & Cẩm nang Kỹ thuật HVAC Winline')
+@section('title', ($post->title ?? 'Chi tiết bài viết') . ' | Tin tức Winline.vn')
 
 @push('styles')
 <style>
@@ -379,7 +379,12 @@ button { font-family: inherit; cursor: pointer; }
 
 @section('content')
 <div class="breadcrumb" id="artBreadcrumb">
-  <a href="{{ route('client.home') }}">Trang chủ</a> › <a href="{{ route('client.news') }}" id="bcCategoryLink">Tư vấn chọn mua</a> › <span id="bcCurrent">Đang tải...</span>
+  <a href="{{ route('client.home') }}">Trang chủ</a> › 
+  <a href="{{ route('client.news') }}">Tin tức & Cẩm nang</a> › 
+  @if($post->category)
+    <a href="{{ route('client.news', ['category' => $post->category->canonicalSlug()]) }}">{{ $post->category->name }}</a> › 
+  @endif
+  <span>{{ Str::limit($post->title, 50) }}</span>
 </div>
 
 <main class="article-detail-layout">
@@ -399,7 +404,14 @@ button { font-family: inherit; cursor: pointer; }
     <div class="sidebar-box">
       <h3 class="sidebar-box-title">Bài viết liên quan</h3>
       <div id="sideRelatedList">
-        <!-- Rendered by JS -->
+        @forelse($relatedPosts as $rel)
+          <div class="side-rel-item" style="margin-bottom:12px; padding-bottom:10px; border-bottom:1px solid #f1f5f9;">
+            <div class="side-rel-title"><a href="{{ route('client.news.detail', ['slug' => $rel->canonicalSlug()]) }}">{{ $rel->title }}</a></div>
+            <div class="side-rel-date" style="margin-top:4px; font-size:11px; color:#94a3b8;"><i class="far fa-calendar-alt"></i> {{ $rel->published_at ? $rel->published_at->format('d/m/Y') : date('d/m/Y') }}</div>
+          </div>
+        @empty
+          <p style="font-size:13px; color:#94a3b8;">Chưa có bài viết liên quan.</p>
+        @endforelse
       </div>
     </div>
 
@@ -414,115 +426,48 @@ button { font-family: inherit; cursor: pointer; }
 
   <!-- Main Article Body -->
   <article class="article-main-card">
-    <h1 class="article-title" id="artTitle">Đang tải nội dung bài viết...</h1>
+    <h1 class="article-title">{{ $post->title }}</h1>
     
     <div class="article-meta-line">
-      <span><i class="far fa-user"></i> <strong id="artAuthor">Lê Quyết Thắng</strong></span>
-      <span><i class="far fa-calendar-alt"></i> <span id="artDate">26/02/2026</span></span>
-      <span><i class="far fa-clock"></i> <span id="artReadTime">5 phút đọc</span></span>
+      <span><i class="far fa-user"></i> <strong>Ban Kỹ Thuật Winline</strong></span>
+      <span><i class="far fa-calendar-alt"></i> {{ $post->published_at ? $post->published_at->format('d/m/Y') : date('d/m/Y') }}</span>
+      <span><i class="far fa-folder"></i> {{ $post->category?->name ?? 'Tư vấn kỹ thuật' }}</span>
     </div>
 
-    <!-- Article Rich Body (Injected by JS) -->
-    <div class="article-body" id="artBody">
-      <!-- Content and Product Showcase injected here -->
+    <div class="article-body">
+      @if($post->summary)
+        <div class="callout-box info-callout" style="margin-bottom:24px;">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-content">
+            <h4 style="margin:0 0 6px; font-weight:700;">Tóm tắt cẩm nang</h4>
+            <p style="margin:0; font-size:13.5px; line-height:1.6;">{{ $post->summary }}</p>
+          </div>
+        </div>
+      @endif
+
+      @if($post->image_url)
+        <div style="margin:20px 0; text-align:center;">
+          <img src="{{ str_starts_with($post->image_url, 'http') ? $post->image_url : asset($post->image_url) }}" alt="{{ $post->title }}" style="max-height:420px; width:auto; margin:0 auto; border-radius:8px;">
+        </div>
+      @endif
+
+      <div class="article-rich-text" style="line-height:1.8; color:#334155;">
+        {!! $post->content !!}
+      </div>
+
+      <!-- Quick CTA inside article -->
+      <div class="in-article-showcase-box" style="margin-top:32px;">
+        <div class="showcase-header-row">
+          <h3 class="showcase-heading"><i class="fas fa-fire"></i> Cần tư vấn chọn quạt & khảo sát dự án trực tiếp?</h3>
+          <a href="{{ route('client.contact') }}" class="showcase-view-all">Liên hệ Winline ngay →</a>
+        </div>
+        <p style="margin:8px 0 0; font-size:13.5px; color:#475569;">
+          Đội ngũ kỹ sư HVAC Winline hỗ trợ tính toán công suất, lập dự toán chi tiết và cung cấp đầy đủ hồ sơ năng lực, CO, CQ cho các nhà thầu cơ điện và chủ đầu tư trên toàn quốc.
+        </p>
+      </div>
     </div>
   </article>
 </main>
-
-
-
-<!-- Footer -->
 @endsection
 
-@push('scripts')
-<script>
->
-function getQueryParam(param) {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(param);
-}
-
-function formatVND(num) {
-  return new Intl.NumberFormat('vi-VN').format(num) + '₫';
-}
-
-function renderInArticleProductShowcase(showcaseData) {
-  if (!showcaseData || !showcaseData.products || showcaseData.products.length === 0) return '';
-  
-  return `
-    <div class="in-article-showcase-box">
-      <div class="showcase-header-row">
-        <h3 class="showcase-heading"><i class="fas fa-fire"></i> ${showcaseData.heading || 'Xem những mẫu quạt bán chạy tại winline.vn.'}</h3>
-        <a href="${showcaseData.viewAllLink || 'san-pham.html'}" class="showcase-view-all">Xem tất cả →</a>
-      </div>
-      <div class="showcase-slider-wrap">
-        <div class="showcase-slider-track">
-          ${showcaseData.products.map(p => `
-            <a href="${p.link || 'chi-tiet-san-pham.html'}" class="sc-product-card">
-              <div class="sc-img-wrap">
-                <img src="${p.image}" alt="${p.name}" class="sc-img" onerror="this.src="{{ asset('client-assets/images/km750s.jpg') }}"">
-              </div>
-              <div class="sc-title" title="${p.name}">${p.name}</div>
-              <div class="sc-brand-price">
-                <span class="sc-brand">${p.brand || 'WINLINE'}</span>
-                <span class="sc-price">${formatVND(p.price)}</span>
-              </div>
-              <div class="sc-stars">
-                ${'★'.repeat(p.rating || 5)}${'☆'.repeat(5 - (p.rating || 5))}
-                ${p.reviewsCount ? `<span style="color:#64748b; font-size:10px;">(${p.reviewsCount})</span>` : ''}
-              </div>
-            </a>
-          `).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function loadArticleDetail() {
-  const artId = getQueryParam("id") || "art-quat-tran";
-  const allArticles = (window.WINLINE_DATA && window.WINLINE_DATA.articles) || [];
-  let article = allArticles.find(a => a.id === artId);
-
-  if (!article) {
-    article = allArticles[0];
-  }
-
-  document.title = article.title + " | Winline.vn";
-  document.getElementById("bcCurrent").textContent = article.title;
-  document.getElementById("bcCategoryLink").textContent = article.category;
-  document.getElementById("artTitle").textContent = article.title;
-  document.getElementById("artAuthor").textContent = article.author ? article.author.split('-')[0] : 'Kỹ sư Winline';
-  document.getElementById("artDate").textContent = article.date;
-  document.getElementById("artReadTime").textContent = article.readTime;
-
-  const bodyEl = document.getElementById("artBody");
-  if (bodyEl) {
-    bodyEl.innerHTML = article.contentHtml || `<p>${article.excerpt}</p>`;
-    
-    // Inject the Best Seller Showcase Box
-    const showcaseTarget = document.getElementById("articleShowcaseInject");
-    if (showcaseTarget && article.bestSellerShowcase) {
-      showcaseTarget.outerHTML = renderInArticleProductShowcase(article.bestSellerShowcase);
-    }
-  }
-
-  // Render Side Related Articles
-  const sideRelatedEl = document.getElementById("sideRelatedList");
-  if (sideRelatedEl) {
-    const otherArticles = allArticles.filter(a => a.id !== article.id).slice(0, 4);
-    sideRelatedEl.innerHTML = otherArticles.map(a => `
-      <div class="side-rel-item">
-        <div class="side-rel-title"><a href="chi-tiet-tin-tuc.html?id=${a.id}">${a.title}</a></div>
-        <div class="side-rel-date"><i class="far fa-calendar-alt"></i> ${a.date}</div>
-      </div>
-    `).join("");
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadArticleDetail();
-});
-</script>
-@endpush
 
