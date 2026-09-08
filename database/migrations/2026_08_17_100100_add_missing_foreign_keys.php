@@ -72,14 +72,18 @@ return new class extends Migration
                 continue;
             }
 
-            Schema::table($table, function (Blueprint $blueprint) use ($definitions) {
-                foreach ($definitions as [$column, $references, $onDelete]) {
-                    $blueprint->foreign($column)
-                        ->references('id')
-                        ->on($references)
-                        ->onDelete($onDelete);
+            foreach ($definitions as [$column, $references, $onDelete]) {
+                try {
+                    Schema::table($table, function (Blueprint $blueprint) use ($column, $references, $onDelete) {
+                        $blueprint->foreign($column)
+                            ->references('id')
+                            ->on($references)
+                            ->onDelete($onDelete);
+                    });
+                } catch (\Throwable $e) {
+                    // Foreign key already exists or cannot be created
                 }
-            });
+            }
         }
     }
 

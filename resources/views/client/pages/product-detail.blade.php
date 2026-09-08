@@ -1674,56 +1674,6 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
   </div>
 </div>
 
-<div class="modal-overlay" id="quoteModal">
-  <div class="modal-box wide">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3>Bạn mua sản phẩm cho:</h3>
-    <p class="sub">Quạt cây công nghiệp Komasu KM-750S — chọn đúng nhu cầu để nhân viên báo giá chính xác hơn.</p>
-
-    <div class="seg-pick" id="segPick">
-      <button class="active" onclick="pickSeg('congtrinh',this)">🏗️ Công trình</button>
-      <button onclick="pickSeg('khoxuong',this)">🏭 Kho-xưởng</button>
-      <button onclick="pickSeg('donvi',this)">🏢 Đơn vị sử dụng</button>
-      <button onclick="pickSeg('thuongmai',this)">🤝 Thương mại</button>
-    </div>
-
-    <div class="seg-fields active" id="fields-congtrinh">
-      <div class="form-field"><label>Số lượng</label><input type="number" placeholder="Ví dụ: 20"></div>
-      <div class="form-field"><label>Địa điểm giao</label><input type="text" placeholder="Công trình / quận, tỉnh"></div>
-      <div class="form-field"><label>Thời gian cần hàng</label><input type="text" placeholder="Ngày dự kiến"></div>
-      <div class="form-field"><label>Số điện thoại / Zalo</label><input type="tel" placeholder="09xx xxx xxx"></div>
-      <div class="seg-optional-label">TÙY CHỌN THÊM (không bắt buộc)</div>
-      <div class="form-field"><label>Giao nhiều đợt / nhiều điểm / giờ riêng</label><input type="text" placeholder="Mô tả ngắn nếu có"></div>
-    </div>
-
-    <div class="seg-fields" id="fields-khoxuong">
-      <div class="form-field"><label>Số lượng</label><input type="number" placeholder="Ví dụ: 15"></div>
-      <div class="form-field"><label>Địa điểm giao</label><input type="text" placeholder="Tên xưởng / khu công nghiệp"></div>
-      <div class="form-field"><label>Nhu cầu sử dụng</label><input type="text" placeholder="Làm mát / thông gió khu vực nào"></div>
-      <div class="form-field"><label>Số điện thoại / Zalo</label><input type="tel" placeholder="09xx xxx xxx"></div>
-    </div>
-
-    <div class="seg-fields" id="fields-donvi">
-      <div class="form-field"><label>Số lượng</label><input type="number" placeholder="Ví dụ: 10"></div>
-      <div class="form-field"><label>Nơi sử dụng</label><input type="text" placeholder="Văn phòng / nhà hàng / trường học..."></div>
-      <div class="form-field"><label>Địa điểm giao</label><input type="text" placeholder="Địa chỉ"></div>
-      <div class="form-field"><label>Số điện thoại / Zalo</label><input type="tel" placeholder="09xx xxx xxx"></div>
-    </div>
-
-    <div class="seg-fields" id="fields-thuongmai">
-      <div class="form-field"><label>Số lượng</label><input type="number" placeholder="Ví dụ: 30"></div>
-      <div class="form-field"><label>Địa điểm giao</label><input type="text" placeholder="Kho / cửa hàng"></div>
-      <div class="form-field"><label>Số điện thoại / Zalo</label><input type="tel" placeholder="09xx xxx xxx"></div>
-      <div class="seg-optional-label">TÙY CHỌN THÊM</div>
-      <div class="form-field"><label>Hồ sơ cần cung cấp</label><input type="text" placeholder="Không bắt buộc"></div>
-    </div>
-
-    <button class="modal-submit">Gửi yêu cầu báo giá</button>
-    <p class="modal-escape">hoặc <a href="#">Chat Zalo ngay</a> / <a href="tel:0949761893">Gọi ngay</a> — không cần điền form</p>
-    <p class="modal-note">Thông tin gửi trực tiếp về Zalo bán hàng, không công khai giá sỉ trên web.</p>
-  </div>
-</div>
-
 <script>
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -1751,23 +1701,12 @@ function jumpTab(tab){
   document.getElementById('panel-'+tab).classList.add('active');
   document.querySelector('.tabs-section').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function openModal(){document.getElementById('quoteModal').classList.add('open');}
-var segIds=['congtrinh','khoxuong','donvi','thuongmai'];
-function pickSeg(id,btn){
-  segIds.forEach(function(s){
-    document.getElementById('fields-'+s).classList.remove('active');
-  });
-  document.getElementById('fields-'+id).classList.add('active');
-  document.querySelectorAll('#segPick button').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-}
 function toggleMobileMenu(){
   document.getElementById('menuSheet').classList.add('open');
 }
 function closeMobileMenu(){
   document.getElementById('menuSheet').classList.remove('open');
 }
-function closeModal(){document.getElementById('quoteModal').classList.remove('open');}
 function stepQty(d){
   const el=document.getElementById('qtyInput');
   let v=parseInt(el.value)||1;
