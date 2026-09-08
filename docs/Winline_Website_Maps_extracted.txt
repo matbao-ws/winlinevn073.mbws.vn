@@ -1,0 +1,783 @@
+TÀI LIỆU BÀN GIAO THIẾT KẾ
+Website Maps Winline.vn
+Bản đồ website, luồng nội dung, đặc tả công cụ tính và tiêu chí nghiệm thu
+Hạng mục | Thông tin
+Hạng mục
+Thông tin
+Bên đặt yêu cầu | Winline
+Bên đặt yêu cầu
+Winline
+Đơn vị thiết kế/lập trình | Mắt Bão
+Đơn vị thiết kế/lập trình
+Mắt Bão
+Phạm vi | Thiết kế và triển khai đồng bộ một lần
+Phạm vi
+Thiết kế và triển khai đồng bộ một lần
+Trạng thái | Cơ sở dựng wireframe, UI và đặc tả kỹ thuật
+Trạng thái
+Cơ sở dựng wireframe, UI và đặc tả kỹ thuật
+Nguồn tham chiếu | Demo /thuong-hieu; brand.html; công cụ HTML; file công thức chốt v05; nội dung đã thống nhất
+Nguồn tham chiếu
+Demo /thuong-hieu; brand.html; công cụ HTML; file công thức chốt v05; nội dung đã thống nhất
+Mục tiêu bàn giao  Giúp hai bên hiểu cùng một cấu trúc, tránh thiết kế theo từng trang rời rạc và tránh Mắt Bão tự suy diễn công thức kỹ thuật chưa được Winline xác nhận.
+Mục tiêu bàn giao  Giúp hai bên hiểu cùng một cấu trúc, tránh thiết kế theo từng trang rời rạc và tránh Mắt Bão tự suy diễn công thức kỹ thuật chưa được Winline xác nhận.
+WINLINE.VN
+0. Cách đọc và phạm vi tài liệu
+Kết luận điều hành  Cấu trúc website và file công thức v05 đã đủ để Mắt Bão bắt đầu dựng sitemap, wireframe và schema dữ liệu. Thông số sản phẩm vận hành phải lấy từ database của Mắt Bão; hai bên cần xác nhận mapping dữ liệu và bộ test trước nghiệm thu.
+Kết luận điều hành  Cấu trúc website và file công thức v05 đã đủ để Mắt Bão bắt đầu dựng sitemap, wireframe và schema dữ liệu. Thông số sản phẩm vận hành phải lấy từ database của Mắt Bão; hai bên cần xác nhận mapping dữ liệu và bộ test trước nghiệm thu.
+Bốn trạng thái sử dụng trong tài liệu
+Trạng thái | Ý nghĩa | Hành động
+Trạng thái
+Ý nghĩa
+Hành động
+ĐÃ CHỐT | Quyết định thiết kế/nghiệp vụ đã thống nhất | Mắt Bão triển khai đúng đặc tả
+ĐÃ CHỐT
+Quyết định thiết kế/nghiệp vụ đã thống nhất
+Mắt Bão triển khai đúng đặc tả
+WINLINE CUNG CẤP | Nội dung, công thức, dữ liệu hoặc thông tin liên hệ | Winline bàn giao trước mốc liên quan
+WINLINE CUNG CẤP
+Nội dung, công thức, dữ liệu hoặc thông tin liên hệ
+Winline bàn giao trước mốc liên quan
+MẮT BÃO XÁC NHẬN | Khả thi kỹ thuật, API, lưu trữ, bảo mật, hiệu năng | Phản hồi bằng giải pháp và giới hạn cụ thể
+MẮT BÃO XÁC NHẬN
+Khả thi kỹ thuật, API, lưu trữ, bảo mật, hiệu năng
+Phản hồi bằng giải pháp và giới hạn cụ thể
+DỰ PHÒNG | Đã giữ chỗ trong kiến trúc nhưng chờ nội dung | Không làm vỡ cấu trúc khi bổ sung sau
+DỰ PHÒNG
+Đã giữ chỗ trong kiến trúc nhưng chờ nội dung
+Không làm vỡ cấu trúc khi bổ sung sau
+Nguyên tắc sản phẩm
+Website là hệ thống bán hàng và hỗ trợ lựa chọn có cấu trúc; không tự nhận là dịch vụ thiết kế kỹ thuật HVAC hoàn chỉnh.
+Khách đã biết model/SKU có thể đi thẳng vào tìm kiếm hoặc trang chi tiết; không bắt buộc đi qua bài “Chọn theo nhu cầu”.
+Mọi dữ liệu sản phẩm trong công cụ phải lấy từ cùng database với trang sản phẩm; không duy trì danh sách giả lập riêng.
+SKU là định danh thao tác quan trọng cho nhân viên bán hàng và phải có nút sao chép.
+Mục lục
+Phần | Nội dung
+Phần
+Nội dung
+1 | Sitemap và vai trò từng nhánh
+1
+Sitemap và vai trò từng nhánh
+2 | Luồng nội dung và URL
+2
+Luồng nội dung và URL
+3 | Mẫu cấu trúc các loại trang
+3
+Mẫu cấu trúc các loại trang
+4 | Maps công cụ tính quạt
+4
+Maps công cụ tính quạt
+5 | Bảng kết quả và chọn sản phẩm
+5
+Bảng kết quả và chọn sản phẩm
+6 | Cooling pad và SET
+6
+Cooling pad và SET
+7 | Lưu backend, PDF, email, Zalo
+7
+Lưu backend, PDF, email, Zalo
+8 | Quản trị, SEO, đo lường
+8
+Quản trị, SEO, đo lường
+9 | Responsive và trạng thái giao diện
+9
+Responsive và trạng thái giao diện
+10 | Đầu vào và nghiệm thu
+10
+Đầu vào và nghiệm thu
+1. Sitemap cấp 1
+Menu chính đã chốt
+Menu | Vai trò chính | Trang con điển hình
+Menu
+Vai trò chính
+Trang con điển hình
+Loại quạt | Duyệt và lọc sản phẩm theo nhóm | Danh mục loại quạt → trang chi tiết sản phẩm
+Loại quạt
+Duyệt và lọc sản phẩm theo nhóm
+Danh mục loại quạt → trang chi tiết sản phẩm
+Chọn theo nhu cầu | Tên thay cho “Giải pháp”; giáo dục và dẫn đến hành động | Bài nhu cầu → công cụ đúng tab → SET nếu có
+Chọn theo nhu cầu
+Tên thay cho “Giải pháp”; giáo dục và dẫn đến hành động
+Bài nhu cầu → công cụ đúng tab → SET nếu có
+Thương hiệu | Chọn sản phẩm theo hãng, không phải trang lịch sử dài | Trang hãng → sản phẩm; link sang bài giới thiệu hãng
+Thương hiệu
+Chọn sản phẩm theo hãng, không phải trang lịch sử dài
+Trang hãng → sản phẩm; link sang bài giới thiệu hãng
+Dự án | Case study tạo bằng chứng ứng dụng | Danh sách dự án → chi tiết dự án → sản phẩm/bài nhu cầu
+Dự án
+Case study tạo bằng chứng ứng dụng
+Danh sách dự án → chi tiết dự án → sản phẩm/bài nhu cầu
+Tài liệu & Hỗ trợ | Tập trung tài nguyên và hỗ trợ sau/before bán | Công cụ, catalogue, chứng nhận, hướng dẫn, chính sách, liên hệ
+Tài liệu & Hỗ trợ
+Tập trung tài nguyên và hỗ trợ sau/before bán
+Công cụ, catalogue, chứng nhận, hướng dẫn, chính sách, liên hệ
+Không đưa “Công cụ tính quạt” thành hành trình bắt buộc  Công cụ là một điểm vào và một CTA theo ngữ cảnh; khách có thể đến từ menu hỗ trợ, bài nhu cầu, trang sản phẩm hoặc link trực tiếp đúng tab.
+Không đưa “Công cụ tính quạt” thành hành trình bắt buộc  Công cụ là một điểm vào và một CTA theo ngữ cảnh; khách có thể đến từ menu hỗ trợ, bài nhu cầu, trang sản phẩm hoặc link trực tiếp đúng tab.
+2. Cây trang chi tiết và quy ước URL
+Nhánh | URL đề xuất | Cấp con / ghi chú
+Nhánh
+URL đề xuất
+Cấp con / ghi chú
+Trang chủ | / | Điểm vào theo loại, nhu cầu, thương hiệu, dự án, tìm SKU
+Trang chủ
+/
+Điểm vào theo loại, nhu cầu, thương hiệu, dự án, tìm SKU
+Loại quạt | /loai-quat/ | /loai-quat/{slug}/ → /san-pham/{slug}/
+Loại quạt
+/loai-quat/
+/loai-quat/{slug}/ → /san-pham/{slug}/
+Chọn theo nhu cầu | /chon-theo-nhu-cau/ | /chon-theo-nhu-cau/{slug}/
+Chọn theo nhu cầu
+/chon-theo-nhu-cau/
+/chon-theo-nhu-cau/{slug}/
+Thương hiệu | /thuong-hieu/ | /thuong-hieu/{brand-slug}/; tránh dùng lẫn /brand/
+Thương hiệu
+/thuong-hieu/
+/thuong-hieu/{brand-slug}/; tránh dùng lẫn /brand/
+Bài giới thiệu hãng | /bai-viet/thuong-hieu/{brand-slug}/ | Khác intent với trang lọc sản phẩm theo hãng
+Bài giới thiệu hãng
+/bai-viet/thuong-hieu/{brand-slug}/
+Khác intent với trang lọc sản phẩm theo hãng
+Dự án | /du-an/ | /du-an/{case-study-slug}/
+Dự án
+/du-an/
+/du-an/{case-study-slug}/
+Tài liệu & Hỗ trợ | /tai-lieu-ho-tro/ | Catalogue, chứng nhận, hướng dẫn, chính sách, liên hệ
+Tài liệu & Hỗ trợ
+/tai-lieu-ho-tro/
+Catalogue, chứng nhận, hướng dẫn, chính sách, liên hệ
+Công cụ tính | /cong-cu-tinh-quat/ | ?tab=thong-gio-hut-khi | cooling-pad | thong-gio-phong
+Công cụ tính
+/cong-cu-tinh-quat/
+?tab=thong-gio-hut-khi | cooling-pad | thong-gio-phong
+Bản dự tính | /du-tinh/{public-id}/ | Link khó đoán; dữ liệu cá nhân không lộ qua URL
+Bản dự tính
+/du-tinh/{public-id}/
+Link khó đoán; dữ liệu cá nhân không lộ qua URL
+SEO trang thương hiệu — quyết định thực dụng
+Trang thương hiệu chủ yếu phục vụ chọn sản phẩm theo hãng; chỉ đầu tư SEO nội dung riêng cho hãng trọng tâm có nhu cầu tìm kiếm và danh mục đủ mạnh.
+Phần đầu trang gồm 3–5 dòng giới thiệu nét chính, CTA xem sản phẩm và link sang bài giới thiệu hãng chuyên sâu.
+URL lọc, sắp xếp và tổ hợp tham số không tạo hàng loạt trang index; dùng canonical/noindex theo cấu hình SEO.
+Không cạnh tranh bằng lịch sử hãng chung chung; tập trung tính sẵn có, SKU, thông số, ứng dụng, giao hàng và hỗ trợ của Winline.
+3. Luồng liên kết nội dung
+Quy tắc liên kết bắt buộc
+Từ trang | Dẫn tới | Mục đích
+Từ trang
+Dẫn tới
+Mục đích
+Chi tiết sản phẩm | Bài nhu cầu liên quan | Giải thích bối cảnh dùng mà không nhồi vào mô tả sản phẩm
+Chi tiết sản phẩm
+Bài nhu cầu liên quan
+Giải thích bối cảnh dùng mà không nhồi vào mô tả sản phẩm
+Bài nhu cầu | Đúng tab công cụ; SET nếu có | Biến nội dung thành hành động tính/chọn
+Bài nhu cầu
+Đúng tab công cụ; SET nếu có
+Biến nội dung thành hành động tính/chọn
+Công cụ/SET | Chi tiết sản phẩm | Xác minh đầy đủ SKU, thông số, hình ảnh
+Công cụ/SET
+Chi tiết sản phẩm
+Xác minh đầy đủ SKU, thông số, hình ảnh
+Dự án | Sản phẩm + bài nhu cầu + công cụ | Cho phép khách đi từ bằng chứng thực tế tới lựa chọn
+Dự án
+Sản phẩm + bài nhu cầu + công cụ
+Cho phép khách đi từ bằng chứng thực tế tới lựa chọn
+Bài giới thiệu hãng | Trang chọn sản phẩm theo hãng | Tách intent nội dung và giao dịch
+Bài giới thiệu hãng
+Trang chọn sản phẩm theo hãng
+Tách intent nội dung và giao dịch
+Điểm quan trọng  Không biến mọi bài thành cùng một phễu. Link phải theo ý định đọc và giữ khả năng quay lại kết quả/bản dự tính.
+Điểm quan trọng  Không biến mọi bài thành cùng một phễu. Link phải theo ý định đọc và giữ khả năng quay lại kết quả/bản dự tính.
+4. Mẫu cấu trúc các loại trang
+4.1 Trang chủ
+Header đồng bộ + tìm kiếm ưu tiên SKU/tên sản phẩm.
+Khối chọn nhanh: theo loại / nhu cầu / thương hiệu.
+Nhóm sản phẩm hoặc SKU nổi bật có dữ liệu thật.
+CTA công cụ tính theo ba nhu cầu.
+Dự án/case study tiêu biểu.
+Tài liệu, hỗ trợ và thông tin tin cậy của Winline.
+4.2 Trang danh mục Loại quạt
+Breadcrumb + H1 + mô tả ngắn.
+Bộ lọc danh mục phù hợp dữ liệu ngành hàng.
+Lưới sản phẩm; SKU nổi bật, tên, ảnh, thông số chính, giá/note giá.
+Nội dung SEO hỗ trợ ở cuối, không đẩy sản phẩm xuống quá sâu.
+4.3 Trang Chọn theo nhu cầu
+Mô tả vấn đề và dấu hiệu nhận biết.
+Các điều kiện đầu vào cần biết.
+Cách tiếp cận/sản phẩm phù hợp.
+CTA mở đúng tab công cụ.
+Khối SET tham khảo nếu có.
+Sản phẩm và bài liên quan.
+Cảnh báo giới hạn tư vấn kỹ thuật.
+4.4 Trang Dự án dạng case study
+Bối cảnh và nhu cầu thực tế.
+Sản phẩm/SKU/số lượng đã dùng.
+Lý do lựa chọn và điều kiện triển khai.
+Ảnh thực tế, kết quả, lưu ý.
+Link sang sản phẩm, bài nhu cầu và công cụ.
+5. Trang Thương hiệu — mẫu áp dụng từ brand.html
+Thứ tự | Khối giao diện | Yêu cầu
+Thứ tự
+Khối giao diện
+Yêu cầu
+01 | Breadcrumb + H1 | Tên hãng rõ; không dùng tiêu đề quảng cáo quá mức
+01
+Breadcrumb + H1
+Tên hãng rõ; không dùng tiêu đề quảng cáo quá mức
+02 | Giới thiệu nhanh | 3–5 dòng về điểm mạnh liên quan tới người mua tại Winline
+02
+Giới thiệu nhanh
+3–5 dòng về điểm mạnh liên quan tới người mua tại Winline
+03 | Link bài chuyên sâu | “Tìm hiểu về thương hiệu {Tên hãng}” → mục bài viết
+03
+Link bài chuyên sâu
+“Tìm hiểu về thương hiệu {Tên hãng}” → mục bài viết
+04 | Bộ lọc ngang | Thương hiệu (khóa sẵn), loại, kích thước, khoảng giá; có nút xóa lọc
+04
+Bộ lọc ngang
+Thương hiệu (khóa sẵn), loại, kích thước, khoảng giá; có nút xóa lọc
+05 | Danh sách sản phẩm | Ảnh, SKU rõ, tên, thông số chính, giá/note giá, trạng thái
+05
+Danh sách sản phẩm
+Ảnh, SKU rõ, tên, thông số chính, giá/note giá, trạng thái
+06 | Nội dung hỗ trợ | Ứng dụng, nhóm sản phẩm nổi bật, FAQ nếu có dữ liệu
+06
+Nội dung hỗ trợ
+Ứng dụng, nhóm sản phẩm nổi bật, FAQ nếu có dữ liệu
+07 | Liên kết chéo | Nhu cầu, dự án và tài liệu phù hợp hãng
+07
+Liên kết chéo
+Nhu cầu, dự án và tài liệu phù hợp hãng
+Quyết định về tên và SKU
+SKU không đặt thành thông tin phụ  Trong card sản phẩm và bảng công cụ: tên được phép 2 dòng; SKU nằm một dòng riêng, tương phản cao, có nút “Sao chép SKU”. Nhân viên bán hàng phải nhìn và copy được ngay.
+SKU không đặt thành thông tin phụ  Trong card sản phẩm và bảng công cụ: tên được phép 2 dòng; SKU nằm một dòng riêng, tương phản cao, có nút “Sao chép SKU”. Nhân viên bán hàng phải nhìn và copy được ngay.
+Hành vi danh sách
+Click ảnh/tên/SKU mở trang chi tiết.
+Bộ lọc nằm ngang trên desktop; mobile mở thành drawer/bottom sheet.
+Không lặp thêm một bộ “sắp xếp”. Trang công cụ tự xếp theo mức phù hợp; trang danh mục chỉ bổ sung sắp xếp nếu nghiệp vụ bán hàng thật sự cần.
+6. Maps công cụ tính quạt
+Ba tab và link ổn định
+Thứ tự | Tab | Link trực tiếp | Ghi chú
+Thứ tự
+Tab
+Link trực tiếp
+Ghi chú
+1 | Thông gió – hút khí | ?tab=thong-gio-hut-khi | Tab mặc định; công thức hiện tại chỉ mang tính định hướng
+1
+Thông gió – hút khí
+?tab=thong-gio-hut-khi
+Tab mặc định; công thức hiện tại chỉ mang tính định hướng
+2 | Làm mát bằng cooling pad | ?tab=cooling-pad | Có hai bảng: quạt + tấm/cụm cooling pad
+2
+Làm mát bằng cooling pad
+?tab=cooling-pad
+Có hai bảng: quạt + tấm/cụm cooling pad
+3 | Thông gió văn phòng, phòng bếp & WC | ?tab=thong-gio-phong | Tiêu đề cột dùng “Kích thước lỗ chờ”
+3
+Thông gió văn phòng, phòng bếp & WC
+?tab=thong-gio-phong
+Tiêu đề cột dùng “Kích thước lỗ chờ”
+Khối đầu vào chung
+Trường | Cách hiển thị | Quy tắc
+Trường
+Cách hiển thị
+Quy tắc
+Diện tích không gian (m²) | Ô số | Bắt buộc khi công thức tab dùng diện tích
+Diện tích không gian (m²)
+Ô số
+Bắt buộc khi công thức tab dùng diện tích
+Chiều cao trung bình (m) | Ô số | Sửa đúng cụm từ “chiều cao trung bình”
+Chiều cao trung bình (m)
+Ô số
+Sửa đúng cụm từ “chiều cao trung bình”
+Loại không gian / nhu cầu | Dropdown/card | Quản trị được cấu hình theo tab
+Loại không gian / nhu cầu
+Dropdown/card
+Quản trị được cấu hình theo tab
+Bội số trao đổi khí / tham số | Dropdown hoặc ô có giải thích | Nguồn và phạm vi do Winline xác nhận
+Bội số trao đổi khí / tham số
+Dropdown hoặc ô có giải thích
+Nguồn và phạm vi do Winline xác nhận
+Điện áp | 220V / 380V / Chưa xác định | Đặt cùng vùng đầu vào, không chiếm cột nếu đã chọn
+Điện áp
+220V / 380V / Chưa xác định
+Đặt cùng vùng đầu vào, không chiếm cột nếu đã chọn
+7. Công thức, nội dung giải thích và cảnh báo
+Nguyên tắc hiển thị công thức
+Giao diện giải thích đầu vào, ý nghĩa kết quả và giả định; không cần công khai toàn bộ mã tính toán.
+File “Winline_Cong_thuc_tinh_quat_Ban_chot_gui_Mat_Bao_v05.xlsx” là tài liệu công thức/kiểm thử bàn giao; Mắt Bão xác nhận mapping trước khi lập trình.
+Không dùng file HTML hay file Excel đã được Office “sửa chữa” làm mã nguồn nghiệp vụ.
+Dữ liệu sản phẩm đọc từ database; công thức độc lập với danh sách sản phẩm.
+Nội dung phải bỏ hoặc thay
+Không dùng | Thay bằng
+Không dùng
+Thay bằng
+TCVN 5687:2024 | Không nêu nếu chưa có căn cứ, phạm vi áp dụng và nội dung được Winline xác nhận
+TCVN 5687:2024
+Không nêu nếu chưa có căn cứ, phạm vi áp dụng và nội dung được Winline xác nhận
+Tính toán chính xác | Kết quả dự tính theo dữ liệu người dùng nhập
+Tính toán chính xác
+Kết quả dự tính theo dữ liệu người dùng nhập
+Lựa chọn tối ưu | Gợi ý sản phẩm theo lưu lượng tính toán
+Lựa chọn tối ưu
+Gợi ý sản phẩm theo lưu lượng tính toán
+Sai số/độ phù hợp ±20% | Mục tiêu chênh lệch tổng lưu lượng đã chọn so với nhu cầu trong khoảng ±5%
+Sai số/độ phù hợp ±20%
+Mục tiêu chênh lệch tổng lưu lượng đã chọn so với nhu cầu trong khoảng ±5%
+Dòng cảnh báo đề xuất  Kết quả là bản dự tính ban đầu dựa trên dữ liệu khách nhập và thông số sản phẩm. Đường ống, tổn thất áp, nguồn nhiệt, vị trí cấp/hút gió và điều kiện lắp đặt thực tế có thể làm thay đổi lựa chọn. Công trình phức tạp cần trao đổi thêm với Winline.
+Dòng cảnh báo đề xuất  Kết quả là bản dự tính ban đầu dựa trên dữ liệu khách nhập và thông số sản phẩm. Đường ống, tổn thất áp, nguồn nhiệt, vị trí cấp/hút gió và điều kiện lắp đặt thực tế có thể làm thay đổi lựa chọn. Công trình phức tạp cần trao đổi thêm với Winline.
+Các quyết định công thức đã chốt và giới hạn áp dụng
+Số lượng quạt và số lượng tấm đều làm tròn lên bằng ROUNDUP/CEILING; không dùng MROUND.
+Diện tích cooling pad tính theo tổng lưu lượng của quạt thực tế đã chọn.
+Sử dụng 9.000 m³/h/m² làm tham số cơ sở hiện tại và phải cho phép cấu hình trong quản trị.
+Mỗi kích thước dài × rộng × dày là một lựa chọn tấm; diện tích = dài × rộng; độ dày 150 mm không tham gia tính diện tích.
+Khung mua riêng, không tự cộng vào số lượng, diện tích hoặc tổng tiền tấm trong công cụ hiện tại.
+Bội số thông gió tổng thể theo bảng Winline bàn giao; hút bụi cục bộ cần tính theo đặc thù loại bụi và nhu cầu, không tự động chỉ bằng một bội số chung.
+8. Bộ lọc và bảng kết quả sản phẩm
+Một bộ lọc duy nhất — 4 tiêu chí
+Tiêu chí | Ba tab | Ghi chú
+Tiêu chí
+Ba tab
+Ghi chú
+Thương hiệu | Có | Lọc theo hãng trong database
+Thương hiệu
+Có
+Lọc theo hãng trong database
+Loại quạt/sản phẩm | Có | Theo taxonomy sản phẩm
+Loại quạt/sản phẩm
+Có
+Theo taxonomy sản phẩm
+Kích thước | Có | Tab thông gió phòng đổi nhãn thành “Kích thước lỗ chờ”
+Kích thước
+Có
+Tab thông gió phòng đổi nhãn thành “Kích thước lỗ chờ”
+Khoảng giá | Có | Theo chính sách giá hiển thị
+Khoảng giá
+Có
+Theo chính sách giá hiển thị
+Không có bộ sắp xếp thứ hai  Công cụ tự xếp hạng. Luồng đúng là: lọc toàn bộ tập ứng viên → chấm mức phù hợp → hiển thị tối đa 6. Không lọc chỉ trên 6 dòng đang nhìn thấy.
+Không có bộ sắp xếp thứ hai  Công cụ tự xếp hạng. Luồng đúng là: lọc toàn bộ tập ứng viên → chấm mức phù hợp → hiển thị tối đa 6. Không lọc chỉ trên 6 dòng đang nhìn thấy.
+Vì sao chỉ hiển thị 6 sản phẩm
+Mục tiêu công cụ là hỗ trợ quyết định, không phải duyệt catalogue.
+Sáu dòng đủ để so sánh mà không làm loãng lựa chọn; không cần ẩn 6 rồi mở thêm thành 10–12.
+Nếu khách muốn xem rộng hơn, dùng link “Xem danh mục với bộ lọc này” sang trang danh mục đầy đủ.
+Quy tắc xếp hạng nội bộ
+Đúng tab/loại sản phẩm và điện áp.
+Khớp bốn điều kiện lọc.
+Độ lệch lưu lượng nhỏ nhất so với nhu cầu.
+Số lượng quạt dự tính hợp lý.
+Dữ liệu đầy đủ và trạng thái cung ứng phù hợp.
+9. Bảng desktop 10 cột và card mobile
+# | Cột desktop | Hiển thị / hành vi
+#
+Cột desktop
+Hiển thị / hành vi
+1 | Ảnh | Cột riêng; tỷ lệ cố định, không méo
+1
+Ảnh
+Cột riêng; tỷ lệ cố định, không méo
+2 | Tên sản phẩm / SKU | Tên tối đa 2 dòng; SKU 1 dòng; nút copy SKU
+2
+Tên sản phẩm / SKU
+Tên tối đa 2 dòng; SKU 1 dòng; nút copy SKU
+3 | Thương hiệu | Giá trị từ database
+3
+Thương hiệu
+Giá trị từ database
+4 | Loại sản phẩm | Taxonomy chuẩn
+4
+Loại sản phẩm
+Taxonomy chuẩn
+5 | Kích thước / KT lỗ chờ | Đổi nhãn theo tab
+5
+Kích thước / KT lỗ chờ
+Đổi nhãn theo tab
+6 | Công suất | Có đơn vị
+6
+Công suất
+Có đơn vị
+7 | Lưu lượng | Có đơn vị và thống nhất cách viết
+7
+Lưu lượng
+Có đơn vị và thống nhất cách viết
+8 | Số lượng dự tính | Có thể chỉnh sau khi chọn
+8
+Số lượng dự tính
+Có thể chỉnh sau khi chọn
+9 | Đơn giá | Kèm chính sách giá
+9
+Đơn giá
+Kèm chính sách giá
+10 | Chọn | Checkbox/nút; không điều hướng
+10
+Chọn
+Checkbox/nút; không điều hướng
+Hành vi click
+Cột 1–9 cùng một dòng đổi nền xám nhẹ khi hover và có thể mở trang chi tiết sản phẩm.
+Cột “Chọn” chỉ thực hiện chọn; nút copy SKU phải chặn sự kiện mở trang.
+Ưu tiên mở chi tiết ở tab mới hoặc tự lưu trạng thái công cụ trước khi rời trang.
+Mobile
+Luôn thấy | Mở rộng khi cần
+Luôn thấy
+Mở rộng khi cần
+Ảnh, SKU + copy, tên, lưu lượng, số lượng dự tính, đơn giá, nút Chọn | Thương hiệu, loại, kích thước/lỗ chờ, công suất, link chi tiết
+Ảnh, SKU + copy, tên, lưu lượng, số lượng dự tính, đơn giá, nút Chọn
+Thương hiệu, loại, kích thước/lỗ chờ, công suất, link chi tiết
+10. Quy tắc chọn và phân bổ số lượng
+Đã chốt  Mỗi bản dự tính chọn tối đa 3 dòng sản phẩm. Mục tiêu tổng lưu lượng đã chọn nằm trong ±5% so với lưu lượng cần; vượt ngưỡng chỉ cảnh báo nhẹ, không khóa lưu/gửi.
+Đã chốt  Mỗi bản dự tính chọn tối đa 3 dòng sản phẩm. Mục tiêu tổng lưu lượng đã chọn nằm trong ±5% so với lưu lượng cần; vượt ngưỡng chỉ cảnh báo nhẹ, không khóa lưu/gửi.
+Dòng được chọn đầu tiên trở thành dòng chính.
+Nếu chỉ chọn 1 dòng: hệ thống đề xuất số lượng nguyên tối thiểu đáp ứng gần nhu cầu nhất theo quy tắc Winline duyệt.
+Nếu chọn dòng thứ 2 hoặc thứ 3: mỗi dòng mới mặc định số lượng 1; dòng chính tự bù phần còn lại.
+Người dùng được tăng/giảm số lượng từng dòng. Có thể có thao tác “Đặt làm dòng chính”.
+Hệ thống tính lại tổng lưu lượng, độ lệch %, tổng tiền và trạng thái cảnh báo ngay khi số lượng đổi.
+Khi bỏ chọn dòng chính, hệ thống yêu cầu/đặt dòng còn lại làm dòng chính theo quy tắc rõ ràng.
+Trạng thái phản hồi
+Độ lệch | Hiển thị | Hành vi
+Độ lệch
+Hiển thị
+Hành vi
+Trong ±5% | Xanh: “Tổng lưu lượng đang trong khoảng dự tính” | Cho phép mọi hành động
+Trong ±5%
+Xanh: “Tổng lưu lượng đang trong khoảng dự tính”
+Cho phép mọi hành động
+Ngoài ±5% | Vàng: “Chênh lệch đang lớn; bạn có thể điều chỉnh số lượng” | Vẫn cho lưu/PDF/email/Zalo
+Ngoài ±5%
+Vàng: “Chênh lệch đang lớn; bạn có thể điều chỉnh số lượng”
+Vẫn cho lưu/PDF/email/Zalo
+Thiếu dữ liệu | Xám/đỏ nhẹ, nêu trường còn thiếu | Không tính cho tới khi đủ trường bắt buộc
+Thiếu dữ liệu
+Xám/đỏ nhẹ, nêu trường còn thiếu
+Không tính cho tới khi đủ trường bắt buộc
+11. Tab Cooling pad — hai bảng, một bản dự tính
+Thứ tự | Khối | Yêu cầu
+Thứ tự
+Khối
+Yêu cầu
+1 | Đầu vào chung | Diện tích, chiều cao, điều kiện, điện áp và tham số cooling pad
+1
+Đầu vào chung
+Diện tích, chiều cao, điều kiện, điện áp và tham số cooling pad
+2 | Kết quả tính | Lưu lượng cần, giả định, diện tích pad và cảnh báo
+2
+Kết quả tính
+Lưu lượng cần, giả định, diện tích pad và cảnh báo
+3 | Bảng chọn quạt | Bộ lọc + tối đa 6 sản phẩm + chọn/số lượng
+3
+Bảng chọn quạt
+Bộ lọc + tối đa 6 sản phẩm + chọn/số lượng
+4 | Bảng chọn cooling pad | Ghép logic từ demo; bổ sung chọn/số lượng/giá/chi tiết
+4
+Bảng chọn cooling pad
+Ghép logic từ demo; bổ sung chọn/số lượng/giá/chi tiết
+5 | Tổng hợp chung | Tổng lưu lượng, tổng diện tích, tổng tiền quạt + cooling pad
+5
+Tổng hợp chung
+Tổng lưu lượng, tổng diện tích, tổng tiền quạt + cooling pad
+6 | Hành động chung | Một ID backend, một PDF, một email và một link gửi Zalo
+6
+Hành động chung
+Một ID backend, một PDF, một email và một link gửi Zalo
+Yêu cầu ghép  Mắt Bão ghép phần tính cooling pad đang có tại bản demo sang file/chức năng mới. Không duy trì hai công cụ rời. Dữ liệu quạt và cooling pad đều lấy từ database sản phẩm.
+Yêu cầu ghép  Mắt Bão ghép phần tính cooling pad đang có tại bản demo sang file/chức năng mới. Không duy trì hai công cụ rời. Dữ liệu quạt và cooling pad đều lấy từ database sản phẩm.
+Điều kiện trước lập trình
+Mắt Bão sử dụng file công thức v05 và bộ test đã bàn giao làm cơ sở đối chiếu.
+Mắt Bão phản hồi mapping trường công thức ↔ trường database ↔ trường giao diện.
+Tấm được tính theo dài × rộng và ROUNDUP; độ dày không tham gia diện tích; khung mua riêng, không tính trong công cụ hiện tại.
+12. SET tham khảo
+Khái niệm  SET là phương án tham khảo Winline chuẩn bị sẵn cho một nhu cầu/bối cảnh phổ biến. SET có thể gồm nhóm sản phẩm, thông số đầu vào mẫu và lý do lựa chọn; không phải thiết kế kỹ thuật, báo giá cố định hay gói bắt buộc mua nguyên bộ.
+Khái niệm  SET là phương án tham khảo Winline chuẩn bị sẵn cho một nhu cầu/bối cảnh phổ biến. SET có thể gồm nhóm sản phẩm, thông số đầu vào mẫu và lý do lựa chọn; không phải thiết kế kỹ thuật, báo giá cố định hay gói bắt buộc mua nguyên bộ.
+Không gian cần dự phòng trong thiết kế
+Vị trí | Thành phần
+Vị trí
+Thành phần
+Bài Chọn theo nhu cầu | Khối “SET tham khảo” sau phần hướng dẫn/công cụ
+Bài Chọn theo nhu cầu
+Khối “SET tham khảo” sau phần hướng dẫn/công cụ
+Card SET | Tên SET, mô tả ngắn, đối tượng phù hợp, nhóm sản phẩm, CTA “Mở và điều chỉnh”
+Card SET
+Tên SET, mô tả ngắn, đối tượng phù hợp, nhóm sản phẩm, CTA “Mở và điều chỉnh”
+Công cụ tính | Nhãn “Bắt đầu từ SET…”; cho phép đổi input/SKU/số lượng
+Công cụ tính
+Nhãn “Bắt đầu từ SET…”; cho phép đổi input/SKU/số lượng
+Backend | Mã SET, tên, phiên bản, nguồn bài viết, thời điểm clone
+Backend
+Mã SET, tên, phiên bản, nguồn bài viết, thời điểm clone
+Bản dự tính/PDF | Ghi nguồn SET nếu có; kết quả sau chỉnh là bản dự tính riêng của khách
+Bản dự tính/PDF
+Ghi nguồn SET nếu có; kết quả sau chỉnh là bản dự tính riêng của khách
+Trạng thái
+Kiến trúc và vị trí: ĐÃ CHỐT.
+Danh sách SET, nội dung và logic chi tiết: DỰ PHÒNG — Winline cung cấp sau.
+Mắt Bão không được để việc bổ sung SET sau này làm phải đổi cấu trúc trang hoặc database cốt lõi.
+13. Lưu backend, PDF, email và Zalo
+Một bản ghi phiên dự tính
+Nhóm dữ liệu | Trường tối thiểu
+Nhóm dữ liệu
+Trường tối thiểu
+Phiên | ID khó đoán, tab, thời gian tạo/cập nhật, nguồn bài/SET, phiên bản công thức
+Phiên
+ID khó đoán, tab, thời gian tạo/cập nhật, nguồn bài/SET, phiên bản công thức
+Đầu vào | Diện tích, chiều cao, loại không gian, tham số, điện áp, bộ lọc
+Đầu vào
+Diện tích, chiều cao, loại không gian, tham số, điện áp, bộ lọc
+Kết quả | Lưu lượng cần, giả định, cảnh báo, độ lệch
+Kết quả
+Lưu lượng cần, giả định, cảnh báo, độ lệch
+Sản phẩm | SKU, tên snapshot, giá snapshot, số lượng, lưu lượng, ảnh/link
+Sản phẩm
+SKU, tên snapshot, giá snapshot, số lượng, lưu lượng, ảnh/link
+Khách gửi | Họ tên, SĐT; email khi gửi email; công ty/MST tùy chọn
+Khách gửi
+Họ tên, SĐT; email khi gửi email; công ty/MST tùy chọn
+Theo dõi | Trạng thái gửi, kênh gửi, chống spam, log lỗi kỹ thuật
+Theo dõi
+Trạng thái gửi, kênh gửi, chống spam, log lỗi kỹ thuật
+Nguyên tắc riêng tư và chống rác
+Không lưu thông tin cá nhân trước khi khách chủ động nhập và gửi.
+Không ghi database sau mỗi phím; cập nhật cùng một phiên đã hoàn tất để tránh dữ liệu rác.
+Rate limit/bot check chỉ tại bước gửi; không cản bước tính và xem kết quả.
+Link công khai không để lộ PII; Mắt Bão xác nhận thời hạn lưu, quyền xóa và phân quyền quản trị.
+CTA và nội dung biểu mẫu
+Hành động | Tên đề xuất | Trường
+Hành động
+Tên đề xuất
+Trường
+Tải máy | Tải bản dự tính PDF | Không bắt nhập PII nếu chính sách cho phép
+Tải máy
+Tải bản dự tính PDF
+Không bắt nhập PII nếu chính sách cho phép
+Gửi email | Gửi bản dự tính qua email | Họ tên, email; SĐT khuyến nghị/bắt buộc theo quyết định Winline
+Gửi email
+Gửi bản dự tính qua email
+Họ tên, email; SĐT khuyến nghị/bắt buộc theo quyết định Winline
+Zalo | Gửi bản dự tính cho Winline qua Zalo | Họ tên + SĐT bắt buộc; email, công ty, MST tùy chọn
+Zalo
+Gửi bản dự tính cho Winline qua Zalo
+Họ tên + SĐT bắt buộc; email, công ty, MST tùy chọn
+14. Đặc tả PDF/bản lưu
+Phương án khuyến nghị  Sinh PDF phía backend từ snapshot đã lưu. Cách này giữ mẫu ổn định, tạo một ID/link dùng được giữa các thiết bị và tránh PDF khác nhau theo trình duyệt.
+Phương án khuyến nghị  Sinh PDF phía backend từ snapshot đã lưu. Cách này giữ mẫu ổn định, tạo một ID/link dùng được giữa các thiết bị và tránh PDF khác nhau theo trình duyệt.
+Cấu trúc file
+Logo và thông tin Winline.
+Tiêu đề “Bản dự tính lựa chọn quạt”; ID, thời gian, tab.
+Thông tin người gửi: họ tên, SĐT, email, công ty, MST nếu có.
+Dữ liệu đầu vào và lưu lượng cần.
+Bảng sản phẩm: ảnh, SKU, tên, thương hiệu, lưu lượng, số lượng, đơn giá, thành tiền.
+Nếu cooling pad: thêm bảng pad trong cùng file.
+Tổng lưu lượng đã chọn, độ lệch %, tổng tiền dự tính.
+Ghi chú giá và giới hạn kết quả.
+Zalo, SĐT, email, địa chỉ, QR/link liên hệ Winline.
+Chính sách giá
+Dòng ghi chú giá  Đơn giá và tổng tiền là giá tham khảo tại thời điểm tạo bản dự tính; có thể thay đổi theo số lượng, giao hàng, VAT và chính sách bán hàng. File phải ghi rõ giá đã gồm/chưa gồm VAT và vận chuyển.
+Dòng ghi chú giá  Đơn giá và tổng tiền là giá tham khảo tại thời điểm tạo bản dự tính; có thể thay đổi theo số lượng, giao hàng, VAT và chính sách bán hàng. File phải ghi rõ giá đã gồm/chưa gồm VAT và vận chuyển.
+Mở lại bản cũ
+Giữ SKU, số lượng, giá và thời điểm theo snapshot.
+Hiển thị cảnh báo đây là dữ liệu tại ngày tạo.
+Nút “Cập nhật theo dữ liệu hiện tại” tạo phiên bản/bản dự tính mới, không ghi đè lịch sử.
+Zalo ưu tiên gửi tóm tắt + link bản dự tính; không giả định trình duyệt có thể tự đính kèm PDF vào Zalo.
+15. CMS, dữ liệu và quyền quản trị
+Năng lực quản trị | Yêu cầu
+Năng lực quản trị
+Yêu cầu
+Menu & trang | Quản trị cây menu, slug, breadcrumb, trạng thái xuất bản
+Menu & trang
+Quản trị cây menu, slug, breadcrumb, trạng thái xuất bản
+Sản phẩm | Một nguồn dữ liệu cho listing, chi tiết và công cụ; SKU duy nhất
+Sản phẩm
+Một nguồn dữ liệu cho listing, chi tiết và công cụ; SKU duy nhất
+Trường theo tab | Cấu hình cột hiển thị/ẩn theo dữ liệu, nhãn kích thước/lỗ chờ
+Trường theo tab
+Cấu hình cột hiển thị/ẩn theo dữ liệu, nhãn kích thước/lỗ chờ
+Link công cụ | Bài viết chọn đúng tab bằng link ổn định; không hard-code theo vị trí tab
+Link công cụ
+Bài viết chọn đúng tab bằng link ổn định; không hard-code theo vị trí tab
+Công thức | Có mã phiên bản; chỉ người có quyền cập nhật; lưu lịch sử thay đổi
+Công thức
+Có mã phiên bản; chỉ người có quyền cập nhật; lưu lịch sử thay đổi
+SET | Tạo phiên bản, gắn bài nhu cầu, sản phẩm/nhóm sản phẩm, input mẫu
+SET
+Tạo phiên bản, gắn bài nhu cầu, sản phẩm/nhóm sản phẩm, input mẫu
+Bản dự tính | Tra cứu ID, trạng thái gửi, dữ liệu ẩn danh; phân quyền xem PII
+Bản dự tính
+Tra cứu ID, trạng thái gửi, dữ liệu ẩn danh; phân quyền xem PII
+Tài liệu | Quản lý file, phiên bản, loại tài liệu, sản phẩm/thương hiệu liên quan
+Tài liệu
+Quản lý file, phiên bản, loại tài liệu, sản phẩm/thương hiệu liên quan
+SEO | Title, description, canonical, index/noindex, schema phù hợp
+SEO
+Title, description, canonical, index/noindex, schema phù hợp
+Liên hệ | SĐT, email, Zalo, địa chỉ, QR dùng chung cho web và PDF
+Liên hệ
+SĐT, email, Zalo, địa chỉ, QR dùng chung cho web và PDF
+Sự kiện đo lường đề xuất
+Mở tab công cụ; hoàn tất tính; thay bộ lọc; mở chi tiết sản phẩm; copy SKU; chọn/bỏ chọn; đổi số lượng; cảnh báo ±5%; tải PDF; gửi email; mở Zalo; mở SET; cập nhật bản cũ.
+Không gửi dữ liệu cá nhân vào tên sự kiện hoặc tham số analytics.
+Báo cáo tập trung nhu cầu, tab, bộ lọc, SKU được chọn và tỷ lệ hoàn tất; không biến backend thành danh sách lead rác.
+16. Responsive, trạng thái và khả năng sử dụng
+Khu vực | Desktop | Mobile
+Khu vực
+Desktop
+Mobile
+Menu | Mega/dropdown theo nhánh | Menu drawer; giữ tìm kiếm và liên hệ nổi bật
+Menu
+Mega/dropdown theo nhánh
+Menu drawer; giữ tìm kiếm và liên hệ nổi bật
+Bộ lọc | Một hàng ngang 4 điều kiện | Nút “Lọc” mở bottom sheet; hiện chip đang áp dụng
+Bộ lọc
+Một hàng ngang 4 điều kiện
+Nút “Lọc” mở bottom sheet; hiện chip đang áp dụng
+Bảng kết quả | 10 cột, sticky header nếu cần | Card; thông số phụ thu gọn
+Bảng kết quả
+10 cột, sticky header nếu cần
+Card; thông số phụ thu gọn
+Tab công cụ | 3 tab ngang | Scrollable tabs hoặc dropdown rõ; URL không đổi
+Tab công cụ
+3 tab ngang
+Scrollable tabs hoặc dropdown rõ; URL không đổi
+Tóm tắt lựa chọn | Khối sticky bên phải/dưới | Thanh tóm tắt dính đáy, mở panel chi tiết
+Tóm tắt lựa chọn
+Khối sticky bên phải/dưới
+Thanh tóm tắt dính đáy, mở panel chi tiết
+PDF/email/Zalo | Ba CTA phân cấp | Nút đủ lớn, không sát nhau; Zalo không che nội dung
+PDF/email/Zalo
+Ba CTA phân cấp
+Nút đủ lớn, không sát nhau; Zalo không che nội dung
+Trạng thái bắt buộc phải thiết kế
+Chưa nhập dữ liệu; đang tính; có kết quả; không có sản phẩm; lỗi dữ liệu/API; đang lọc; đã chọn 1/2/3 dòng; vượt ±5%; giá chưa có; sản phẩm ngừng kinh doanh; gửi thành công/thất bại; link bản dự tính hết hạn.
+Yêu cầu tiếp cận và thao tác
+Nhãn form luôn hiện, không chỉ dùng placeholder.
+Bàn phím thao tác được; focus rõ; copy SKU có phản hồi.
+Màu không là tín hiệu duy nhất cho cảnh báo.
+Ảnh có alt; bảng/card có tiêu đề và đơn vị rõ.
+Không mở trang chi tiết khi người dùng đang bấm Chọn, copy SKU hoặc chỉnh số lượng.
+17. Ma trận trách nhiệm trước khi lập trình
+Nội dung | Trạng thái | Chủ trì | Đầu ra
+Nội dung
+Trạng thái
+Chủ trì
+Đầu ra
+Sitemap/menu/URL | ĐÃ CHỐT | Mắt Bão | Sitemap + wireframe
+Sitemap/menu/URL
+ĐÃ CHỐT
+Mắt Bão
+Sitemap + wireframe
+Cấu trúc trang thương hiệu | ĐÃ CHỐT | Mắt Bão | Áp dụng mẫu brand.html, chỉnh theo đặc tả
+Cấu trúc trang thương hiệu
+ĐÃ CHỐT
+Mắt Bão
+Áp dụng mẫu brand.html, chỉnh theo đặc tả
+Ba tab và thứ tự | ĐÃ CHỐT | Mắt Bão | Link ổn định theo tab
+Ba tab và thứ tự
+ĐÃ CHỐT
+Mắt Bão
+Link ổn định theo tab
+4 bộ lọc, tối đa 6 kết quả | ĐÃ CHỐT | Mắt Bão | Prototype PC/mobile
+4 bộ lọc, tối đa 6 kết quả
+ĐÃ CHỐT
+Mắt Bão
+Prototype PC/mobile
+Bảng 10 cột + card mobile | ĐÃ CHỐT | Mắt Bão | Component + states
+Bảng 10 cột + card mobile
+ĐÃ CHỐT
+Mắt Bão
+Component + states
+Chọn tối đa 3, mục tiêu ±5% | ĐÃ CHỐT | Mắt Bão | Logic có test
+Chọn tối đa 3, mục tiêu ±5%
+ĐÃ CHỐT
+Mắt Bão
+Logic có test
+Công thức và bộ test | ĐÃ CHỐT | Winline | File công thức bàn giao v05
+Công thức và bộ test
+ĐÃ CHỐT
+Winline
+File công thức bàn giao v05
+Dữ liệu sản phẩm thật | PHỐI HỢP | Hai bên | Schema + mapping + mẫu dữ liệu
+Dữ liệu sản phẩm thật
+PHỐI HỢP
+Hai bên
+Schema + mapping + mẫu dữ liệu
+Backend/PDF/email/Zalo | MẮT BÃO XÁC NHẬN | Mắt Bão | Kiến trúc, chi phí vận hành, bảo mật
+Backend/PDF/email/Zalo
+MẮT BÃO XÁC NHẬN
+Mắt Bão
+Kiến trúc, chi phí vận hành, bảo mật
+Nội dung SET | DỰ PHÒNG | Winline | Danh sách và nội dung SET
+Nội dung SET
+DỰ PHÒNG
+Winline
+Danh sách và nội dung SET
+Chính sách lưu/PII | PHỐI HỢP | Hai bên | Thời hạn lưu, consent, phân quyền
+Chính sách lưu/PII
+PHỐI HỢP
+Hai bên
+Thời hạn lưu, consent, phân quyền
+Nội dung Mắt Bão phải phản hồi bằng văn bản
+Giải pháp URL tab, lưu trạng thái khi mở chi tiết và chia sẻ link.
+Schema sản phẩm/công thức/phiên dự tính/SET.
+Cách sinh PDF backend và gửi email; font tiếng Việt, QR, ảnh.
+Khả năng mở Zalo với tóm tắt + link; giới hạn đính kèm file.
+Chống spam, phân quyền PII, thời hạn lưu, sao lưu và log lỗi.
+Hiệu năng bảng/filter trên PC/mobile với dữ liệu thật.
+18. Tiến trình một lần và tiêu chí nghiệm thu
+Phạm vi thương mại  Winline đã dự tính chi phí và mong muốn triển khai đầy đủ một lần. Các mốc dưới đây là checkpoint nghiệm thu trong cùng phạm vi, không phải đề xuất chia nhỏ đầu tư.
+Phạm vi thương mại  Winline đã dự tính chi phí và mong muốn triển khai đầy đủ một lần. Các mốc dưới đây là checkpoint nghiệm thu trong cùng phạm vi, không phải đề xuất chia nhỏ đầu tư.
+Mốc | Sản phẩm bàn giao | Điều kiện qua mốc
+Mốc
+Sản phẩm bàn giao
+Điều kiện qua mốc
+1. Maps | Sitemap, URL, luồng, inventory trang | Hai bên xác nhận đúng tài liệu này
+1. Maps
+Sitemap, URL, luồng, inventory trang
+Hai bên xác nhận đúng tài liệu này
+2. Wireframe | Desktop + mobile; trạng thái chính | Không thiếu hành trình SKU, nhu cầu, công cụ, lưu/gửi
+2. Wireframe
+Desktop + mobile; trạng thái chính
+Không thiếu hành trình SKU, nhu cầu, công cụ, lưu/gửi
+3. Data & formula | Schema, mapping, công thức, test cases | Winline ký xác nhận đầu vào/kết quả mẫu
+3. Data & formula
+Schema, mapping, công thức, test cases
+Winline ký xác nhận đầu vào/kết quả mẫu
+4. UI prototype | Design system + prototype tương tác | Đúng 10 cột/card, 4 filter, max 6, 3 dòng chọn
+4. UI prototype
+Design system + prototype tương tác
+Đúng 10 cột/card, 4 filter, max 6, 3 dòng chọn
+5. Development | Frontend, backend, CMS, PDF/email/Zalo | Chạy bằng database thật; log lỗi rõ
+5. Development
+Frontend, backend, CMS, PDF/email/Zalo
+Chạy bằng database thật; log lỗi rõ
+6. QA & UAT | Test PC/mobile, trình duyệt, SEO, privacy | Tất cả test quan trọng đạt
+6. QA & UAT
+Test PC/mobile, trình duyệt, SEO, privacy
+Tất cả test quan trọng đạt
+7. Go-live | Dữ liệu, redirect, analytics, backup | Có rollback và người phụ trách
+7. Go-live
+Dữ liệu, redirect, analytics, backup
+Có rollback và người phụ trách
+Checklist nghiệm thu trọng yếu
+Menu dùng “Chọn theo nhu cầu”, không dùng “Giải pháp”.
+Ba link tab mở đúng trạng thái kể cả khi chia sẻ.
+Điện áp nằm vùng input; cột điện áp ẩn khi đã chọn.
+Kết quả tối đa 6, không nút xem thêm 10–12 trong công cụ.
+Bộ lọc chỉ một hàng 4 tiêu chí, không bộ sắp xếp cạnh tranh.
+SKU dễ thấy/copy; click dòng không xung đột nút Chọn.
+Chọn tối đa 3; dòng chính bù số lượng; cảnh báo ±5% không khóa thao tác.
+Cooling pad có hai bảng nhưng một tổng và một file.
+PDF đúng logo/liên hệ/giá/disclaimer và mở tốt Office 365/browser phổ biến.
+Không còn TCVN 5687:2024 và các tuyên bố “chính xác/tối ưu” chưa có căn cứ.
+19. Phụ lục — nội dung mẫu dùng ngay
+Tên khối kết quả
+Đề xuất  Gợi ý sản phẩm theo lưu lượng tính toán
+Đề xuất  Gợi ý sản phẩm theo lưu lượng tính toán
+Cảnh báo chênh lệch
+Trong ngưỡng  Tổng lưu lượng đã chọn đang nằm trong khoảng dự tính ±5%.
+Trong ngưỡng  Tổng lưu lượng đã chọn đang nằm trong khoảng dự tính ±5%.
+Ngoài ngưỡng  Tổng lưu lượng đã chọn đang chênh lệch hơn ±5% so với nhu cầu. Bạn có thể điều chỉnh số lượng hoặc tiếp tục lưu bản dự tính để trao đổi với Winline.
+Ngoài ngưỡng  Tổng lưu lượng đã chọn đang chênh lệch hơn ±5% so với nhu cầu. Bạn có thể điều chỉnh số lượng hoặc tiếp tục lưu bản dự tính để trao đổi với Winline.
+Nút Zalo
+CTA  Gửi bản dự tính cho Winline qua Zalo
+CTA  Gửi bản dự tính cho Winline qua Zalo
+Dòng hỗ trợ: Winline sẽ tiếp nhận bản dự tính để trao đổi thêm về sản phẩm, số lượng, giá và khả năng cung ứng.
+Khái niệm SET
+SET tham khảo là phương án Winline chuẩn bị sẵn cho một nhu cầu hoặc bối cảnh phổ biến. Khách hàng có thể mở SET, thay đổi dữ liệu đầu vào, model và số lượng rồi lưu thành bản dự tính riêng. SET không thay thế thiết kế kỹ thuật và không phải báo giá cố định.
+Nguồn và giới hạn tài liệu
+Tài liệu này tổng hợp các quyết định trong quá trình trao đổi, bản demo Winline, brand.html, cong_cu_tinh_quat_corrected_4(1).html và file công thức chốt v05. Danh sách sản phẩm trong Excel chỉ dùng tham khảo/kiểm thử; SKU, thông số, giá, ảnh, URL và trạng thái sản phẩm vận hành lấy từ database của Mắt Bão. Thông tin pháp lý, liên hệ và chính sách giá do Winline cung cấp/xác nhận.

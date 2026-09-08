@@ -91,8 +91,8 @@
     <!-- 2. Giới thiệu -->
     <a href="{{ route('client.about') }}" class="nav-top {{ request()->routeIs('client.about') ? 'active' : '' }}">Giới thiệu</a>
 
-    <!-- 3. Giải pháp -->
-    <a href="{{ route('client.solutions') }}" class="nav-top {{ request()->routeIs('client.solutions') ? 'active' : '' }}">Giải pháp</a>
+    <!-- 3. Chọn theo nhu cầu -->
+    <a href="{{ route('client.demands') }}" class="nav-top {{ request()->routeIs('client.solutions') || request()->routeIs('client.demands') ? 'active' : '' }}">Chọn theo nhu cầu</a>
 
     <!-- 4. Dự án -->
     <a href="{{ route('client.projects') }}" class="nav-top {{ request()->routeIs('client.projects') ? 'active' : '' }}">Dự án</a>

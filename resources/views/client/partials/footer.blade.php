@@ -44,7 +44,7 @@
             <li><a href="{{ route('client.about') }}">Giới thiệu công ty</a></li>
             <li><a href="{{ route('client.about') }}">Hồ sơ năng lực &amp; CQ/CO</a></li>
             <li><a href="{{ route('client.brands') }}">Thương hiệu phân phối chính hãng</a></li>
-            <li><a href="{{ route('client.solutions') }}">Giải pháp làm mát &amp; Thông gió xưởng</a></li>
+            <li><a href="{{ route('client.demands') }}">Chọn theo nhu cầu thông gió xưởng</a></li>
             <li><a href="{{ route('client.projects') }}">Dự án công trình tiêu biểu</a></li>
             <li><a href="{{ route('client.news') }}">Tin tức &amp; Cẩm nang kỹ thuật HVAC</a></li>
             <li><a href="{{ route('client.about') }}">Chính sách bảo mật thông tin</a></li>

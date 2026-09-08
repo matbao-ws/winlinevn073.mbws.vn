@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công cụ tính lưu lượng quạt | Winline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-950: #00354F;
+            --navy-800: #004E7D;
+            --navy-700: #1F6690;
+            --navy-100: #E6EEF3;
+            --orange: #D41E3D;
+            --orange-dark: #A71830;
+            --orange-100: #F4E6E9;
+            --green: #1E8A5F;
+            --ink: #1A2230;
+            --ink-soft: #5C6773;
+            --paper: #F7F8FA;
+            --line: #DDE3EA;
+            --warning-yellow: #FFC107;
+            --warning-red: #DC3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            color: var(--ink);
+            background: var(--paper);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(180deg, var(--navy-950) 0%, var(--navy-800) 100%);
+            color: white;
+            padding: 48px 0 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Guide Box */
+        .guide-box {
+            background: #E6F4EE;
+            border-left: 4px solid var(--green);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 32px 0;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #1E8A5F;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            font-weight: 600;
+            font-size: 14px;
+            padding: 13px 20px;
+            border-radius: 8px 8px 0 0;
+            border: 1px solid var(--line);
+            border-bottom: none;
+            background: #E6EEF3;
+            color: var(--ink-soft);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: var(--ink);
+            box-shadow: 0 -2px 0 var(--orange) inset;
+        }
+
+        .panel {
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        /* Card Sections */
+        .card {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--navy-800);
+        }
+
+        .card-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: var(--navy-950);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Space Selector */
+        .space-selector {
+            background: linear-gradient(135deg, #E6F4EE 0%, #E6EEF3 100%);
+            border: 2px solid var(--green);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(30, 138, 95, 0.12);
+        }
+
+        .space-selector h2 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--navy-950);
+        }
+
+        .space-selector-label {
+            font-size: 12px;
+            color: var(--ink-soft);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .space-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .space-btn {
+            padding: 14px 16px;
+            border: 2px solid var(--line);
+            border-radius: 10px;
+            background: white;
+            color: var(--ink);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .space-btn.active {
+            border-color: var(--green);
+            background: var(--green);
+            color: white;
+        }
+
+        /* Input Group */
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .input-grid .input-group {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--ink-soft);
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 14px;
+            background: var(--paper);
+            color: var(--ink);
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--orange);
+            background: white;
+        }
+
+        /* Result Metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .metric {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .metric-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--navy-800);
+        }
+
+        /* Table Styles */
+        .table-section {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .table-title {
+            font-size: 14px;
+            font-weight: 600;
+            background: var(--navy-950);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--line);
+            border-radius: 0 0 12px 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #F0F4F8;
+        }
+
+        th {
+            padding: 14px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border-bottom: 2px solid var(--line);
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid var(--line);
+            font-size: 13px;
+        }
+
+        tbody tr:hover {
+            background: #F9FAFB;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #E6EEF3;
+            color: var(--navy-800);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .price {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            color: var(--orange);
+        }
+
+        .editable-qty {
+            width: 60px;
+            padding: 6px 8px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* Warning Alert */
+        .alert-warning {
+            background: #FFF3CD;
+            border: 2px solid var(--warning-red);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            visibility: hidden;  /* Keep space, but hidden */
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .alert-warning.show {
+            visibility: visible;  /* Show when alert is needed */
+            opacity: 1;
+        }
+
+        .alert-warning-icon {
+            font-size: 24px;
+            min-width: 24px;
+        }
+
+        .alert-warning-text {
+            color: var(--warning-red);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #E6F4EE 0%, #E6EEF3 100%);
+            border: 2px solid var(--green);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .summary-value {
+            color: var(--green);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding-top: 12px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--navy-100);
+            color: var(--navy-800);
+            border: 1px solid var(--navy-800);
+        }
+
+        .btn-danger {
+            background: white;
+            border: 1px solid #ddd;
+            color: #999;
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <h1>🎯 Công cụ tính lưu lượng quạt thông gió & làm mát</h1>
+            <p>Chuẩn TCVN 5687:2024 - Tính toán chính xác, lựa chọn quạt tối ưu cho công trình của bạn</p>
+        </div>
+    </div>
+
+    <div class="container" style="padding-top: 40px; padding-bottom: 60px;">
+        <div class="guide-box">
+            <strong>💡 Hướng dẫn sử dụng:</strong><br>
+            1. Chọn loại không gian và nhập thông số phòng → Hệ thống tính lưu lượng gió cần thiết<br>
+            2. Chọn 1-3 loại quạt từ danh sách → Hệ thống tự động chia số lượng hợp lý<br>
+            3. Điều chỉnh số lượng nếu cần → Hệ thống tự động tính bù cho các loại khác<br>
+            4. In, lưu PDF hoặc gửi email báo giá
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="tab1">📊 Thông gió văn phòng, Phòng bếp & WC</button>
+            <button class="tab-btn" data-tab="tab2">🔄 Thông gió - Hút khí</button>
+            <button class="tab-btn" data-tab="tab3">❄️ Làm mát nhà xưởng cooling pad</button>
+        </div>
+
+        <!-- TAB 1 -->
+        <div class="panel active" id="tab1">
+            <div class="space-selector">
+                <h2>🎯 Chọn loại không gian</h2>
+                <span class="space-selector-label">Tiêu chuẩn trao đổi khí:</span>
+                <div class="space-options">
+                    <button class="space-btn active" data-boiso="6" onclick="updateBoiso('tab1', 6)">
+                        <strong>Phòng khách</strong>
+                        <small>6 lần/giờ</small>
+                    </button>
+                    <button class="space-btn" data-boiso="10" onclick="updateBoiso('tab1', 10)">
+                        <strong>Phòng bếp</strong>
+                        <small>10 lần/giờ</small>
+                    </button>
+                    <button class="space-btn" data-boiso="12" onclick="updateBoiso('tab1', 12)">
+                        <strong>WC / Phòng tắm</strong>
+                        <small>12 lần/giờ</small>
+                    </button>
+                    <button class="space-btn" data-boiso="8" onclick="updateBoiso('tab1', 8)">
+                        <strong>Phòng ngủ</strong>
+                        <small>8 lần/giờ</small>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-number">1</span>Thông số không gian</h3>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>Diện tích phòng (m²)</label>
+                        <input type="number" id="tab1_area" value="50" min="1" onchange="calculateTab1()">
+                    </div>
+                    <div class="input-group">
+                        <label>Chiều cao trung bình (m)</label>
+                        <input type="number" id="tab1_height" value="3" min="1" step="0.1" onchange="calculateTab1()">
+                    </div>
+                    <div class="input-group">
+                        <label>Bội số trao đổi khí (lần/giờ)</label>
+                        <input type="number" id="tab1_boiso" value="6" min="1" onchange="calculateTab1()">
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 32px;"><span class="card-number">2</span>Kết quả tính toán</h3>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-label">Thể tích không gian</div>
+                        <div class="metric-value"><span id="tab1_vol">150</span> <span style="font-size: 14px;">m³</span></div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Lưu lượng gió cần</div>
+                        <div class="metric-value"><span id="tab1_flow">900</span> <span style="font-size: 14px;">m³/h</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="table-section">
+                <div class="table-title">📋 <span id="tab1_count">12</span> quạt phù hợp</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Kích thước lỗ (mm)</th>
+                                <th>Kích thước phủ bì (mm)</th>
+                                <th>Điện áp (V)</th>
+                                <th>Công suất (W)</th>
+                                <th>Độ ồn (dB)</th>
+                                <th>Áp suất (Pa)</th>
+                                <th>Số lượng</th>
+                                <th>Lưu lượng (m³/h)</th>
+                                <th>Thương hiệu</th>
+                                <th>Đơn giá (VND)</th>
+                                <th>Chọn</th>
+                                <th>Xem chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tab1_products"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Selected Items -->
+            <div id="tab1_selected_section">
+                <!-- Alert Warning -->
+                <div class="alert-warning" id="tab1_alert">
+                    <span class="alert-warning-icon">⚠️</span>
+                    <span class="alert-warning-text" id="tab1_alert_text">Bạn đã chọn sai số lượng - Lưu lượng vượt quá ±20%</span>
+                </div>
+
+                <!-- Summary -->
+                <div class="summary-box" id="tab1_summary">
+                    <div class="summary-row">
+                        <span>Tổng lưu lượng cần:</span>
+                        <span class="summary-value"><span id="tab1_needed_flow">900</span> m³/h</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tổng lưu lượng chọn:</span>
+                        <span class="summary-value"><span id="tab1_total_flow">0</span> m³/h</span>
+                    </div>
+                </div>
+
+                <div class="table-section">
+                    <div class="table-title">📋 Danh sách đã chọn - <span id="tab1_selected_count">0</span> loại</div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Thương hiệu</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá (VND)</th>
+                                    <th>Thành tiền (VND)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tab1_selected">
+                                <tr style="text-align: center; color: var(--ink-soft);">
+                                    <td colspan="7">Chọn quạt từ bảng trên để thêm vào danh sách</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="padding: 16px; background: var(--paper); border-radius: 0 0 12px 12px; border: 1px solid var(--line); border-top: none;">
+                        <div style="text-align: right; margin-bottom: 16px;">
+                            <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Tổng cộng: <span id="tab1_total_price" style="color: var(--orange); font-size: 18px; font-family: 'IBM Plex Mono';">0</span> VND</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-secondary" onclick="previewSelection('tab1')">👀 Xem trước</button>
+                            <button class="btn-secondary" onclick="printSelection('tab1')">🖨️ In</button>
+                            <button class="btn-primary" onclick="downloadSelection('tab1')" id="tab1_btn_download">📥 Tải PDF</button>
+                            <button class="btn-primary" onclick="emailSelection('tab1')" id="tab1_btn_email">💌 Lưu vào Email</button>
+                            <button class="btn-primary" onclick="alert('Tính năng Zalo sẽ được cập nhật')" style="background: #0099FF;">💬 Zalo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2 -->
+        <div class="panel" id="tab2">
+            <div class="space-selector">
+                <h2>🎯 Chọn loại không gian</h2>
+                <span class="space-selector-label">Nhu cầu hút khí & bụi:</span>
+                <div class="space-options">
+                    <button class="space-btn active" data-boiso="20" onclick="updateBoiso('tab2', 20)">
+                        <strong>Bếp nhà hàng</strong>
+                        <small>Hút khói nấu nước</small>
+                    </button>
+                    <button class="space-btn" data-boiso="25" onclick="updateBoiso('tab2', 25)">
+                        <strong>Kho bãi / Xưởng</strong>
+                        <small>Hút bụi & khí thải</small>
+                    </button>
+                    <button class="space-btn" data-boiso="40" onclick="updateBoiso('tab2', 40)">
+                        <strong>Phòng sơn</strong>
+                        <small>Hút khí hóa chất</small>
+                    </button>
+                    <button class="space-btn" data-boiso="30" onclick="updateBoiso('tab2', 30)">
+                        <strong>Hút di động</strong>
+                        <small>Quạt xách tay tốc độ cao</small>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-number">1</span>Thông số không gian</h3>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>Diện tích phòng (m²)</label>
+                        <input type="number" id="tab2_area" value="100" min="1" onchange="calculateTab2()">
+                    </div>
+                    <div class="input-group">
+                        <label>Chiều cao trung bình (m)</label>
+                        <input type="number" id="tab2_height" value="3.5" min="1" step="0.1" onchange="calculateTab2()">
+                    </div>
+                    <div class="input-group">
+                        <label>Bội số trao đổi khí (lần/giờ)</label>
+                        <input type="number" id="tab2_boiso" value="20" min="1" onchange="calculateTab2()">
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 32px;"><span class="card-number">2</span>Kết quả tính toán</h3>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-label">Thể tích không gian</div>
+                        <div class="metric-value"><span id="tab2_vol">350</span> <span style="font-size: 14px;">m³</span></div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Lưu lượng gió cần</div>
+                        <div class="metric-value"><span id="tab2_flow">7.000</span> <span style="font-size: 14px;">m³/h</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="table-section">
+                <div class="table-title">📋 <span id="tab2_count">12</span> quạt phù hợp</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Kích thước lỗ (mm)</th>
+                                <th>Kích thước phủ bì (mm)</th>
+                                <th>Điện áp (V)</th>
+                                <th>Công suất (W)</th>
+                                <th>Độ ồn (dB)</th>
+                                <th>Áp suất (Pa)</th>
+                                <th>Số lượng</th>
+                                <th>Lưu lượng (m³/h)</th>
+                                <th>Thương hiệu</th>
+                                <th>Đơn giá (VND)</th>
+                                <th>Chọn</th>
+                                <th>Xem chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tab2_products"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Selected Items -->
+            <div id="tab2_selected_section">
+                <!-- Alert Warning -->
+                <div class="alert-warning" id="tab2_alert">
+                    <span class="alert-warning-icon">⚠️</span>
+                    <span class="alert-warning-text" id="tab2_alert_text">Bạn đã chọn sai số lượng - Lưu lượng vượt quá ±20%</span>
+                </div>
+
+                <!-- Summary -->
+                <div class="summary-box" id="tab2_summary">
+                    <div class="summary-row">
+                        <span>Tổng lưu lượng cần:</span>
+                        <span class="summary-value"><span id="tab2_needed_flow">7000</span> m³/h</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tổng lưu lượng chọn:</span>
+                        <span class="summary-value"><span id="tab2_total_flow">0</span> m³/h</span>
+                    </div>
+                </div>
+
+                <div class="table-section">
+                    <div class="table-title">📋 Danh sách đã chọn - <span id="tab2_selected_count">0</span> loại</div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Thương hiệu</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá (VND)</th>
+                                    <th>Thành tiền (VND)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tab2_selected">
+                                <tr style="text-align: center; color: var(--ink-soft);">
+                                    <td colspan="7">Chọn quạt từ bảng trên để thêm vào danh sách</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="padding: 16px; background: var(--paper); border-radius: 0 0 12px 12px; border: 1px solid var(--line); border-top: none;">
+                        <div style="text-align: right; margin-bottom: 16px;">
+                            <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Tổng cộng: <span id="tab2_total_price" style="color: var(--orange); font-size: 18px; font-family: 'IBM Plex Mono';">0</span> VND</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-secondary" onclick="previewSelection('tab2')">👀 Xem trước</button>
+                            <button class="btn-secondary" onclick="printSelection('tab2')">🖨️ In</button>
+                            <button class="btn-primary" onclick="downloadSelection('tab2')" id="tab2_btn_download">📥 Tải PDF</button>
+                            <button class="btn-primary" onclick="emailSelection('tab2')" id="tab2_btn_email">💌 Lưu vào Email</button>
+                            <button class="btn-primary" onclick="alert('Tính năng Zalo sẽ được cập nhật')" style="background: #0099FF;">💬 Zalo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3 -->
+        <div class="panel" id="tab3">
+            <div class="space-selector">
+                <h2>🎯 Chọn loại không gian</h2>
+                <span class="space-selector-label">Nhu cầu làm mát áp suất âm:</span>
+                <div class="space-options">
+                    <button class="space-btn active" data-boiso="50" onclick="updateBoiso('tab3', 50)">
+                        <strong>Xưởng thông thoáng</strong>
+                        <small>Làm mát thông thường</small>
+                    </button>
+                    <button class="space-btn" data-boiso="60" onclick="updateBoiso('tab3', 60)">
+                        <strong>Xưởng nóng</strong>
+                        <small>Nhiều máy, đông người</small>
+                    </button>
+                    <button class="space-btn" data-boiso="40" onclick="updateBoiso('tab3', 40)">
+                        <strong>Trang trại khép kín</strong>
+                        <small>Chăn nuôi, trồng nông sản</small>
+                    </button>
+                    <button class="space-btn" data-boiso="70" onclick="updateBoiso('tab3', 70)">
+                        <strong>Xưởng nặng</strong>
+                        <small>Ép nhựa, hóa chất, cao nhiệt</small>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-number">1</span>Thông số nhà xưởng</h3>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>Diện tích cần làm mát (m²)</label>
+                        <input type="number" id="tab3_area" value="200" min="1" onchange="calculateTab3()">
+                    </div>
+                    <div class="input-group">
+                        <label>Chiều cao trung bình (m)</label>
+                        <input type="number" id="tab3_height" value="6" min="1" step="0.1" onchange="calculateTab3()">
+                    </div>
+                    <div class="input-group">
+                        <label>Bội số trao đổi khí (lần/giờ)</label>
+                        <input type="number" id="tab3_boiso" value="50" min="1" onchange="calculateTab3()">
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 32px;"><span class="card-number">2</span>Kết quả tính toán</h3>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-label">Thể tích không gian</div>
+                        <div class="metric-value"><span id="tab3_vol">1.200</span> <span style="font-size: 14px;">m³</span></div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Lưu lượng gió cần</div>
+                        <div class="metric-value"><span id="tab3_flow">60.000</span> <span style="font-size: 14px;">m³/h</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="table-section">
+                <div class="table-title">📋 <span id="tab3_count">12</span> quạt phù hợp</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Kích thước lỗ (mm)</th>
+                                <th>Kích thước phủ bì (mm)</th>
+                                <th>Điện áp (V)</th>
+                                <th>Công suất (W)</th>
+                                <th>Độ ồn (dB)</th>
+                                <th>Áp suất (Pa)</th>
+                                <th>Số lượng</th>
+                                <th>Lưu lượng (m³/h)</th>
+                                <th>Thương hiệu</th>
+                                <th>Đơn giá (VND)</th>
+                                <th>Chọn</th>
+                                <th>Xem chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tab3_products"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Selected Items -->
+            <div id="tab3_selected_section">
+                <!-- Alert Warning -->
+                <div class="alert-warning" id="tab3_alert">
+                    <span class="alert-warning-icon">⚠️</span>
+                    <span class="alert-warning-text" id="tab3_alert_text">Bạn đã chọn sai số lượng - Lưu lượng vượt quá ±20%</span>
+                </div>
+
+                <!-- Summary -->
+                <div class="summary-box" id="tab3_summary">
+                    <div class="summary-row">
+                        <span>Tổng lưu lượng cần:</span>
+                        <span class="summary-value"><span id="tab3_needed_flow">60000</span> m³/h</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tổng lưu lượng chọn:</span>
+                        <span class="summary-value"><span id="tab3_total_flow">0</span> m³/h</span>
+                    </div>
+                </div>
+
+                <div class="table-section">
+                    <div class="table-title">📋 Danh sách đã chọn - <span id="tab3_selected_count">0</span> loại</div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Thương hiệu</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá (VND)</th>
+                                    <th>Thành tiền (VND)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tab3_selected">
+                                <tr style="text-align: center; color: var(--ink-soft);">
+                                    <td colspan="7">Chọn quạt từ bảng trên để thêm vào danh sách</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="padding: 16px; background: var(--paper); border-radius: 0 0 12px 12px; border: 1px solid var(--line); border-top: none;">
+                        <div style="text-align: right; margin-bottom: 16px;">
+                            <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Tổng cộng: <span id="tab3_total_price" style="color: var(--orange); font-size: 18px; font-family: 'IBM Plex Mono';">0</span> VND</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-secondary" onclick="previewSelection('tab3')">👀 Xem trước</button>
+                            <button class="btn-secondary" onclick="printSelection('tab3')">🖨️ In</button>
+                            <button class="btn-primary" onclick="downloadSelection('tab3')" id="tab3_btn_download">📥 Tải PDF</button>
+                            <button class="btn-primary" onclick="emailSelection('tab3')" id="tab3_btn_email">💌 Lưu vào Email</button>
+                            <button class="btn-primary" onclick="alert('Tính năng Zalo sẽ được cập nhật')" style="background: #0099FF;">💬 Zalo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Safe parse Vietnamese number format (1.000,50 → 1000.50)
+        function parseVietnameseNumber(str) {
+            if (!str) return 0;
+            return parseFloat(String(str).replace(/\./g, '').replace(',', '.')) || 0;
+        }
+
+        // Mock Products Data - 14 columns
+        const mockProducts = {
+            tab1: [
+                { sku: 'VW-60', name: 'Quạt gắn tường VW-60', sizeHole: '150x150', sizeCover: '180x180', voltage: 220, power: 60, noise: '', pressure: '', brand: 'Vinawind', price: 690000, airflow: 300 },
+                { sku: 'VW-80', name: 'Quạt gắn tường VW-80', sizeHole: '150x150', sizeCover: '180x180', voltage: 220, power: 80, noise: '', pressure: '', brand: 'Vinawind', price: 850000, airflow: 400 },
+                { sku: 'TC-100', name: 'Quạt hút trần TC-100', sizeHole: '200x200', sizeCover: '230x230', voltage: 220, power: 100, noise: '', pressure: '', brand: 'Tico', price: 950000, airflow: 500 },
+                { sku: 'TC-120', name: 'Quạt hút trần TC-120', sizeHole: '200x200', sizeCover: '230x230', voltage: 220, power: 120, noise: '', pressure: '', brand: 'Tico', price: 1100000, airflow: 600 },
+                { sku: 'KM-150', name: 'Quạt nối ống KM-150', sizeHole: '250x250', sizeCover: '280x280', voltage: 220, power: 150, noise: '', pressure: '', brand: 'Komasu', price: 1450000, airflow: 800 },
+                { sku: 'KM-180', name: 'Quạt nối ống KM-180', sizeHole: '250x250', sizeCover: '280x280', voltage: 220, power: 180, noise: '', pressure: '', brand: 'Komasu', price: 1650000, airflow: 1000 },
+                { sku: 'SE-200', name: 'Quạt gắn tường SE-200', sizeHole: '300x300', sizeCover: '330x330', voltage: 380, power: 200, noise: '', pressure: '', brand: 'Senko', price: 1800000, airflow: 1100 },
+                { sku: 'SE-220', name: 'Quạt gắn tường SE-220', sizeHole: '300x300', sizeCover: '330x330', voltage: 380, power: 220, noise: '', pressure: '', brand: 'Senko', price: 1950000, airflow: 1200 },
+                { sku: 'HA-240', name: 'Quạt hút trần HA-240', sizeHole: '350x350', sizeCover: '380x380', voltage: 380, power: 240, noise: '', pressure: '', brand: 'Hatari', price: 2150000, airflow: 1400 },
+                { sku: 'HA-260', name: 'Quạt hút trần HA-260', sizeHole: '350x350', sizeCover: '380x380', voltage: 380, power: 260, noise: '', pressure: '', brand: 'Hatari', price: 2300000, airflow: 1500 },
+                { sku: 'VW-280', name: 'Quạt nối ống VW-280', sizeHole: '350x350', sizeCover: '380x380', voltage: 380, power: 280, noise: '', pressure: '', brand: 'Vinawind', price: 2200000, airflow: 1600 },
+                { sku: 'TC-300', name: 'Quạt nối ống TC-300', sizeHole: '350x350', sizeCover: '380x380', voltage: 380, power: 300, noise: '', pressure: '', brand: 'Tico', price: 2450000, airflow: 1600 },
+            ],
+            tab2: [
+                { sku: 'LT-300', name: 'Quạt ly tâm LT-300', sizeHole: '300x300', sizeCover: '330x330', voltage: 220, power: 300, noise: '', pressure: '', brand: 'Tico', price: 3200000, airflow: 5000 },
+                { sku: 'LT-350', name: 'Quạt ly tâm LT-350', sizeHole: '300x300', sizeCover: '330x330', voltage: 220, power: 350, noise: '', pressure: '', brand: 'Tico', price: 3650000, airflow: 6000 },
+                { sku: 'KM-380', name: 'Quạt ly tâm KM-380', sizeHole: '400x400', sizeCover: '430x430', voltage: 380, power: 380, noise: '', pressure: '', brand: 'Komasu', price: 3950000, airflow: 6500 },
+                { sku: 'KM-400', name: 'Quạt hướng trục KM-400', sizeHole: '400x400', sizeCover: '430x430', voltage: 380, power: 400, noise: '', pressure: '', brand: 'Komasu', price: 4200000, airflow: 7000 },
+                { sku: 'VW-420', name: 'Quạt ly tâm VW-420', sizeHole: '400x400', sizeCover: '430x430', voltage: 380, power: 420, noise: '', pressure: '', brand: 'Vinawind', price: 4550000, airflow: 7500 },
+                { sku: 'VW-450', name: 'Quạt hướng trục VW-450', sizeHole: '450x450', sizeCover: '480x480', voltage: 380, power: 450, noise: '', pressure: '', brand: 'Vinawind', price: 4850000, airflow: 8000 },
+                { sku: 'SE-380', name: 'Quạt ly tâm SE-380', sizeHole: '400x400', sizeCover: '430x430', voltage: 380, power: 380, noise: '', pressure: '', brand: 'Senko', price: 3900000, airflow: 7200 },
+                { sku: 'SE-410', name: 'Quạt hướng trục SE-410', sizeHole: '400x400', sizeCover: '430x430', voltage: 380, power: 410, noise: '', pressure: '', brand: 'Senko', price: 4350000, airflow: 7800 },
+                { sku: 'HA-390', name: 'Quạt ly tâm HA-390', sizeHole: '400x400', sizeCover: '430x430', voltage: 380, power: 390, noise: '', pressure: '', brand: 'Hatari', price: 4000000, airflow: 7300 },
+                { sku: 'HA-430', name: 'Quạt hướng trục HA-430', sizeHole: '450x450', sizeCover: '480x480', voltage: 380, power: 430, noise: '', pressure: '', brand: 'Hatari', price: 4600000, airflow: 8200 },
+                { sku: 'TC-380', name: 'Quạt ly tâm TC-380', sizeHole: '400x400', sizeCover: '430x430', voltage: 380, power: 380, noise: '', pressure: '', brand: 'Tico', price: 3800000, airflow: 6800 },
+                { sku: 'KM-450', name: 'Quạt hướng trục KM-450', sizeHole: '450x450', sizeCover: '480x480', voltage: 380, power: 450, noise: '', pressure: '', brand: 'Komasu', price: 4950000, airflow: 8500 },
+            ],
+            tab3: [
+                { sku: 'KM-8000', name: 'Cooling pad KM-8000 550mm', sizeHole: '550x550', sizeCover: '600x600', voltage: 220, power: 550, noise: '', pressure: '', brand: 'Komasu', price: 3000000, airflow: 8000 },
+                { sku: 'TC-10000', name: 'Cooling pad TC-10000 650mm', sizeHole: '650x650', sizeCover: '700x700', voltage: 220, power: 600, noise: '', pressure: '', brand: 'Tico', price: 3400000, airflow: 10000 },
+                { sku: 'VW-12000', name: 'Cooling pad VW-12000 650mm', sizeHole: '650x650', sizeCover: '700x700', voltage: 380, power: 650, noise: '', pressure: '', brand: 'Vinawind', price: 3800000, airflow: 12000 },
+                { sku: 'ST-15000', name: 'Cooling pad ST-15000 750mm', sizeHole: '750x750', sizeCover: '800x800', voltage: 380, power: 700, noise: '', pressure: '', brand: 'Senko', price: 4500000, airflow: 15000 },
+                { sku: 'HA-18000', name: 'Cooling pad HA-18000 750mm', sizeHole: '750x750', sizeCover: '800x800', voltage: 380, power: 750, noise: '', pressure: '', brand: 'Hatari', price: 5200000, airflow: 18000 },
+                { sku: 'KM-20000', name: 'Cooling pad KM-20000 750mm', sizeHole: '750x750', sizeCover: '800x800', voltage: 380, power: 800, noise: '', pressure: '', brand: 'Komasu', price: 5600000, airflow: 20000 },
+                { sku: 'TC-25000', name: 'Cooling pad TC-25000 800mm', sizeHole: '800x800', sizeCover: '850x850', voltage: 380, power: 850, noise: '', pressure: '', brand: 'Tico', price: 6300000, airflow: 25000 },
+                { sku: 'VW-30000', name: 'Cooling pad VW-30000 800mm', sizeHole: '800x800', sizeCover: '850x850', voltage: 380, power: 900, noise: '', pressure: '', brand: 'Vinawind', price: 6800000, airflow: 30000 },
+                { sku: 'PM-35000', name: 'Cooling pad PM-35000 800mm', sizeHole: '800x800', sizeCover: '850x850', voltage: 380, power: 950, noise: '', pressure: '', brand: 'Panasonic', price: 7200000, airflow: 35000 },
+                { sku: 'MH-40000', name: 'Cooling pad MH-40000 800mm', sizeHole: '800x800', sizeCover: '850x850', voltage: 380, power: 1000, noise: '', pressure: '', brand: 'Mitsubishi', price: 7500000, airflow: 40000 },
+                { sku: 'ND-42000', name: 'Cooling pad ND-42000 800mm', sizeHole: '800x800', sizeCover: '850x850', voltage: 380, power: 1050, noise: '', pressure: '', brand: 'Nedfon', price: 7600000, airflow: 42000 },
+                { sku: 'CH-45000', name: 'Cooling pad CH-45000 800mm', sizeHole: '800x800', sizeCover: '850x850', voltage: 380, power: 1100, noise: '', pressure: '', brand: 'Chinghai', price: 7800000, airflow: 45000 },
+            ]
+        };
+
+        // Global state
+        const selectedItems = {
+            tab1: {},
+            tab2: {},
+            tab3: {}
+        };
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.dataset.tab;
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Update boiso
+        function updateBoiso(tab, boiso) {
+            document.getElementById(`${tab}_boiso`).value = boiso;
+            const calcFunc = tab === 'tab1' ? calculateTab1 : (tab === 'tab2' ? calculateTab2 : calculateTab3);
+            calcFunc();
+        }
+
+        // Calculate Tab 1
+        function calculateTab1() {
+            const area = parseFloat(document.getElementById('tab1_area').value) || 0;
+            const height = parseFloat(document.getElementById('tab1_height').value) || 0;
+            const boiso = parseFloat(document.getElementById('tab1_boiso').value) || 0;
+            const vol = area * height;
+            const flow = vol * boiso;
+            document.getElementById('tab1_vol').textContent = vol.toLocaleString('vi-VN');
+            document.getElementById('tab1_flow').textContent = flow.toLocaleString('vi-VN');
+            document.getElementById('tab1_needed_flow').textContent = flow.toLocaleString('vi-VN');
+            renderProducts('tab1', flow);
+        }
+
+        // Calculate Tab 2
+        function calculateTab2() {
+            const area = parseFloat(document.getElementById('tab2_area').value) || 0;
+            const height = parseFloat(document.getElementById('tab2_height').value) || 0;
+            const boiso = parseFloat(document.getElementById('tab2_boiso').value) || 0;
+            const vol = area * height;
+            const flow = vol * boiso;
+            document.getElementById('tab2_vol').textContent = vol.toLocaleString('vi-VN');
+            document.getElementById('tab2_flow').textContent = flow.toLocaleString('vi-VN');
+            document.getElementById('tab2_needed_flow').textContent = flow.toLocaleString('vi-VN');
+            renderProducts('tab2', flow);
+        }
+
+        // Calculate Tab 3
+        function calculateTab3() {
+            const area = parseFloat(document.getElementById('tab3_area').value) || 0;
+            const height = parseFloat(document.getElementById('tab3_height').value) || 0;
+            const boiso = parseFloat(document.getElementById('tab3_boiso').value) || 0;
+            const vol = area * height;
+            const flow = vol * boiso;
+            document.getElementById('tab3_vol').textContent = vol.toLocaleString('vi-VN');
+            document.getElementById('tab3_flow').textContent = flow.toLocaleString('vi-VN');
+            document.getElementById('tab3_needed_flow').textContent = flow.toLocaleString('vi-VN');
+            renderProducts('tab3', flow);
+        }
+
+        // Render products table with 14 columns
+        function renderProducts(tab, targetFlow) {
+            const products = mockProducts[tab];
+            const tbody = document.getElementById(`${tab}_products`);
+            tbody.innerHTML = '';
+
+            products.forEach((p, idx) => {
+                const quantity = Math.ceil(targetFlow / p.airflow);
+                const checkboxId = `${tab}_check_${p.sku.replace(/-/g, '_')}`;  // VW-60 → VW_60
+                const row = `
+                    <tr>
+                        <td><strong>${p.sku}</strong></td>
+                        <td>${p.name}</td>
+                        <td>${p.sizeHole}</td>
+                        <td>${p.sizeCover}</td>
+                        <td>${p.voltage}</td>
+                        <td>${p.power}</td>
+                        <td>${p.noise}</td>
+                        <td>${p.pressure}</td>
+                        <td><strong>${quantity}</strong></td>
+                        <td><strong style="color: var(--green);">${p.airflow.toLocaleString('vi-VN')}</strong></td>
+                        <td>${p.brand}</td>
+                        <td><span class="price">${(p.price / 1000000).toFixed(2)}M</span></td>
+                        <td style="text-align: center;"><input type="checkbox" id="${checkboxId}" onchange="onProductCheck('${tab}', '${p.sku}', this.checked)"></td>
+                        <td style="text-align: center;"><button class="btn-danger" onclick="alert('Chi tiết sản phẩm: ${p.sku}')">👁️</button></td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            document.getElementById(`${tab}_count`).textContent = products.length;
+        }
+
+        // When checkbox is checked, auto-calculate quantities
+        function onProductCheck(tab, sku, isChecked) {
+            if (isChecked) {
+                const checked = Object.keys(selectedItems[tab]).length + 1;
+                if (checked > 3) {
+                    alert('⚠️ Bạn chỉ được chọn tối đa 3 loại quạt');
+                    document.getElementById(`${tab}_check_${sku.replace(/-/g, '_')}`).checked = false;
+                    return;
+                }
+
+                const product = mockProducts[tab].find(p => p.sku === sku);
+                selectedItems[tab][sku] = { ...product, quantity: 1 };
+            } else {
+                delete selectedItems[tab][sku];
+            }
+
+            if (Object.keys(selectedItems[tab]).length > 0) {
+                calculateSelectedQuantities(tab);
+            }
+
+            renderSelectedList(tab);
+        }
+
+        // Calculate auto quantities (priority by airflow descending)
+        function calculateSelectedQuantities(tab) {
+            const neededFlow = parseVietnameseNumber(document.getElementById(`${tab}_needed_flow`).textContent) || 0;
+            const items = Object.values(selectedItems[tab]);
+
+            if (items.length === 0) return;
+
+            // Sort by airflow descending
+            items.sort((a, b) => b.airflow - a.airflow);
+
+            let remainingFlow = neededFlow;
+            items.forEach((item, idx) => {
+                if (idx < items.length - 1) {
+                    // Not the last item
+                    const qty = Math.floor(remainingFlow / item.airflow);
+                    item.quantity = Math.max(1, qty);
+                    remainingFlow -= item.quantity * item.airflow;
+                } else {
+                    // Last item: fill remaining
+                    const qty = Math.ceil(remainingFlow / item.airflow);
+                    item.quantity = Math.max(1, qty);
+                }
+            });
+        }
+
+        // Render selected items with validation
+        function renderSelectedList(tab) {
+            const tbody = document.getElementById(`${tab}_selected`);
+            const items = Object.values(selectedItems[tab]);
+
+            if (items.length === 0) {
+                tbody.innerHTML = '<tr style="text-align: center; color: var(--ink-soft); height: 100px;"><td colspan="7" style="vertical-align: middle;">Chọn quạt từ bảng trên để thêm vào danh sách</td></tr>';
+                document.getElementById(`${tab}_selected_count`).textContent = '0';
+                document.getElementById(`${tab}_total_price`).textContent = '0';
+                document.getElementById(`${tab}_total_flow`).textContent = '0';
+                document.getElementById(`${tab}_alert`).classList.remove('show');
+                // Disable action buttons
+                document.getElementById(`${tab}_btn_download`).disabled = true;
+                document.getElementById(`${tab}_btn_email`).disabled = true;
+                return;
+            }
+
+            let html = '';
+            let totalPrice = 0;
+            let totalFlow = 0;
+
+            items.forEach(item => {
+                const totalItemPrice = item.price * item.quantity;
+                totalPrice += totalItemPrice;
+                totalFlow += item.airflow * item.quantity;
+
+                html += `
+                    <tr>
+                        <td><strong>${item.sku}</strong></td>
+                        <td>${item.name}</td>
+                        <td>${item.brand}</td>
+                        <td>
+                            <input type="number" class="editable-qty" value="${item.quantity}" min="1" max="20" onchange="updateQuantity('${tab}', '${item.sku}', this.value)">
+                        </td>
+                        <td><span class="price">${item.price.toLocaleString('vi-VN')}</span></td>
+                        <td><strong>${totalItemPrice.toLocaleString('vi-VN')}</strong></td>
+                        <td>
+                            <button class="btn-danger" onclick="removeSelected('${tab}', '${item.sku}')">✕</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+            document.getElementById(`${tab}_selected_count`).textContent = items.length;
+            document.getElementById(`${tab}_total_price`).textContent = totalPrice.toLocaleString('vi-VN');
+            document.getElementById(`${tab}_total_flow`).textContent = totalFlow.toLocaleString('vi-VN');
+
+            // Validation - Allow ±20% tolerance
+            validateSelection(tab, totalFlow);
+
+            // Update action buttons - Enable only if within ±20% tolerance
+            const neededFlow = parseVietnameseNumber(document.getElementById(`${tab}_needed_flow`).textContent);
+            const minFlow = neededFlow * 0.8;
+            const maxFlow = neededFlow * 1.2;
+            const isValid = totalFlow >= minFlow && totalFlow <= maxFlow;
+
+            document.getElementById(`${tab}_btn_download`).disabled = !isValid;
+            document.getElementById(`${tab}_btn_email`).disabled = !isValid;
+        }
+
+        // Update quantity and recalculate
+        function updateQuantity(tab, sku, newQty) {
+            const qty = parseInt(newQty) || 1;
+            if (qty > 0 && selectedItems[tab][sku]) {
+                selectedItems[tab][sku].quantity = qty;
+                const neededFlow = parseVietnameseNumber(document.getElementById(`${tab}_needed_flow`).textContent);
+                const items = Object.values(selectedItems[tab]);
+
+                // Recalculate other items
+                let currentFlow = 0;
+                items.forEach(item => {
+                    if (item.sku !== sku) {
+                        currentFlow += item.airflow * item.quantity;
+                    } else {
+                        currentFlow += item.airflow * qty;
+                    }
+                });
+
+                let remainingFlow = neededFlow - currentFlow;
+                if (remainingFlow > 0 && items.length > 1) {
+                    // Auto-adjust other items
+                    const otherItems = items.filter(i => i.sku !== sku).sort((a, b) => b.airflow - a.airflow);
+                    if (otherItems.length > 0) {
+                        const lastItem = otherItems[otherItems.length - 1];
+                        lastItem.quantity = Math.max(1, Math.ceil(remainingFlow / lastItem.airflow));
+                    }
+                }
+
+                renderSelectedList(tab);
+            }
+        }
+
+        // Remove selected item
+        function removeSelected(tab, sku) {
+            const checkboxId = `${tab}_check_${sku.replace(/-/g, '_')}`;  // VW-60 → VW_60
+            const checkbox = document.getElementById(checkboxId);
+            if (checkbox) checkbox.checked = false;
+            delete selectedItems[tab][sku];
+            renderSelectedList(tab);  // Always render, even if empty
+        }
+
+        // Validation - Only alert if beyond ±20% tolerance
+        function validateSelection(tab, totalFlow) {
+            const neededFlow = parseVietnameseNumber(document.getElementById(`${tab}_needed_flow`).textContent);
+            const alertEl = document.getElementById(`${tab}_alert`);
+
+            // Allow ±20% tolerance
+            const minFlow = neededFlow * 0.8;
+            const maxFlow = neededFlow * 1.2;
+
+            // Only show alert if BEYOND ±20% tolerance
+            if (totalFlow < minFlow || totalFlow > maxFlow) {
+                alertEl.classList.add('show');
+            } else {
+                alertEl.classList.remove('show');
+            }
+        }
+
+        // Preview
+        function previewSelection(tab) {
+            const items = Object.values(selectedItems[tab]);
+            if (items.length === 0) {
+                alert('❌ Vui lòng chọn ít nhất 1 quạt');
+                return;
+            }
+            const neededFlow = parseVietnameseNumber(document.getElementById(`${tab}_needed_flow`).textContent);
+            const totalFlow = parseVietnameseNumber(document.getElementById(`${tab}_total_flow`).textContent);
+            if (totalFlow < neededFlow) {
+                alert('❌ Bạn đã chọn sai số lượng - Lưu lượng không đủ');
+                return;
+            }
+            alert('✅ Dự tính hợp lệ\n\nTổng lưu lượng: ' + totalFlow.toLocaleString('vi-VN') + ' m³/h\nTổng giá: ' + document.getElementById(`${tab}_total_price`).textContent + ' VND');
+        }
+
+        // Print
+        function printSelection(tab) {
+            const items = Object.values(selectedItems[tab]);
+            if (items.length === 0) {
+                alert('❌ Vui lòng chọn ít nhất 1 quạt');
+                return;
+            }
+            window.print();
+        }
+
+        // Download
+        function downloadSelection(tab) {
+            const items = Object.values(selectedItems[tab]);
+            if (items.length === 0) {
+                alert('❌ Vui lòng chọn ít nhất 1 quạt');
+                return;
+            }
+            alert('📥 Tính năng tải PDF sẽ được cập nhật');
+        }
+
+        // Email
+        function emailSelection(tab) {
+            const items = Object.values(selectedItems[tab]);
+            if (items.length === 0) {
+                alert('❌ Vui lòng chọn ít nhất 1 quạt');
+                return;
+            }
+            alert('💌 Tính năng gửi email sẽ được cập nhật');
+        }
+
+        // Initial render
+        calculateTab1();
+        calculateTab2();
+        calculateTab3();
+    </script>
+</body>
+</html>

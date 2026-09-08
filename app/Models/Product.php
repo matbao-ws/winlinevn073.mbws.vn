@@ -39,6 +39,17 @@ class Product extends Model
         'is_featured',
         'sort_order',
         'published_at',
+        'airflow',
+        'power',
+        'voltage',
+        'size_display',
+        'hole_size',
+        'fan_type',
+        'use_ventilation',
+        'use_cooling_pad',
+        'is_cooling_pad',
+        'pad_area',
+        'pad_thickness',
     ];
 
     protected $casts = [
@@ -51,6 +62,12 @@ class Product extends Model
         'is_featured' => 'boolean',
         'sort_order' => 'integer',
         'published_at' => 'datetime',
+        'airflow' => 'integer',
+        'use_ventilation' => 'boolean',
+        'use_cooling_pad' => 'boolean',
+        'is_cooling_pad' => 'boolean',
+        'pad_area' => 'decimal:2',
+        'pad_thickness' => 'integer',
     ];
 
     public function category()

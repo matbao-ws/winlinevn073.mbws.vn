@@ -19,8 +19,16 @@ Route::get('/gioi-thieu', [AboutController::class, 'index'])->name('about');
 Route::get('/san-pham', [ProductController::class, 'index'])->name('products');
 Route::get('/san-pham/{slug}', [ProductController::class, 'show'])->name('products.detail');
 Route::get('/cong-cu-tinh-quat', [CalculatorController::class, 'index'])->name('calculator');
+Route::get('/cong-cu-tinh-quat/products', [CalculatorController::class, 'apiProducts'])->name('calculator.products');
+Route::post('/cong-cu-tinh-quat/balance', [CalculatorController::class, 'balance'])->name('calculator.balance');
+Route::post('/cong-cu-tinh-quat/save', [CalculatorController::class, 'save'])->name('calculator.save');
+Route::get('/du-tinh/{publicId}', [CalculatorController::class, 'showEstimation'])->name('calculator.estimation');
+Route::get('/du-tinh/{publicId}/pdf', [CalculatorController::class, 'pdf'])->name('calculator.pdf');
+Route::post('/du-tinh/{publicId}/submit', [CalculatorController::class, 'submitRfq'])->name('calculator.submit');
+
 Route::get('/thuong-hieu', [BrandController::class, 'index'])->name('brands');
 Route::get('/giai-phap', [SolutionController::class, 'index'])->name('solutions');
+Route::get('/chon-theo-nhu-cau', [SolutionController::class, 'index'])->name('demands');
 Route::get('/du-an', [ProjectController::class, 'index'])->name('projects');
 Route::get('/tin-tuc', [NewsController::class, 'index'])->name('news');
 Route::get('/tin-tuc/{slug}', [NewsController::class, 'show'])->name('news.detail');

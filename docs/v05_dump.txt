@@ -1,0 +1,344 @@
+
+==================== SHEET: 00_Huong_dan ====================
+Row 1  : A1: CÔNG THỨC TÍNH QUẠT – TÀI LIỆU BÀN GIAO MẮT BÃO
+Row 2  : A2: Mục đích: chuyển bảng Excel đang dùng thành đặc tả có thể lập trình, đồng thời tách rõ nội dung đã chốt và nội dung cần Winline xác nhận.
+Row 4  : A4: 1. PHẠM VI VÀ NGUYÊN TẮC
+Row 5  : A5: Mục | B5: Nội dung | C5: Giải thích/ghi chú bàn giao
+Row 6  : A6: Phạm vi vòng này | B6: Thông gió tổng thể/hút khí chung; hệ thống làm mát áp suất âm bằng quạt hút + cooling pad. | C6: Không dùng file gốc như mã nguồn. Mắt Bão lập trình theo công thức, schema dữ liệu và bộ test trong file này.
+Row 7  : A7: Nguồn dữ liệu | B7: Danh sách sản phẩm trong file chỉ dùng tham khảo, minh họa và kiểm thử; không phải nguồn dữ liệu vận hành của website. | C7: Khi triển khai, toàn bộ SKU, tên, thông số, giá, ảnh, URL và trạng thái sản phẩm lấy trực tiếp từ database sản phẩm do Mắt Bão quản lý.
+Row 8  : A8: Tính chất kết quả | B8: Dự tính tham khảo theo dữ liệu người dùng nhập và thông số sản phẩm. Không thay thế thiết kế kỹ thuật hoặc báo giá chính thức. | C8: Các công thức/giả định tô màu cam là nội dung chưa đủ cơ sở hoặc có mâu thuẫn; chỉ triển khai sau khi Winline xác nhận.
+Row 9  : A9: Quy tắc số lượng | B9: Số lượng thiết bị phải làm tròn lên; sau khi chọn phải tính mức chênh lệch giữa năng lực đã chọn và nhu cầu. | C9: Các ô vàng là đầu vào; ô xanh lá là kết quả công thức; ô đỏ/cam là cảnh báo.
+Row 10 : A10: Đầu ra | B10: Một mã bản dự tính; lưu backend; tải PDF; gửi email; gửi link bản dự tính cho Winline qua Zalo. | C10: Phần hút bụi cục bộ, chụp hút và hệ thống đường ống cần thêm vận tốc bắt giữ/trở lực/áp suất; không nên dùng duy nhất bội số trao đổi khí.
+Row 12 : A12: 2. CẤU TRÚC FILE
+Row 13 : A13: Sheet | B13: Vai trò | C13: Trạng thái
+Row 14 : A14: 01_Thong_gio_chung | B14: Công thức thông gió tổng thể/hút khí chung | C14: Có thể lập trình sau khi chốt bảng bội số
+Row 15 : A15: 02_CoolingPad | B15: Công thức quạt hút và diện tích cooling pad | C15: Cần xác nhận cơ sở 9.000 m³/h/m²
+Row 16 : A16: 03_Quy_doi_tam | B16: Quy đổi diện tích sang số cụm/tấm | C16: Có lỗi làm tròn trong file gốc; cần xác nhận khái niệm tấm/cụm
+Row 17 : A17: 04_Schema_du_lieu | B17: Trường dữ liệu backend và giao diện | C17: Khung bàn giao
+Row 18 : A18: 05_Boi_so_tham_khao | B18: Hai bảng bội số đang được sử dụng | C18: Đang mâu thuẫn; cần chọn nguồn chính thức
+Row 19 : A19: 06_Test_nghiem_thu | B19: Kết quả mẫu để Mắt Bão kiểm thử | C19: Dùng nghiệm thu lập trình
+Row 20 : A20: 07_Diem_can_chot | B20: Các mâu thuẫn, rủi ro và đề xuất | C20: Winline quyết định
+
+==================== SHEET: 01_Thong_gio_chung ====================
+Row 1  : A1: 01 – THÔNG GIÓ TỔNG THỂ / HÚT KHÍ CHUNG
+Row 2  : A2: Công thức này phù hợp cho dự tính trao đổi khí toàn không gian. Không đủ để thiết kế hút bụi cục bộ, chụp hút bếp hoặc hệ thống đường ống có trở lực.
+Row 4  : A4: ĐẦU VÀO NGƯỜI DÙNG
+Row 5  : A5: Thông số | B5: Giá trị | D5: Chỉ tiêu | E5: Kết quả | F5: Công thức lập trình
+Row 6  : A6: Diện tích không gian (m²) | B6: 3000 | D6: Thể tích không gian (m³) | E6: 9000 [FORMULA: =B6*B7] | F6: Diện tích × Chiều cao trung bình
+Row 7  : A7: Chiều cao trung bình (m) | B7: 3 | D7: Lưu lượng gió cần (m³/h) | E7: 180000 [FORMULA: =E6*B8] | F7: Thể tích × Bội số trao đổi khí
+Row 8  : A8: Bội số trao đổi khí (lần/h) | B8: 20 | D8: Lưu lượng 1 quạt đã chọn (m³/h) | E8: 46000 | F8: Lấy từ database theo SKU
+Row 9  : A9: Điện áp | B9: 380V | D9: Số lượng quạt – đề xuất làm tròn lên | E9: 4 [FORMULA: =IFERROR(ROUNDUP(E7/E8,0),"")] | F9: ROUNDUP(Lưu lượng cần / Lưu lượng 1 quạt)
+Row 10 : D10: Tổng lưu lượng quạt đã chọn (m³/h) | E10: 184000 [FORMULA: =IFERROR(E8*E9,"")] | F10: Lưu lượng 1 quạt × Số lượng
+Row 12 : A12: KIỂM TRA SAI LỆCH VÀ QUY TẮC KẾT QUẢ
+Row 13 : A13: Chỉ tiêu | B13: Giá trị | D13: Quy tắc chọn tối đa 6 sản phẩm
+Row 14 : A14: Sai lệch lưu lượng | B14: 0.022222222222222143 [FORMULA: =IFERROR(E10/E7-1,"")] | D14: 1 | E14: Đúng tab/loại quạt và điện áp.
+Row 15 : A15: Ngưỡng mong muốn | B15: 0.05 | D15: 2 | E15: Đáp ứng bộ lọc: thương hiệu, loại quạt, kích thước, khoảng giá.
+Row 16 : A16: Trạng thái | B16: Trong ±5% [FORMULA: =IF(ABS(B14)<=B15,"Trong ±5%","Ngoài ±5% – cần cảnh báo")] | D16: 3 | E16: Ưu tiên mức chênh lưu lượng nhỏ, số lượng hợp lý, dữ liệu đầy đủ.
+Row 17 : A17: Lưu ý | B17: Vẫn cho phép lưu/tải/gửi khi ngoài ±5%; chỉ cảnh báo nhẹ. | D17: 4 | E17: Không có bộ sắp xếp do người dùng điều khiển.
+
+==================== SHEET: 02_CoolingPad ====================
+Row 1  : A1: 02 – LÀM MÁT ÁP SUẤT ÂM BẰNG QUẠT HÚT + COOLING PAD
+Row 2  : A2: Hai bảng sản phẩm tạo thành một phương án chung: quạt hút và tấm/cụm cooling pad. Một mã lưu, một tổng tiền, một file PDF.
+Row 4  : A4: ĐẦU VÀO CHUNG
+Row 5  : A5: Thông số | B5: Giá trị | D5: Chỉ tiêu | E5: Kết quả
+Row 6  : A6: Diện tích cần làm mát (m²) | B6: 200 | D6: Thể tích (m³) | E6: 1200 [FORMULA: =B6*B7]
+Row 7  : A7: Chiều cao trung bình (m) | B7: 6 | D7: Lưu lượng gió cần (m³/h) | E7: 72000 [FORMULA: =E6*B8]
+Row 8  : A8: Bội số trao đổi khí (lần/h) | B8: 60 | D8: Cơ sở tính | E8: Diện tích × Chiều cao × Bội số
+Row 9  : A9: Điện áp | B9: 380V
+Row 11 : A11: BẢNG 1 – QUẠT HÚT ĐÃ CHỌN (MẪU TÍNH)
+Row 12 : A12: SKU | B12: Lưu lượng 1 quạt | C12: Số lượng | D12: Tổng lưu lượng | E12: Sai lệch so nhu cầu | F12: Điện áp | G12: Đơn giá tham khảo | H12: Thành tiền
+Row 13 : A13: LF1380 | B13: 48000 | C13: 2 [FORMULA: =IFERROR(ROUNDUP($E$7/B13,0),"")] | D13: 96000 [FORMULA: =IFERROR(B13*C13,"")] | E13: 0.33333333333333326 [FORMULA: =IFERROR(D13/$E$7-1,"")] | F13: 380V | H13: 0 [FORMULA: =IFERROR(C13*G13,"")]
+Row 14 : A14: Công thức
+Row 15 : A15: Lưu ý | B15: Website hiển thị tối đa 6 gợi ý; người dùng chọn tối đa 3 dòng. Dòng chính bù số lượng, dòng 2–3 mặc định 1.
+Row 18 : A18: BẢNG 2 – DIỆN TÍCH COOLING PAD CẦN
+Row 19 : A19: Chỉ tiêu | B19: Giá trị | C19: Trạng thái/giải thích | E19: Chỉ tiêu | F19: Giá trị
+Row 20 : A20: Năng suất gió qua 1 m² tấm (m³/h/m²) | B20: 9000 | C20: Winline chốt dùng mức 9.000 m³/h/m² làm cơ sở tính hiện tại. Giá trị phải được cấu hình để có thể điều chỉnh khi cần. | E20: Tổng lưu lượng quạt | F20: 96000 [FORMULA: =D13]
+Row 21 : A21: Diện tích theo lưu lượng yêu cầu (m²) | B21: 8 [FORMULA: =IFERROR($E$7/B20,"")] | C21: Cách đang dùng trong file gốc: Lưu lượng cần / 9.000. | E21: Diện tích tấm dùng quy đổi | F21: 10.666666666666666 [FORMULA: ='02_CoolingPad'!B23]
+Row 22 : A22: Diện tích theo tổng lưu lượng quạt chọn (m²) | B22: 10.666666666666666 [FORMULA: =IFERROR(D13/B20,"")] | C22: Đã chốt: diện tích tấm tính theo tổng lưu lượng của quạt thực tế đã chọn. | E22: Tiền quạt | F22: 0 [FORMULA: =H13]
+Row 23 : A23: Diện tích dùng để quy đổi (m²) | B23: 10.666666666666666 [FORMULA: =B22] | C23: Lấy theo tổng lưu lượng quạt đã chọn; độ dày tấm không tham gia tính diện tích. | E23: Tiền tấm/cụm | F23: Chưa có dữ liệu giá
+Row 24 : A24: Chênh lệch hai cách tính | B24: 0.33333333333333326 [FORMULA: =IFERROR(B22/B21-1,"")] | C24: Phát sinh do làm tròn số lượng quạt. | E24: Tổng giá dự tính | F24: 0 [FORMULA: =SUM(F22:F23)]
+Row 25 : A25: Cảnh báo | B25: ĐÃ CHỐT CƠ SỞ HIỆN TẠI | C25: Sử dụng 9.000 m³/h/m². Đây là tham số cấu hình của công cụ, không phải lưu lượng riêng của một tấm làm mát. | E25: Đầu ra | F25: Một mã + một PDF + một email/link Zalo
+
+==================== SHEET: 03_Quy_doi_tam ====================
+Row 1  : A1: 03 – QUY ĐỔI DIỆN TÍCH COOLING PAD SANG SỐ LƯỢNG
+Row 2  : A2: Bảng quy đổi diện tích cooling pad sang số tấm. Mỗi kích thước là một lựa chọn tấm; khung mua riêng và không tính trong bảng này. Số lượng dùng ROUNDUP để không thiếu diện tích.
+Row 4  : A4: Đầu vào | B4: Giá trị
+Row 5  : A5: Diện tích cooling pad cần (m²) | B5: 10.666666666666666 [FORMULA: ='02_CoolingPad'!B23]
+Row 6  : A6: Cách lấy | B6: Liên kết từ tổng lưu lượng quạt thực chọn
+Row 7  : A7: Quy tắc số lượng | B7: ROUNDUP(Diện tích cần / Diện tích một tấm đã chọn, 0)
+Row 9  : A9: BẢNG QUY ĐỔI – SO SÁNH KẾT QUẢ GỐC VÀ ĐỀ XUẤT
+Row 10 : A10: Kích thước ghi trong file gốc | B10: Dài (m) | C10: Rộng (m) | D10: Diện tích 1 tấm (m²) | E10: Số lượng file gốc | F10: Số lượng ROUNDUP | G10: Diện tích đáp ứng (m²) | H10: Đạt/thiếu
+Row 11 : A11: 1800×1500×150 | B11: 1.8 | C11: 1.5 | D11: 2.7 [FORMULA: =B11*C11] | E11: 3 | F11: 4 [FORMULA: =IFERROR(ROUNDUP($B$5/D11,0),"")] | G11: 10.8 [FORMULA: =IFERROR(D11*F11,"")] | H11: Đạt [FORMULA: =IF(G11>=$B$5,"Đạt","Thiếu")]
+Row 12 : A12: 1800×1800×150 | B12: 1.8 | C12: 1.8 | D12: 3.24 | E12: 2 | F12: 4 | G12: 12.96 | H12: Đạt
+Row 13 : A13: 2400×1500×150 | B13: 2.4 | C13: 1.5 | D13: 3.5999999999999996 | E13: 2 | F13: 3 | G13: 10.799999999999999 | H13: Đạt
+Row 14 : A14: 2400×1800×150 | B14: 2.4 | C14: 1.8 | D14: 4.32 | E14: 2 | F14: 3 | G14: 12.96 | H14: Đạt
+Row 15 : A15: 3600×1500×150 | B15: 3.6 | C15: 1.5 | D15: 5.4 | E15: 1 | F15: 2 | G15: 10.8 | H15: Đạt
+Row 16 : A16: 3600×1800×150 | B16: 3.6 | C16: 1.8 | D16: 6.48 | E16: 1 | F16: 2 | G16: 12.96 | H16: Đạt
+Row 17 : A17: 4200×1500×150 | B17: 4.2 | C17: 1.5 | D17: 6.3000000000000007 | E17: 1 | F17: 2 | G17: 12.600000000000001 | H17: Đạt
+Row 18 : A18: 4200×1800×150 | B18: 4.2 | C18: 1.8 | D18: 7.5600000000000005 | E18: 1 | F18: 2 | G18: 15.120000000000001 | H18: Đạt
+Row 20 : A20: QUY TẮC COOLING PAD ĐÃ CHỐT
+Row 21 : A21: Mã | B21: Nội dung
+Row 22 : A22: PAD-01 | B22: Các kích thước ghi trong bảng là những lựa chọn tấm làm mát. Diện tích tấm = chiều dài × chiều rộng. Khung được mua riêng, không tính tại đây.
+Row 23 : A23: PAD-02 | B23: Độ dày 150 mm là thông số sản phẩm, không tham gia công thức tính diện tích tấm.
+Row 24 : A24: PAD-03 | B24: Số lượng phải dùng ROUNDUP để tổng diện tích tấm không nhỏ hơn diện tích yêu cầu.
+Row 25 : A25: PAD-04 | B25: Khách chọn kích thước tấm phù hợp; website không tự cộng khung vào số lượng hoặc tổng diện tích tấm.
+
+==================== SHEET: 04_Schema_du_lieu ====================
+Row 1  : A1: 04 – SCHEMA DỮ LIỆU CHO DATABASE VÀ GIAO DIỆN
+Row 2  : A2: Khung tối thiểu để công cụ, trang sản phẩm, PDF và backend dùng chung một nguồn dữ liệu.
+Row 4  : A4: Trường | B4: Tên kỹ thuật gợi ý | C4: Kiểu | D4: Đơn vị | E4: Bắt buộc | F4: Dùng tính | G4: Dùng lọc | H4: Hiện bảng | I4: Nguồn | J4: Ghi chú
+Row 5  : A5: Ảnh | B5: image_url | C5: URL | E5: Có | F5: Không | G5: Không | H5: Có | I5: Trang sản phẩm | J5: Cột riêng
+Row 6  : A6: SKU | B6: sku | C6: Text | E6: Có | F6: Không | G6: Không | H6: Có | I6: Database sản phẩm | J6: Có nút copy
+Row 7  : A7: Tên sản phẩm | B7: product_name | C7: Text | E7: Có | F7: Không | G7: Không | H7: Có | I7: Database sản phẩm | J7: Tên có link
+Row 8  : A8: URL chi tiết | B8: product_url | C8: URL | E8: Có | F8: Không | G8: Không | H8: Không | I8: Trang sản phẩm | J8: Mở trang chi tiết
+Row 9  : A9: Thương hiệu | B9: brand | C9: Text | E9: Có | F9: Không | G9: Có | H9: Có | I9: Database sản phẩm
+Row 10 : A10: Loại quạt/sản phẩm | B10: product_type | C10: Text | E10: Có | F10: Có | G10: Có | H10: Có | I10: Database sản phẩm
+Row 11 : A11: Kích thước | B11: size_display | C11: Text | D11: mm | E11: Tùy loại | F11: Có | G11: Có | H11: Có | I11: Database sản phẩm | J11: Tab phòng dùng kích thước lỗ chờ
+Row 12 : A12: Kích thước lỗ | B12: hole_size | C12: Text | D12: mm | E12: Tab phòng | F12: Có | G12: Có | H12: Có | I12: Database sản phẩm
+Row 13 : A13: Điện áp | B13: voltage | C13: List | D13: V | E13: Có | F13: Có | G13: Điều kiện đầu vào | H13: Khi chưa xác định | I13: Database sản phẩm | J13: 220V/380V
+Row 14 : A14: Công suất | B14: power | C14: Number | D14: W | E14: Có | F14: Không | G14: Không | H14: Có | I14: Database sản phẩm
+Row 15 : A15: Lưu lượng | B15: airflow | C15: Number | D15: m³/h | E15: Có | F15: Có | G15: Không | H15: Có | I15: Database sản phẩm | J15: Chỉ áp dụng cho quạt. Tấm/khung để trống; dữ liệu chính thức lấy từ database website.
+Row 16 : A16: Đơn giá | B16: unit_price | C16: Number | D16: VND | E16: Có | F16: Tính tổng | G16: Có | H16: Có | I16: Database giá | J16: Có thời điểm ghi nhận
+Row 17 : A17: Áp dụng tab hút khí | B17: use_ventilation | C17: Boolean | E17: Có | F17: Có | G17: Không | H17: Không | I17: Quản trị
+Row 18 : A18: Áp dụng cooling pad | B18: use_cooling_pad | C18: Boolean | E18: Có | F18: Có | G18: Không | H18: Không | I18: Quản trị
+Row 19 : A19: Diện tích tấm/cụm | B19: pad_area | C19: Number | D19: m² | E19: Với cooling pad | F19: Có | G19: Không | H19: Có | I19: Tính từ kích thước | J19: Tính từ chiều dài × chiều rộng của tấm; dữ liệu kích thước lấy từ database.
+Row 20 : A20: Độ dày tấm | B20: pad_thickness | C20: Number | D20: mm | E20: Với cooling pad | F20: Có thể | G20: Không | H20: Tùy | I20: Database sản phẩm | J20: Độ dày 150 mm chỉ là thông số hiển thị/lọc nếu cần; không tham gia tính diện tích.
+
+==================== SHEET: 05_Boi_so_tham_khao ====================
+Row 1  : A1: 05 – BỘI SỐ TRAO ĐỔI KHÍ ĐANG CÓ TRONG FILE GỐC
+Row 2  : A2: Hai bảng dưới đây không thống nhất với nhau. Chưa dùng làm dữ liệu production cho đến khi Winline chọn nguồn và phạm vi áp dụng.
+Row 4  : A4: BẢNG A – ĐANG DÙNG Ở SHEET HÚT KHÓI/BỤI | E4: BẢNG B – “PHỤ LỤC G” TRONG FILE GỐC
+Row 5  : A5: Không gian | B5: Bội số | C5: Ghi chú | E5: Không gian | F5: Bội số | G5: Ghi chú
+Row 6  : A6: Hút khói bếp gia đình, thông gió gia đình | B6: 10 | E6: Công sở | F6: 6
+Row 7  : A7: Hút khói/bụi nhà hàng, bếp nhà hàng, nhà kho ít người, cửa hàng | B7: 20 | C7: Gộp nhiều nhu cầu khác nhau | E7: Nhà ở, phòng ngủ | F7: 2-3
+Row 8  : A8: Hút khói phòng sơn, nhà xưởng, hút nhiệt nóng cần hút mạnh | B8: 40 | C8: Phòng sơn cần xem thêm quy định an toàn/chuyên ngành | E8: Phòng ăn khách sạn, căng tin | F8: 10
+Row 9  : A9: Hút nhiệt nóng, hút khói mức độ cao, thông đường ống, hầm | B9: 60 | C9: Đường ống không thể chọn chỉ bằng ACH | E9: Cửa hàng, siêu thị | F9: 6
+Row 10 : A10: Thông gió có nhiệt độ cao, đông người | B10: 40 | E10: Xí nghiệp, nhà công nghiệp | F10: 6
+Row 11 : A11: Thông gió nhà xưởng | B11: 25 | C11: Khác Phụ lục G: xí nghiệp/nhà công nghiệp = 6 | E11: Phòng học | F11: 8
+Row 12 : A12: Trại chăn nuôi | B12: 20 | E12: Phòng thí nghiệm | F12: 10-12
+Row 13 : A13: Nhà màng trồng rau, hoa | B13: 10 | E13: Thư viện | F13: 5-6
+Row 14 : E14: Bệnh viện | F14: 6-8
+Row 15 : A15: Mâu thuẫn/giới hạn
+Row 16 : A16: AIR-01 | B16: Thông gió nhà xưởng dùng 25 trong Bảng A nhưng xí nghiệp/nhà công nghiệp dùng 6 trong Bảng B.
+Row 17 : A17: AIR-02 | B17: Bảng A gộp hút bụi, hút khói, thông gió tổng thể, đường ống và phòng sơn trong cùng phương pháp ACH.
+Row 19 : E19: Ga ra ô tô | F19: 6*
+Row 20 : E20: Trung tâm cứu hỏa | F20: 6
+Row 21 : E21: Phòng máy bơm cấp thoát nước | F21: 8
+
+==================== SHEET: 06_Test_nghiem_thu ====================
+Row 1  : A1: 06 – BỘ TEST NGHIỆM THU LẬP TRÌNH
+Row 2  : A2: Mắt Bão phải trả đúng các kết quả mẫu sau. Các test có trạng thái “Chờ chốt” chỉ chạy sau khi Winline xác nhận giả định.
+Row 4  : A4: Test | B4: Chức năng | C4: Diện tích | D4: Chiều cao | E4: Bội số | F4: Lưu lượng cần | G4: Lưu lượng quạt / Năng suất tấm | H4: SL quạt / Diện tích pad | I4: Tổng lưu lượng / Ghi chú | J4: Sai lệch | K4: Trạng thái
+Row 5  : A5: TG-01 | B5: Thông gió tổng thể | C5: 3000 | D5: 3 | E5: 20 | F5: 180000 [FORMULA: =C5*D5*E5] | G5: 46000 | H5: 4 [FORMULA: =IFERROR(ROUNDUP(F5/G5,0),"")] | I5: 184000 [FORMULA: =IFERROR(G5*H5,"")] | J5: 0.022222222222222143 [FORMULA: =IFERROR(I5/F5-1,"")] | K5: Đã xác định
+Row 6  : A6: TG-02 | B6: Thông gió tổng thể | C6: 290 | D6: 3 | E6: 20 | F6: 17400 | G6: 3080 | H6: 6 [FORMULA: =IFERROR(ROUNDUP(F6/G6,0),"")] | I6: 18480 [FORMULA: =IFERROR(G6*H6,"")] | J6: 0.06206896551724128 [FORMULA: =IFERROR(I6/F6-1,"")] | K6: Đã xác định
+Row 7  : A7: CP-01 | B7: Quạt cooling pad | C7: 200 | D7: 6 | E7: 60 | F7: 72000 | G7: 48000 | H7: 2 [FORMULA: =IFERROR(ROUNDUP(F7/G7,0),"")] | I7: 96000 [FORMULA: =IFERROR(G7*H7,"")] | J7: 0.33333333333333326 [FORMULA: =IFERROR(I7/F7-1,"")] | K7: Đã xác định
+Row 8  : A8: CP-02 | B8: Diện tích pad theo nhu cầu | C8: 200 | D8: 6 | E8: 60 | F8: 72000 | G8: 9000 | H8: 8 [FORMULA: =IFERROR(F8/G8,"")] | I8: m² theo nhu cầu | K8: Chờ chốt cách tính
+Row 9  : A9: CP-03 | B9: Diện tích pad theo quạt chọn | C9: 200 | D9: 6 | E9: 60 | F9: 72000 | G9: 48000 | H9: 10.666666666666666 [FORMULA: =IFERROR(ROUNDUP(F9/48000,0)*48000/9000,"")] | I9: m² theo quạt chọn | K9: Chờ chốt cách tính
+Row 10 : A10: EDGE-01 | B10: Dữ liệu bằng 0 | C10: 0 | D10: 3 | E10: 20 | F10: 0 | G10: 46000 | H10: 0 [FORMULA: =IFERROR(ROUNDUP(F10/G10,0),"")] | K10: Không được lỗi chia 0
+
+==================== SHEET: 07_Diem_can_chot ====================
+Row 1  : A1: 07 – ĐIỂM MÂU THUẪN, CHƯA CHÍNH XÁC VÀ CẦN QUYẾT ĐỊNH
+Row 2  : A2: Màu đỏ: phải sửa trước khi lập trình. Màu cam: cần Winline xác nhận. Màu xanh: đề xuất đã có cơ sở logic.
+Row 4  : A4: Mã | B4: Vấn đề | C4: Quan sát từ file gốc | D4: Rủi ro nếu lập trình nguyên trạng | E4: Đề xuất | F4: Mức độ | G4: Quyết định Winline | H4: Trạng thái
+Row 5  : A5: CAL-01 | B5: Làm tròn số lượng quạt | C5: Sheet hút khí dùng MROUND – làm tròn gần nhất. | D5: Có thể chọn thiếu công suất/lưu lượng. | E5: Dùng ROUNDUP/CEILING; sau đó hiển thị sai lệch ±5%. | F5: Đã chốt | G5: Sửa  | H5: Đã chốt
+Row 6  : A6: CAL-02 | B6: Làm tròn số tấm/cụm | C6: Các kết quả 8/3,24=2; 8/5,4=1… bị làm tròn xuống. | D6: Tổng diện tích tấm nhỏ hơn nhu cầu. | E6: Dùng ROUNDUP; không làm tròn gần nhất. | F6: Đã chốt | G6: Sửa  | H6: Đã chốt
+Row 7  : A7: CAL-03 | B7: Cơ sở tính diện tích tấm | C7: File tính 72.000/9.000=8 m², nhưng chọn 2×48.000=96.000 m³/h. | D7: Tấm có thể nhỏ so với lưu lượng quạt thực tế. | E7: Đề xuất lấy tổng lưu lượng quạt đã chọn / năng suất qua tấm. | F7: Đã chốt | G7: OK | H7: Đã chốt
+Row 8  : A8: CAL-04 | B8: Mức 9.000 m³/h/m² | C8: Mô tả khoảng 7.200–9.000 nhưng gọi 9.000 là “mức an toàn”. | D8: 9.000 tạo diện tích nhỏ nhất; cách gọi có thể sai. | E8: Xác nhận nguồn kỹ thuật và chọn một giá trị/cho phép cấu hình. | F8: Đã chốt | G8: thực chất chỉ là cách gọi còn vẫn sử dụng mức 9000 | H8: Đã chốt
+Row 9  : A9: CAL-05 | B9: Kích thước tấm và khung mua riêng | C9: Các kích thước dài × rộng × dày trong bảng là lựa chọn tấm làm mát; khung mua riêng. | D9: Nếu gộp tấm và khung sẽ làm sai số lượng, diện tích và giá. | E9: Tính diện tích theo dài × rộng của tấm; độ dày 150 mm không tham gia; không tự cộng khung. | F9: Đã chốt | G9: Tấm có nhiều kích thước để khách chọn; khung mua riêng và không tính trong công cụ này. | H9: Đã chốt
+Row 10 : A10: AIR-01 | B10: Bội số nhà xưởng | C10: Một bảng dùng 25; Phụ lục G dùng 6. Cooling pad dùng 50–60. | D10: Kết quả có thể chênh 4–10 lần. | E10: Tách theo mục tiêu hệ thống và ghi nguồn/phạm vi từng bảng. | F10: Đã chốt | G10: Bội số lấy theo phụ lục G_TCVN 5687 2024, cooling pad cần lấy bội số cao do cần tạo áp suất âm hút không khí và hơi nước qua màng tấm chất lieuj bột gỗ, nên cần tốc độ gió cũng như áp suất cao | H10: Đã chốt
+Row 11 : A11: AIR-02 | B11: Gộp hút bụi với thông gió | C11: File dùng diện tích×cao×ACH cho hút bụi, chụp hút và đường ống. | D11: Không phản ánh vận tốc bắt giữ và trở lực. | E11: Giới hạn tên tab là thông gió tổng thể/hút khí chung; trường hợp cục bộ chuyển tư vấn chuyên môn. | F11: Đã chốt | G11: Phần hút bụi cũng sử dụng theo phụ lục G và đặc thù của từng loại bụi, thông số tự động sẽ sai, phải tính theo nhu cầu | H11: Đã chốt
+Row 12 : A12: DATA-01 | B12: Giá trị 350 nhập nhầm ở nhóm cooling pad | C12: Bảng tham khảo cũ ghi 350 trong cột lưu lượng cho tấm và khung. | D12: Nếu dùng nguyên trạng, website có thể hiểu sai 350 m³/h là lưu lượng của tấm. | E12: Xóa 350; không map airflow cho tấm/khung. Thông số chính thức lấy từ database Mắt Bão. | F12: Đã chốt | G12: Xóa bỏ giá trị 350; danh sách Excel chỉ dùng tham khảo và kiểm thử. | H12: Đã chốt
+Row 13 : A13: DATA-02 | B13: Mã sản phẩm trong ví dụ | C13: Ví dụ dùng LF1380/40CL nhưng danh sách nguồn dùng mã nội bộ dạng số. | D13: Không liên kết được trang sản phẩm/database. | E13: Dùng mã sản phẩm/SKU từ database làm khóa; tên viết tắt chỉ là thông tin hiển thị tham khảo. | F13: Đã chốt | G13: Đây là tên gọi nôm na không phải mã cũng không phải tên, đúng là phải ghi nó là tên đầu đủ, đây là tên viết tắt | H13: Đã chốt
+Row 14 : A14: UI-01 | B14: Hai bảng cooling pad | C14: File gốc có quạt và quy đổi tấm nhưng chưa tích chọn/lưu chung. | D14: Hai kết quả rời nhau, tổng tiền/PDF không thống nhất. | E14: Ghép thành một bản dự tính, một mã backend, một PDF. | F14: Đã chốt | G14: Một phương án chung | H14: Đã chốt
+
+==================== SHEET: Nguon_Danh_sach_SP ====================
+Row 1  : A1: DANH SÁCH QUẠT THÔNG GIÓ VÀ LƯU LƯỢNG THAM KHẢO TẠI WINLINE.VN
+Row 2  : A2: Mã | B2: Tên | C2: Nhóm VTHH | D2: Lưu lượng gió tham khảo (m³/h) | E2: ĐVT chính | F2: Thời hạn BH | G2: Thương hiệu | H2: Nguồn gốc | I2: Thông gió hút bụi | J2: Hệ thống làm mát áp suất âm | K2: Điện áp | L2: Quạt vuông/tròn
+Row 3  : A3: 2005290 | B3: Quạt thông gió tròn Nedfon GF(D)2-220V, Ø 20 | C3: Quạt thông gió CN | D3: 600 | E3: Cái | F3: 12 tháng | G3: Nedfon | H3: Trung quốc | I3: x | K3: 220V | L3: Quạt hình tròn
+Row 4  : A4: 2003552 | B4: Quạt thông gió xách tay Haiki XT-20 (Tốc độ cao)-220V, Ø 20 | C4: Quạt thông gió CN | D4: 1330 | E4: Cái | F4: 12 tháng | G4: Haiki | H4: Trung quốc | I4: x | K4: 220V | L4: Quạt hình tròn
+Row 5  : A5: 2004249 | B5: Quạt thông gió công nghiệp tròn Gale VF25-220V, Ø 25 | C5: Quạt thông gió CN | D5: 840 | E5: Cái | F5: 12 tháng | G5: Gale | H5: Việt nam | I5: x | K5: 220V | L5: Quạt hình tròn
+Row 6  : A6: 2004244 | B6: Quạt thông gió công nghiệp tròn Gale SVF25-220V, Ø 25 | C6: Quạt thông gió CN | D6: 840 | E6: Cái | F6: 12 tháng | G6: Gale | H6: Việt nam | I6: x | K6: 220V | L6: Quạt hình tròn
+Row 7  : A7: 2003619 | B7: Quạt thông gió công nghiệp Haiki HK-25FA-220V, Ø 25 | C7: Quạt thông gió CN | D7: 840 | E7: Cái | F7: 12 tháng | G7: Haiki | H7: Việt nam | I7: x | K7: 220V | L7: Quạt hình tròn
+Row 8  : A8: 2003553 | B8: Quạt thông gió xách tay Haiki XT-25 (Tốc độ cao)-220V, Ø 25 | C8: Quạt thông gió CN | D8: 2340 | E8: Cái | F8: 12 tháng | G8: Haiki | H8: Trung quốc | I8: x | K8: 220V | L8: Quạt hình tròn
+Row 9  : A9: 2005072 | B9: Quạt thông gió công nghiệp Superlite MAX SLHCV-25-220V, Ø 25 | C9: Quạt thông gió CN | D9: 2200 | E9: Cái | F9: 12 tháng | G9: Superlite Max | H9: Trung quốc | I9: x | K9: 220V | L9: Quạt hình tròn
+Row 10 : A10: 2002340 | B10: Quạt thông gió công nghiệp komasu tròn KM-25T-220V, Ø 25 | C10: Quạt thông gió CN | D10: 1180 | E10: Cái | F10: 12 tháng | G10: Komasu | H10: Trung quốc | I10: x | K10: 220V | L10: Quạt hình tròn
+Row 11 : A11: 2003352 | B11: Quạt hút công nghiệp Panasonic FV-25GS4-220V, Ø 25 | C11: Quạt thông gió CN | D11: 1150 | E11: Cái | F11: 12 tháng | G11: Panasonic | H11: Trung quốc | I11: x | K11: 220V | L11: Quạt hình tròn
+Row 12 : A12: 2005291 | B12: Quạt thông gió tròn Nedfon GF(D)25-2-220V, Ø 25 | C12: Quạt thông gió CN | D12: 1100 | E12: Cái | F12: 12 tháng | G12: Nedfon | H12: Trung quốc | I12: x | K12: 220V | L12: Quạt hình tròn
+Row 13 : A13: 2003554 | B13: Quạt thông gió xách tay Haiki XT-30, (Tốc độ cao)-220V, Ø 30 | C13: Quạt thông gió CN | D13: 3460 | E13: Cái | F13: 12 tháng | G13: Haiki | H13: Việt nam | I13: x | K13: 220V | L13: Quạt hình tròn
+Row 14 : A14: 2004250 | B14: Quạt thông gió công nghiệp tròn Gale VF30-220V, Ø 30 | C14: Quạt thông gió CN | D14: 2200 | E14: Cái | F14: 12 tháng | G14: Gale | H14: Trung quốc | I14: x | K14: 220V | L14: Quạt hình tròn
+Row 15 : A15: 2005073 | B15: Quạt thông gió công nghiệp Superlite MAX SLHCV-30-220V, Ø 30 | C15: Quạt thông gió CN | D15: 2200 | E15: Cái | F15: 12 tháng | G15: Superlite Max | H15: Trung quốc | I15: x | K15: 220V | L15: Quạt hình tròn
+Row 16 : A16: 2002348 | B16: Quạt thông gió công nghiệp komasu KM-30-1S-220V, Ø 30 | C16: Quạt thông gió CN | D16: 2090 | E16: Cái | F16: 12 tháng | G16: Komasu | H16: Trung quốc | I16: x | K16: 220V | L16: Quạt hình tròn
+Row 17 : A17: 2002341 | B17: Quạt thông gió công nghiệp komasu tròn KM-30T-220V, Ø 30 | C17: Quạt thông gió CN | D17: 2000 | E17: Cái | F17: 12 tháng | G17: Komasu | H17: Trung quốc | I17: x | K17: 220V | L17: Quạt hình tròn
+Row 18 : A18: 2003353 | B18: Quạt hút công nghiệp Panasonic FV-30GS4-220V, Ø 30 | C18: Quạt thông gió CN | D18: 1820 | E18: Cái | F18: 12 tháng | G18: Panasonic | H18: Trung quốc | I18: x | K18: 220V | L18: Quạt hình tròn
+Row 19 : A19: 2003620 | B19: Quạt thông gió công nghiệp Haiki HK-30FA-220V, Ø 30 | C19: Quạt thông gió CN | D19: 1200 | E19: Cái | F19: 12 tháng | G19: Haiki | H19: Trung quốc | I19: x | K19: 220V | L19: Quạt hình tròn
+Row 20 : A20: 2004245 | B20: Quạt thông gió công nghiệp tròn Gale SVF30-220V, Ø 30 | C20: Quạt thông gió CN | D20: 1080 | E20: Cái | F20: 12 tháng | G20: Gale | H20: Trung quốc | I20: x | K20: 220V | L20: Quạt hình tròn
+Row 21 : A21: 2003549 | B21: Quạt thông gió công suất cao Haiki HKS-35G điện áp 380V-380v, Ø 35 | C21: Quạt thông gió CN | D21: 3190 | E21: Cái | F21: 12 tháng | G21: Haiki | H21: Trung quốc | I21: x | K21: 380v | L21: Quạt hình tròn
+Row 22 : A22: 2005292 | B22: Quạt thông gió tròn Nedfon GF(D)35-220V, Ø 35 | C22: Quạt thông gió CN | D22: 3000 | E22: Cái | F22: 12 tháng | G22: Nedfon | H22: Trung quốc | I22: x | K22: 220V | L22: Quạt hình tròn
+Row 23 : A23: 2002349 | B23: Quạt thông gió công nghiệp komasu KM-35-1S-220V, Ø 35 | C23: Quạt thông gió CN | D23: 2870 | E23: Cái | F23: 12 tháng | G23: Komasu | H23: Trung quốc | I23: x | K23: 220V | L23: Quạt hình tròn
+Row 24 : A24: 2005074 | B24: Quạt thông gió công nghiệp Superlite MAX SLHCV-35-220V, Ø 35 | C24: Quạt thông gió CN | D24: 2800 | E24: Cái | F24: 12 tháng | G24: Superlite Max | H24: Trung quốc | I24: x | K24: 220V | L24: Quạt hình tròn
+Row 25 : A25: 2003354 | B25: Quạt hút công nghiệp Panasonic FV-35GS4-220V, Ø 35 | C25: Quạt thông gió CN | D25: 2670 | E25: Cái | F25: 12 tháng | G25: Panasonic | H25: Trung quốc | I25: x | K25: 220V | L25: Quạt hình tròn
+Row 26 : A26: 2002342 | B26: Quạt thông gió công nghiệp komasu tròn KM-35T-220V, Ø 35 | C26: Quạt thông gió CN | D26: 2500 | E26: Cái | F26: 12 tháng | G26: Komasu | H26: Trung quốc | I26: x | K26: 220V | L26: Quạt hình tròn
+Row 27 : A27: 2003621 | B27: Quạt thông gió công nghiệp Haiki HK-35FA-220V, Ø 35 | C27: Quạt thông gió CN | D27: 1800 | E27: Cái | F27: 12 tháng | G27: Haiki | H27: Trung quốc | I27: x | K27: 220V | L27: Quạt hình tròn
+Row 28 : A28: 2005529 | B28: Quạt xách tay SHT-35 (Tốc độ cao)-220V, Ø 35 | C28: Quạt thông gió CN | D28: 9900 | E28: Cái | F28: 1 năm | G28: Omysu | H28: Trung quốc | I28: x | K28: 220V | L28: Quạt hình tròn
+Row 29 : A29: 2004252 | B29: Quạt thông gió công nghiệp tròn Gale VF40T 380V-380v, Ø 40 | C29: Quạt thông gió CN | D29: 4500 | E29: Cái | F29: 12 tháng | G29: Gale | H29: Việt nam | I29: x | K29: 380v | L29: Quạt hình tròn
+Row 30 : A30: 2004251 | B30: Quạt thông gió công nghiệp tròn Gale VF40-220V, Ø 40 | C30: Quạt thông gió CN | D30: 4500 | E30: Cái | F30: 12 tháng | G30: Gale | H30: Việt nam | I30: x | K30: 220V | L30: Quạt hình tròn
+Row 31 : A31: 2005075 | B31: Quạt thông gió công nghiệp Superlite MAX SLHCV-40-220V, Ø 40 | C31: Quạt thông gió CN | D31: 4500 | E31: Cái | F31: 12 tháng | G31: Superlite Max | H31: Việt nam | I31: x | K31: 220V | L31: Quạt hình tròn
+Row 32 : A32: 2002350 | B32: Quạt thông gió công nghiệp komasu KM-40-1S-220V, Ø 40 | C32: Quạt thông gió CN | D32: 4430 | E32: Cái | F32: 12 tháng | G32: Komasu | H32: Trung quốc | I32: x | K32: 220V | L32: Quạt hình tròn
+Row 33 : A33: 2002339 | B33: Quạt thông gió công nghiệp komasu tròn KM-40T-220V, Ø 40 | C33: Quạt thông gió CN | D33: 4000 | E33: Cái | F33: 12 tháng | G33: Komasu | H33: Việt nam | I33: x | K33: 220V | L33: Quạt hình tròn
+Row 34 : A34: 2003355 | B34: Quạt hút công nghiệp Panasonic FV-40GS4-220V, Ø 40 | C34: Quạt thông gió CN | D34: 3780 | E34: Cái | F34: 12 tháng | G34: Panasonic | H34: Việt nam | I34: x | K34: 220V | L34: Quạt hình tròn
+Row 35 : A35: 2003541 | B35: Quạt thông gió công nghiệp Haiki HKV-40CL-220V, Ø 40 | C35: Quạt thông gió CN | D35: 3080 | E35: Cái | F35: 12 tháng | G35: Haiki | H35: Trung quốc | I35: x | K35: 220V | L35: Quạt hình tròn
+Row 36 : A36: 2003622 | B36: Quạt thông gió công nghiệp Haiki HK-40FA-220V, Ø 40 | C36: Quạt thông gió CN | D36: 3000 | E36: Cái | F36: 12 tháng | G36: Haiki | H36: Trung quốc | I36: x | K36: 220V | L36: Quạt hình tròn
+Row 37 : A37: 2004246 | B37: Quạt thông gió công nghiệp tròn Gale SVF40-220V, Ø 40 | C37: Quạt thông gió CN | D37: 2880 | E37: Cái | F37: 12 tháng | G37: Gale | H37: Trung quốc | I37: x | K37: 220V | L37: Quạt hình tròn
+Row 38 : A38: 2002935 | B38: Quạt xách tay SHT-40 (Tốc độ cao)-220V, Ø 40 | C38: Quạt thông gió CN | D38: 11100 | E38: Cái | F38: 1 năm | G38: Omysu | H38: Trung quốc | I38: x | K38: 220V | L38: Quạt hình tròn
+Row 39 : A39: 2002351 | B39: Quạt thông gió công nghiệp komasu KM-50-1S-220V, Ø 50 | C39: Quạt thông gió CN | D39: 8480 | E39: Cái | F39: 12 tháng | G39: Komasu | H39: Việt nam | I39: x | K39: 220V | L39: Quạt hình tròn
+Row 40 : A40: 2002343 | B40: Quạt thông gió công nghiệp komasu tròn KM-50T-220V, Ø 50 | C40: Quạt thông gió CN | D40: 6560 | E40: Cái | F40: 12 tháng | G40: Komasu | H40: Trung quốc | I40: x | K40: 220V | L40: Quạt hình tròn
+Row 41 : A41: 2004254 | B41: Quạt thông gió công nghiệp tròn Gale VF50T 380V-380v, Ø 50 | C41: Quạt thông gió CN | D41: 5800 | E41: Cái | F41: 12 tháng | G41: Gale | H41: Trung quốc | I41: x | K41: 380v | L41: Quạt hình tròn
+Row 42 : A42: 2004253 | B42: Quạt thông gió công nghiệp tròn Gale VF50-220V, Ø 50 | C42: Quạt thông gió CN | D42: 5800 | E42: Cái | F42: 12 tháng | G42: Gale | H42: Trung quốc | I42: x | K42: 220V | L42: Quạt hình tròn
+Row 43 : A43: 2005076 | B43: Quạt thông gió công nghiệp Superlite MAX SLHCV-50-220V, Ø 50 | C43: Quạt thông gió CN | D43: 5800 | E43: Cái | F43: 12 tháng | G43: Superlite Max | H43: Trung quốc | I43: x | K43: 220V | L43: Quạt hình tròn
+Row 44 : A44: 2004247 | B44: Quạt thông gió công nghiệp tròn Gale SVF50-220V, Ø 50 | C44: Quạt thông gió CN | D44: 5700 | E44: Cái | F44: 12 tháng | G44: Gale | H44: Trung quốc | I44: x | K44: 220V | L44: Quạt hình tròn
+Row 45 : A45: 2004256 | B45: Quạt thông gió công nghiệp tròn Gale VF60T 380V-380v, Ø 60 | C45: Quạt thông gió CN | D45: 8700 | E45: Cái | F45: 12 tháng | G45: Gale | H45: Việt nam | I45: x | K45: 380v | L45: Quạt hình tròn
+Row 46 : A46: 2004255 | B46: Quạt thông gió công nghiệp tròn Gale VF60-220V, Ø 60 | C46: Quạt thông gió CN | D46: 8700 | E46: Cái | F46: 12 tháng | G46: Gale | H46: Việt nam | I46: x | K46: 220V | L46: Quạt hình tròn
+Row 47 : A47: 2004248 | B47: Quạt thông gió công nghiệp tròn Gale SVF60-220V, Ø 60 | C47: Quạt thông gió CN | D47: 8500 | E47: Cái | F47: 12 tháng | G47: Gale | H47: Việt nam | I47: x | K47: 220V | L47: Quạt hình tròn
+Row 48 : A48: 2005077 | B48: Quạt thông gió công nghiệp Superlite MAX SLHCV-60-220V, Ø 60 | C48: Quạt thông gió CN | D48: 8500 | E48: Cái | F48: 12 tháng | G48: Superlite Max | H48: Việt nam | I48: x | K48: 220V | L48: Quạt hình tròn
+Row 49 : A49: 2002955 | B49: Quạt thông gió công nghiệp Omysu FA-60-C1-220V, Ø 60 | C49: Quạt thông gió CN | D49: 8500 | E49: Cái | F49: 12 tháng | G49: Omysu | H49: Việt nam | I49: x | K49: 220V | L49: Quạt hình tròn
+Row 50 : A50: 2002344 | B50: Quạt thông gió công nghiệp komasu tròn KM-60T-220V, Ø 60 | C50: Quạt thông gió CN | D50: 8340 | E50: Cái | F50: 12 tháng | G50: Komasu | H50: Việt nam | I50: x | K50: 220V | L50: Quạt hình tròn
+Row 51 : A51: 2005293 | B51: Quạt thông gió tròn Nedfon GF(D)5-220V, Ø 60 | C51: Quạt thông gió CN | D51: 8000 | E51: Cái | F51: 12 tháng | G51: Nedfon | H51: Việt nam | I51: x | K51: 220V | L51: Quạt hình tròn
+Row 52 : A52: 2002337 | B52: Quạt thông gió công nghiệp komasu KM-60-2S-220V, Ø 60 | C52: Quạt thông gió CN | D52: 20000 | E52: Cái | F52: 12 tháng | G52: Komasu | H52: Trung quốc | I52: x | K52: 220V | L52: Quạt hình tròn
+Row 53 : A53: 2002338 | B53: Quạt thông gió công nghiệp komasu KM-70-2S-220V, Ø 70 | C53: Quạt thông gió CN | D53: 24000 | E53: Cái | F53: 12 tháng | G53: Komasu | H53: Trung quốc | I53: x | K53: 220V | L53: Quạt hình tròn
+Row 54 : A54: 2005047 | B54: Quạt hút công nghiệp vuông 400x400x400_380V | C54: Quạt hút CN | D54: 8000 | E54: Cái | F54: 12 tháng | G54: Superlite Max | H54: Việt nam | I54: x | K54: 380v | L54: Quạt hình vuông
+Row 55 : A55: 2005048 | B55: Quạt hút công nghiệp vuông 400x400x400_220V | C55: Quạt hút CN | D55: 8000 | E55: Cái | F55: 12 tháng | G55: Superlite Max | H55: Trung quốc | I55: x | K55: 220V | L55: Quạt hình vuông
+Row 56 : A56: 2003466 | B56: Quạt hút công nghiệp BMF 400x400x320 220V Cánh inox | C56: Quạt hút CN | D56: 9000 | E56: Cái | F56: 12 tháng | G56: Omysu | H56: Việt nam | I56: x | K56: 220V | L56: Quạt hình vuông
+Row 57 : A57: 2005027 | B57: Quạt hút công nghiệp vuông 500x500x400 điện áp 380V | C57: Quạt hút CN | D57: 10000 | E57: Cái | F57: 12 tháng | G57: Superlite Max | H57: Trung quốc | I57: x | K57: 380v | L57: Quạt hình vuông
+Row 58 : A58: 2005028 | B58: Quạt hút công nghiệp vuông 500x500x400 điện áp 220V | C58: Quạt hút CN | D58: 10000 | E58: Cái | F58: 12 tháng | G58: Superlite Max | H58: Trung quốc | I58: x | K58: 220V | L58: Quạt hình vuông
+Row 59 : A59: 2003592 | B59: Quạt hút công nghiệp BMF 500x500x350 220V Cánh inox | C59: Quạt hút CN | D59: 10000 | E59: Cái | F59: 12 tháng | G59: Omysu | H59: Panasonic Việt nam | I59: x | K59: 220V | L59: Quạt hình vuông
+Row 60 : A60: 2005029 | B60: Quạt hút công nghiệp vuông 600x600x400 điện áp 380V | C60: Quạt hút CN | D60: 15000 | E60: Cái | F60: 12 tháng | G60: Superlite Max | H60: Trung quốc | I60: x | K60: 380v | L60: Quạt hình vuông
+Row 61 : A61: 2005030 | B61: Quạt hút công nghiệp vuông 600x600x400 điện áp 220V | C61: Quạt hút CN | D61: 15000 | E61: Cái | F61: 12 tháng | G61: Superlite Max | H61: Trung quốc | I61: x | K61: 220V | L61: Quạt hình vuông
+Row 62 : A62: 2004374 | B62: Quạt hút công nghiệp BMF 600 Inox 430 toàn phần 380V | C62: Quạt hút CN | D62: 16000 | E62: Cái | F62: 12 tháng | G62: Omysu | H62: Trung quốc | I62: x | K62: 380v | L62: Quạt hình vuông
+Row 63 : A63: 2004583 | B63: Quạt hút công nghiệp BMF 600 Inox 430 toàn phần 220V | C63: Quạt hút CN | D63: 16000 | E63: Cái | F63: 12 tháng | G63: Omysu | H63: Trung quốc | I63: x | K63: 220V | L63: Quạt hình vuông
+Row 64 : A64: 2005363 | B64: Quạt hút công nghiệp BMF 700 Inox 430 toàn phần 380V | C64: Quạt hút CN | D64: 17000 | E64: Cái | F64: 12 tháng | G64: Omysu | H64: Trung quốc | I64: x | K64: 380v | L64: Quạt hình vuông
+Row 65 : A65: 2004584 | B65: Quạt hút công nghiệp BMF 700 Inox 430 toàn phần 220V | C65: Quạt hút CN | D65: 17000 | E65: Cái | F65: 12 tháng | G65: Omysu | H65: Trung quốc | I65: x | K65: 220V | L65: Quạt hình vuông
+Row 66 : A66: 2003468 | B66: Quạt hút công nghiệp BMF 600x600x400 Cánh inox_380V | C66: Quạt hút CN | D66: 18000 | E66: Cái | F66: 12 tháng | G66: Omysu | H66: Trung quốc | I66: x | K66: 380v | L66: Quạt hình vuông
+Row 67 : A67: 2005623 | B67: Quạt hút công nghiệp BMF 600x600x400 Cánh inox_220V | C67: Quạt hút CN | D67: 18000 | E67: Cái | F67: 12 tháng | G67: Omysu | H67: Trung quốc | I67: x | K67: 220V | L67: Quạt hình vuông
+Row 68 : A68: 2005031 | B68: Quạt hút công nghiệp vuông 700x700x400 điện áp 380V | C68: Quạt hút CN | D68: 19000 | E68: Cái | F68: 12 tháng | G68: Superlite Max | H68: Trung quốc | I68: x | K68: 380v | L68: Quạt hình vuông
+Row 69 : A69: 2005032 | B69: Quạt hút công nghiệp vuông 700x700x400 điện áp 220V | C69: Quạt hút CN | D69: 19000 | E69: Cái | F69: 12 tháng | G69: Superlite Max | H69: Trung quốc | I69: x | K69: 220V | L69: Quạt hình vuông
+Row 70 : A70: 2003500 | B70: Quạt hút công nghiệp BMF 700x700x400 Cánh inox_380V | C70: Quạt hút CN | D70: 20000 | E70: Cái | F70: 12 tháng | G70: Omysu | H70: Trung quốc | I70: x | K70: 380v | L70: Quạt hình vuông
+Row 71 : A71: 2005624 | B71: Quạt hút công nghiệp BMF 700x700x400 Cánh inox_220V | C71: Quạt hút CN | D71: 20000 | E71: Cái | F71: 12 tháng | G71: Omysu | H71: Trung quốc | I71: x | K71: 220V | L71: Quạt hình vuông
+Row 72 : A72: 2005033 | B72: Quạt hút công nghiệp vuông 800x800x400_380V | C72: Quạt hút CN | D72: 22000 | E72: Cái | F72: 12 tháng | G72: Superlite Max | H72: Trung quốc | I72: x | K72: 380v | L72: Quạt hình vuông
+Row 73 : A73: 2004654 | B73: Quạt hút công nghiệp vuông 800x800x400 điện áp 220V | C73: Quạt hút CN | D73: 22000 | E73: Cái | F73: 12 tháng | G73: Superlite Max | H73: Trung quốc | I73: x | K73: 220V | L73: Quạt hình vuông
+Row 74 : A74: 2003474 | B74: Quạt hút công nghiệp BMF 800x800x400 Cánh inox_380V | C74: Quạt hút CN | D74: 25000 | E74: Cái | F74: 12 tháng | G74: Omysu | H74: Trung quốc | I74: x | K74: 380v | L74: Quạt hình vuông
+Row 75 : A75: 2005625 | B75: Quạt hút công nghiệp BMF 800x800x400 Cánh inox_220V | C75: Quạt hút CN | D75: 25000 | E75: Cái | F75: 12 tháng | G75: Omysu | H75: Trung quốc | I75: x | K75: 220V | L75: Quạt hình vuông
+Row 76 : A76: 2005362 | B76: Quạt hút công nghiệp BMF 800  Inox 430 toàn phần 380V | C76: Quạt hút CN | D76: 25000 | E76: Cái | F76: 12 tháng | G76: Omysu | H76: Trung quốc | I76: x | K76: 380v | L76: Quạt hình vuông
+Row 77 : A77: 2004585 | B77: Quạt hút công nghiệp BMF 800  Inox 430 toàn phần 220V | C77: Quạt hút CN | D77: 25000 | E77: Cái | F77: 12 tháng | G77: Omysu | H77: Trung quốc | I77: x | K77: 220V | L77: Quạt hình vuông
+Row 78 : A78: 2005035 | B78: Quạt hút công nghiệp vuông 900x900x400 điện áp 380V | C78: Quạt hút CN | D78: 28000 | E78: Cái | F78: 12 tháng | G78: Superlite Max | H78: Trung quốc | I78: x | J78: x | K78: 380v | L78: Quạt hình vuông
+Row 79 : A79: 2005034 | B79: Quạt hút công nghiệp vuông 900x900x400 điện áp 220V | C79: Quạt hút CN | D79: 28000 | E79: Cái | F79: 12 tháng | G79: Superlite Max | H79: Trung quốc | I79: x | J79: x | K79: 220V | L79: Quạt hình vuông
+Row 80 : A80: 2003472 | B80: Quạt hút công nghiệp BMF 900x900x400 Cánh inox_380V | C80: Quạt hút CN | D80: 28000 | E80: Cái | F80: 12 tháng | G80: Omysu | H80: Trung quốc | I80: x | J80: x | K80: 380v | L80: Quạt hình vuông
+Row 81 : A81: 2005626 | B81: Quạt hút công nghiệp BMF 900x900x400 Cánh inox_220V | C81: Quạt hút CN | D81: 28000 | E81: Cái | F81: 12 tháng | G81: Omysu | H81: Trung quốc | I81: x | J81: x | K81: 220V | L81: Quạt hình vuông
+Row 82 : A82: 2005272 | B82: Quạt hút công nghiệp BMF 900x900x400  inox 304 toàn phần_380V | C82: Quạt hút CN | D82: 28000 | E82: Cái | F82: 12 tháng | G82: Omysu | H82: Trung quốc | I82: x | J82: x | K82: 380v | L82: Quạt hình vuông
+Row 83 : A83: 2004359 | B83: Quạt hút công nghiệp BMF 900STD khung sơn tĩnh điện cánh inox_380V | C83: Quạt hút CN | D83: 28000 | E83: Cái | F83: 12 tháng | G83: Omysu | H83: Trung quốc | I83: x | J83: x | K83: 380v | L83: Quạt hình vuông
+Row 84 : A84: 2004369 | B84: Quạt hút công nghiệp BMF 900STD khung sơn tĩnh điện cánh inox_220V | C84: Quạt hút CN | D84: 28000 | E84: Cái | F84: 12 tháng | G84: Omysu | H84: Trung quốc | I84: x | J84: x | K84: 220V | L84: Quạt hình vuông
+Row 85 : A85: 2005361 | B85: Quạt hút công nghiệp BMF 900P Khung mạ kẽm cánh POM_380V | C85: Quạt hút CN | D85: 28000 | E85: Cái | F85: 12 tháng | G85: Omysu | H85: Trung quốc | I85: x | J85: x | K85: 380v | L85: Quạt hình vuông
+Row 86 : A86: 2004361 | B86: Quạt hút công nghiệp BMF 900P Khung mạ kẽm cánh POM_220V | C86: Quạt hút CN | D86: 28000 | E86: Cái | F86: 12 tháng | G86: Omysu | H86: Trung quốc | I86: x | J86: x | K86: 220V | L86: Quạt hình vuông
+Row 87 : A87: 2004365 | B87: Quạt hút công nghiệp BMF 900 Inox 430 toàn phần 380V | C87: Quạt hút CN | D87: 28000 | E87: Cái | F87: 12 tháng | G87: Omysu | H87: Trung quốc | I87: x | J87: x | K87: 380v | L87: Quạt hình vuông
+Row 88 : A88: 2004586 | B88: Quạt hút công nghiệp BMF 900 Inox 430 toàn phần 220V | C88: Quạt hút CN | D88: 28000 | E88: Cái | F88: 12 tháng | G88: Omysu | H88: Trung quốc | I88: x | J88: x | K88: 220V | L88: Quạt hình vuông
+Row 89 : A89: 2004203 | B89: Quạt hút công nghiệp BMF 900  inox 304 toàn phần_220V | C89: Quạt hút CN | D89: 28000 | E89: Cái | F89: 12 tháng | G89: Omysu | H89: Trung quốc | I89: x | J89: x | K89: 220V | L89: Quạt hình vuông
+Row 90 : A90: 2004358 | B90: Quạt hút công nghiệp BMF 1000 cánh inox_380V | C90: Quạt hút CN | D90: 32000 | E90: Cái | F90: 12 tháng | G90: Omysu | H90: Trung quốc | I90: x | J90: x | K90: 380v | L90: Quạt hình vuông
+Row 91 : A91: 2004373 | B91: Quạt hút công nghiệp BMF 1000 cánh inox_220V | C91: Quạt hút CN | D91: 32000 | E91: Cái | F91: 12 tháng | G91: Omysu | H91: Trung quốc | I91: x | J91: x | K91: 220V | L91: Quạt hình vuông
+Row 92 : A92: 2005036 | B92: Quạt hút công nghiệp vuông 1100x1100x400_380V | C92: Quạt hút CN | D92: 34000 | E92: Cái | F92: 12 tháng | G92: Superlite Max | H92: Việt nam | I92: x | J92: x | K92: 380v | L92: Quạt hình vuông
+Row 93 : A93: 2005037 | B93: Quạt hút công nghiệp vuông 1100x1100x400 điện áp 220V | C93: Quạt hút CN | D93: 34000 | E93: Cái | F93: 12 tháng | G93: Superlite Max | H93: Trung quốc | I93: x | J93: x | K93: 220V | L93: Quạt hình vuông
+Row 94 : A94: 2003471 | B94: Quạt hút công nghiệp BMF 1100x1100x400 Cánh inox_380V | C94: Quạt hút CN | D94: 35000 | E94: Cái | F94: 12 tháng | G94: Omysu | H94: Việt nam | I94: x | J94: x | K94: 380v | L94: Quạt hình vuông
+Row 95 : A95: 2005627 | B95: Quạt hút công nghiệp BMF 1100x1100x400 Cánh inox_220V | C95: Quạt hút CN | D95: 35000 | E95: Cái | F95: 12 tháng | G95: Omysu | H95: Việt nam | I95: x | J95: x | K95: 220V | L95: Quạt hình vuông
+Row 96 : A96: 2005271 | B96: Quạt hút công nghiệp BMF 1100x1100x400  inox 304 toàn phần_380V | C96: Quạt hút CN | D96: 35000 | E96: Cái | F96: 12 tháng | G96: Omysu | H96: Việt nam | I96: x | J96: x | K96: 380v | L96: Quạt hình vuông
+Row 97 : A97: 2004357 | B97: Quạt hút công nghiệp BMF 1100STD khung sơn tĩnh điện cánh inox_380V | C97: Quạt hút CN | D97: 35000 | E97: Cái | F97: 12 tháng | G97: Omysu | H97: Việt nam | I97: x | J97: x | K97: 380v | L97: Quạt hình vuông
+Row 98 : A98: 2004370 | B98: Quạt hút công nghiệp BMF 1100STD khung sơn tĩnh điện cánh inox_220V | C98: Quạt hút CN | D98: 35000 | E98: Cái | F98: 12 tháng | G98: Omysu | H98: Việt nam | I98: x | J98: x | K98: 220V | L98: Quạt hình vuông
+Row 99 : A99: 2005355 | B99: Quạt hút công nghiệp BMF 1100PA Hiệu suất cao Cánh PA_380V | C99: Quạt hút CN | D99: 35000 | E99: Cái | F99: 12 tháng | G99: Omysu | H99: Việt nam | I99: x | J99: x | K99: 380v | L99: Quạt hình vuông
+Row 100: A100: 2005360 | B100: Quạt hút công nghiệp BMF 1100P Khung mạ kẽm cánh POM_380V | C100: Quạt hút CN | D100: 35000 | E100: Cái | F100: 12 tháng | G100: Omysu | H100: Việt nam | I100: x | J100: x | K100: 380v | L100: Quạt hình vuông
+Row 101: A101: 2004362 | B101: Quạt hút công nghiệp BMF 1100P Khung mạ kẽm cánh POM_220V | C101: Quạt hút CN | D101: 35000 | E101: Cái | F101: 12 tháng | G101: Omysu | H101: Việt nam | I101: x | J101: x | K101: 220V | L101: Quạt hình vuông
+Row 102: A102: 2005364 | B102: Quạt hút công nghiệp BMF 1100 Inox 430 toàn phần 380V | C102: Quạt hút CN | D102: 35000 | E102: Cái | F102: 12 tháng | G102: Omysu | H102: Việt nam | I102: x | J102: x | K102: 380v | L102: Quạt hình vuông
+Row 103: A103: 2004580 | B103: Quạt hút công nghiệp BMF 1100 Inox 430 toàn phần 220V | C103: Quạt hút CN | D103: 35000 | E103: Cái | F103: 12 tháng | G103: Omysu | H103: Việt nam | I103: x | J103: x | K103: 220V | L103: Quạt hình vuông
+Row 104: A104: 2004205 | B104: Quạt hút công nghiệp BMF 1100  inox 304 toàn phần_220V | C104: Quạt hút CN | D104: 35000 | E104: Cái | F104: 12 tháng | G104: Omysu | H104: Việt nam | I104: x | J104: x | K104: 220V | L104: Quạt hình vuông
+Row 105: A105: 2005038 | B105: Quạt hút công nghiệp vuông 1220x1220x400_380V | C105: Quạt hút CN | D105: 37000 | E105: Cái | F105: 12 tháng | G105: Superlite Max | H105: Việt nam | I105: x | J105: x | K105: 380v | L105: Quạt hình vuông
+Row 106: A106: 2005039 | B106: Quạt hút công nghiệp vuông 1220x1220x400 điện áp 220V | C106: Quạt hút CN | D106: 37000 | E106: Cái | F106: 12 tháng | G106: Superlite Max | H106: Việt nam | I106: x | J106: x | K106: 220V | L106: Quạt hình vuông
+Row 107: A107: 2005270 | B107: Quạt hút công nghiệp BMF 1220x1220x400 inox 304 toàn phần_380V | C107: Quạt hút CN | D107: 40000 | E107: Cái | F107: 12 tháng | G107: Omysu | H107: Việt nam | I107: x | J107: x | K107: 380v | L107: Quạt hình vuông
+Row 108: A108: 2003470 | B108: Quạt hút công nghiệp BMF 1220x1220x400 Cánh inox_380V | C108: Quạt hút CN | D108: 40000 | E108: Cái | F108: 12 tháng | G108: Omysu | H108: Việt nam | I108: x | J108: x | K108: 380v | L108: Quạt hình vuông
+Row 109: A109: 2005628 | B109: Quạt hút công nghiệp BMF 1220x1220x400 Cánh inox_220V | C109: Quạt hút CN | D109: 40000 | E109: Cái | F109: 12 tháng | G109: Omysu | H109: Việt nam | I109: x | J109: x | K109: 220V | L109: Quạt hình vuông
+Row 110: A110: 2004356 | B110: Quạt hút công nghiệp BMF 1220STD khung sơn tĩnh điện cánh inox_380V | C110: Quạt hút CN | D110: 40000 | E110: Cái | F110: 12 tháng | G110: Omysu | H110: Việt nam | I110: x | J110: x | K110: 380v | L110: Quạt hình vuông
+Row 111: A111: 2004371 | B111: Quạt hút công nghiệp BMF 1220STD khung sơn tĩnh điện cánh inox_220V | C111: Quạt hút CN | D111: 40000 | E111: Cái | F111: 12 tháng | G111: Omysu | H111: Việt nam | I111: x | J111: x | K111: 220V | L111: Quạt hình vuông
+Row 112: A112: 2005356 | B112: Quạt hút công nghiệp BMF 1220PA Hiệu suất cao Cánh PA_380V | C112: Quạt hút CN | D112: 40000 | E112: Cái | F112: 12 tháng | G112: Omysu | H112: Việt nam | I112: x | J112: x | K112: 380v | L112: Quạt hình vuông
+Row 113: A113: 2005359 | B113: Quạt hút công nghiệp BMF 1220P Khung mạ kẽm cánh POM_380V | C113: Quạt hút CN | D113: 40000 | E113: Cái | F113: 12 tháng | G113: Omysu | H113: Việt nam | I113: x | J113: x | K113: 380v | L113: Quạt hình vuông
+Row 114: A114: 2004363 | B114: Quạt hút công nghiệp BMF 1220P Khung mạ kẽm cánh POM_220V | C114: Quạt hút CN | D114: 40000 | E114: Cái | F114: 12 tháng | G114: Omysu | H114: Việt nam | I114: x | J114: x | K114: 220V | L114: Quạt hình vuông
+Row 115: A115: 2004367 | B115: Quạt hút công nghiệp BMF 1220 Inox 430 toàn phần 380V | C115: Quạt hút CN | D115: 40000 | E115: Cái | F115: 12 tháng | G115: Omysu | H115: Việt nam | I115: x | J115: x | K115: 380v | L115: Quạt hình vuông
+Row 116: A116: 2004581 | B116: Quạt hút công nghiệp BMF 1220 Inox 430 toàn phần 220V | C116: Quạt hút CN | D116: 40000 | E116: Cái | F116: 12 tháng | G116: Omysu | H116: Việt nam | I116: x | J116: x | K116: 220V | L116: Quạt hình vuông
+Row 117: A117: 2004206 | B117: Quạt hút công nghiệp BMF 1220  inox 304 toàn phần_220V | C117: Quạt hút CN | D117: 40000 | E117: Cái | F117: 12 tháng | G117: Omysu | H117: Việt nam | I117: x | J117: x | K117: 220V | L117: Quạt hình vuông
+Row 118: A118: 2004622 | B118: Quạt hút công nghiệp SHRV 1380x1380x400 inox 380V | C118: Quạt hút CN | D118: 45000 | E118: Cái | F118: 12 tháng | G118: Superlite Max | H118: Việt nam | I118: x | J118: x | K118: 380v | L118: Quạt hình vuông
+Row 119: A119: 2003469 | B119: Quạt hút công nghiệp BMF 1380x1380x400 Cánh inox_380V | C119: Quạt hút CN | D119: 45000 | E119: Cái | F119: 12 tháng | G119: Omysu | H119: Việt nam | I119: x | J119: x | K119: 380v | L119: Quạt hình vuông
+Row 120: A120: 2005629 | B120: Quạt hút công nghiệp BMF 1380x1380x400 Cánh inox_220V | C120: Quạt hút CN | D120: 45000 | E120: Cái | F120: 12 tháng | G120: Omysu | H120: Việt nam | I120: x | J120: x | K120: 220V | L120: Quạt hình vuông
+Row 121: A121: 2003473 | B121: Quạt hút công nghiệp BMF 1380x1380x400  inox 304 toàn phần_380V | C121: Quạt hút CN | D121: 45000 | E121: Cái | F121: 12 tháng | G121: Omysu | H121: Việt nam | I121: x | J121: x | K121: 380v | L121: Quạt hình vuông
+Row 122: A122: 2004355 | B122: Quạt hút công nghiệp BMF 1380STD khung sơn tĩnh điện cánh inox_380V | C122: Quạt hút CN | D122: 45000 | E122: Cái | F122: 12 tháng | G122: Omysu | H122: Việt nam | I122: x | J122: x | K122: 380v | L122: Quạt hình vuông
+Row 123: A123: 2004372 | B123: Quạt hút công nghiệp BMF 1380STD khung sơn tĩnh điện cánh inox_220V | C123: Quạt hút CN | D123: 45000 | E123: Cái | F123: 12 tháng | G123: Omysu | H123: Việt nam | I123: x | J123: x | K123: 220V | L123: Quạt hình vuông
+Row 124: A124: 2005357 | B124: Quạt hút công nghiệp BMF 1380PA Hiệu suất cao Cánh PA_380V | C124: Quạt hút CN | D124: 45000 | E124: Cái | F124: 12 tháng | G124: Omysu | H124: Việt nam | I124: x | J124: x | K124: 380v | L124: Quạt hình vuông
+Row 125: A125: 2005358 | B125: Quạt hút công nghiệp BMF 1380P Khung mạ kẽm cánh POM_380V | C125: Quạt hút CN | D125: 45000 | E125: Cái | F125: 12 tháng | G125: Omysu | H125: Việt nam | I125: x | J125: x | K125: 380v | L125: Quạt hình vuông
+Row 126: A126: 2004364 | B126: Quạt hút công nghiệp BMF 1380P Khung mạ kẽm cánh POM_220V | C126: Quạt hút CN | D126: 45000 | E126: Cái | F126: 12 tháng | G126: Omysu | H126: Việt nam | I126: x | J126: x | K126: 220V | L126: Quạt hình vuông
+Row 127: A127: 2004368 | B127: Quạt hút công nghiệp BMF 1380 Inox 430 toàn phần 380V | C127: Quạt hút CN | D127: 45000 | E127: Cái | F127: 12 tháng | G127: Omysu | H127: Trung quốc | I127: x | J127: x | K127: 380v | L127: Quạt hình vuông
+Row 128: A128: 2004582 | B128: Quạt hút công nghiệp BMF 1380 Inox 430 toàn phần 220V | C128: Quạt hút CN | D128: 45000 | E128: Cái | F128: 12 tháng | G128: Omysu | H128: Trung quốc | I128: x | J128: x | K128: 220V | L128: Quạt hình vuông
+Row 129: A129: 2004207 | B129: Quạt hút công nghiệp BMF 1380  inox 304 toàn phần_220V | C129: Quạt hút CN | D129: 45000 | E129: Cái | F129: 12 tháng | G129: Omysu | H129: Trung quốc | I129: x | J129: x | K129: 220V | L129: Quạt hình vuông
+Row 130: A130: 2005040 | B130: Quạt hút công nghiệp vuông 1380x1380x400 điện áp 380v | C130: Quạt hút CN | D130: 48000 | E130: Cái | F130: 12 tháng | G130: Superlite Max | H130: Trung quốc | I130: x | J130: x | K130: 380v | L130: Quạt hình vuông
+Row 131: A131: 2005041 | B131: Quạt hút công nghiệp vuông 1380x1380x400 điện áp 220V | C131: Quạt hút CN | D131: 48000 | E131: Cái | F131: 12 tháng | G131: Superlite Max | H131: Trung quốc | I131: x | J131: x | K131: 220V | L131: Quạt hình vuông
+Row 132: A132: 2004315 | B132: Tấm làm mát nâu 2000x600x150mm | C132: Làm mát CN | E132: Tấm | F132: 12 tháng | G132: Superlite Max | H132: Panasonic Việt nam | J132: x
+Row 133: A133: 2004052 | B133: Tấm làm mát nâu 1800x600x150mm | C133: Làm mát CN | E133: Tấm | F133: 12 tháng | G133: Superlite Max | H133: Panasonic Việt nam | J133: x
+Row 134: A134: 2004053 | B134: Tấm làm mát nâu 1500x600x150mm | C134: Làm mát CN | E134: Tấm | F134: 12 tháng | G134: Superlite Max | H134: Panasonic Việt nam | J134: x
+Row 135: A135: 2005144 | B135: Tấm làm mát chống rêu 2000x600x150mm | C135: Làm mát CN | E135: Tấm | F135: 12 tháng | G135: Superlite Max | H135: Việt nam | J135: x
+Row 136: A136: 2003854 | B136: Tấm làm mát chống rêu 1800x600x150mm | C136: Làm mát CN | E136: Tấm | F136: 12 tháng | G136: Superlite Max | H136: Việt nam | J136: x
+Row 137: A137: 2003864 | B137: Tấm làm mát chống rêu 1500x600x150mm | C137: Làm mát CN | E137: Tấm | F137: 12 tháng | G137: Superlite Max | H137: Việt nam | J137: x
+Row 138: A138: 2004055 | B138: Khung tấm làm mát nhôm 3m | C138: Làm mát CN | E138: Cái | F138: 12 tháng | G138: No brand | H138: Việt nam | J138: x
+Row 139: A139: 2004056 | B139: Khung tấm làm mát nhôm 36m | C139: Làm mát CN | E139: Cái | F139: 12 tháng | G139: No brand | H139: Việt nam | J139: x
+Row 140: A140: 2004106 | B140: Khung Inox 304_4200x1800x150 dầy 08mm | C140: Làm mát CN | E140: Cái | F140: 12 tháng | G140: No brand | H140: Việt nam | J140: x
+Row 141: A141: 2004100 | B141: Khung Inox 304_4200x1500x150 dầy 08mm | C141: Làm mát CN | E141: Cái | F141: 12 tháng | G141: No brand | H141: Trung quốc | J141: x
+Row 142: A142: 2004105 | B142: Khung Inox 304_3600x1800x150 dầy 08mm | C142: Làm mát CN | E142: Cái | F142: 12 tháng | G142: No brand | H142: Trung quốc | J142: x
+Row 143: A143: 2004099 | B143: Khung Inox 304_3600x1500x150 dầy 08mm | C143: Làm mát CN | E143: Cái | F143: 12 tháng | G143: No brand | H143: Trung quốc | J143: x
+Row 144: A144: 2004104 | B144: Khung Inox 304_3000x1800x150 dầy 08mm | C144: Làm mát CN | E144: Cái | F144: 12 tháng | G144: No brand | H144: Trung quốc | J144: x
+Row 145: A145: 2004098 | B145: Khung Inox 304_3000x1500x150 dầy 08mm | C145: Làm mát CN | E145: Cái | F145: 12 tháng | G145: No brand | H145: Trung quốc | J145: x
+Row 146: A146: 2004103 | B146: Khung Inox 304_2400x1800x150 dầy 08mm | C146: Làm mát CN | E146: Cái | F146: 12 tháng | G146: No brand | H146: Việt nam | J146: x
+Row 147: A147: 2004097 | B147: Khung Inox 304_2400x1500x150 dầy 08mm | C147: Làm mát CN | E147: Cái | F147: 12 tháng | G147: No brand | H147: Việt nam | J147: x
+Row 148: A148: 2004102 | B148: Khung Inox 304_1800x1800x150 dầy 08mm | C148: Làm mát CN | E148: Cái | F148: 12 tháng | G148: No brand | H148: Trung quốc | J148: x
+Row 149: A149: 2004101 | B149: Khung Inox 304_1800x1800x150 dầy 06mm | C149: Làm mát CN | E149: Cái | F149: 12 tháng | G149: No brand | H149: Trung quốc | J149: x
+Row 150: A150: 2004096 | B150: Khung Inox 304_1800x1500x150 dầy 08mm | C150: Làm mát CN | E150: Cái | F150: 12 tháng | G150: No brand | H150: Trung quốc | J150: x
+Row 151: A151: 2004095 | B151: Khung Inox 304_1800x1500x150 dầy 06mm | C151: Làm mát CN | E151: Cái | F151: 12 tháng | G151: No brand | H151: Trung quốc | J151: x
+Row 152: A152: 2002646 | B152: Khung Inox 201_4800x1800x150 dầy 08mm | C152: Làm mát CN | E152: Cái | F152: 12 tháng | G152: No brand | H152: Trung quốc | J152: x
+Row 153: A153: 2004094 | B153: Khung Inox 201_4200x1800x150 dầy 08mm | C153: Làm mát CN | E153: Cái | F153: 12 tháng | G153: No brand | H153: Trung quốc | J153: x
+Row 154: A154: 2004088 | B154: Khung Inox 201_4200x1500x150 dầy 08mm | C154: Làm mát CN | E154: Cái | F154: 12 tháng | G154: No brand | H154: Trung quốc | J154: x
+Row 155: A155: 2004093 | B155: Khung Inox 201_3600x1800x150 dầy 08mm | C155: Làm mát CN | E155: Cái | F155: 12 tháng | G155: No brand | H155: Trung quốc | J155: x
+Row 156: A156: 2004087 | B156: Khung Inox 201_3600x1500x150 dầy 08mm | C156: Làm mát CN | E156: Cái | F156: 12 tháng | G156: No brand | H156: Trung quốc | J156: x
+Row 157: A157: 2004092 | B157: Khung Inox 201_3000x1800x150 dầy 08mm | C157: Làm mát CN | E157: Cái | F157: 12 tháng | G157: No brand | H157: Trung quốc | J157: x
+Row 158: A158: 2004086 | B158: Khung Inox 201_3000x1500x150 dầy 08mm | C158: Làm mát CN | E158: Cái | F158: 12 tháng | G158: No brand | H158: Trung quốc | J158: x
+Row 159: A159: 2004091 | B159: Khung Inox 201_2400x1800x150 dầy 08mm | C159: Làm mát CN | E159: Cái | F159: 12 tháng | G159: No brand | H159: Trung quốc | J159: x
+Row 160: A160: 2004085 | B160: Khung Inox 201_2400x1500x150 dầy 08mm | C160: Làm mát CN | E160: Cái | F160: 12 tháng | G160: No brand | H160: Trung quốc | J160: x
+Row 161: A161: 2002947 | B161: Khung Inox 201_1800x1800x150 dầy 08mm | C161: Làm mát CN | E161: Cái | F161: 12 tháng | G161: No brand | H161: Trung quốc | J161: x
+Row 162: A162: 2004090 | B162: Khung Inox 201_1800x1800x150 dầy 08mm | C162: Làm mát CN | E162: Cái | F162: 12 tháng | G162: No brand | H162: Trung quốc | J162: x
+Row 163: A163: 2004089 | B163: Khung Inox 201_1800x1800x150 dầy 06mm | C163: Làm mát CN | E163: Cái | F163: 12 tháng | G163: No brand | H163: Trung quốc | J163: x
+Row 164: A164: 2004084 | B164: Khung Inox 201_1800x1500x150 dầy 08mm | C164: Làm mát CN | E164: Cái | F164: 12 tháng | G164: No brand | H164: Trung quốc | J164: x
+Row 165: A165: 2004054 | B165: Khung inox 201_1800x1500x150 dầy 06mm | C165: Làm mát CN | E165: Cái | F165: 12 tháng | G165: No brand | H165: Trung quốc | J165: x
+
+==================== SHEET: Nguon_Phu_luc_G ====================
+Row 1  : A1: Phụ lục G- TCVN 5687 về Thông gió, Bội số trao đổi không khí
+Row 2  : A2: (Quy định)
+Row 3  : A3: Lưu lượng không khí ngoài (gió tươi) cho các phòng được thông gió cơ khí
+Row 4  : A4: Loại phòng, công trình | B4: Số lần (bội số) trao đổi không khí, lần/h
+Row 5  : A5: Công sở | B5: 6
+Row 6  : A6: Nhà ở, phòng ngủ | B6: 2-3
+Row 7  : A7: Phòng ăn khách sạn, căng tin | B7: 10
+Row 8  : A8: Cửa hàng, siêu thị | B8: 6
+Row 9  : A9: Xí nghiệp, nhà công nghiệp | B9: 6
+Row 10 : A10: Phòng học | B10: 8
+Row 11 : A11: Phòng thí nghiệm | B11: 10-12
+Row 12 : A12: Thư viện | B12: 5-6
+Row 13 : A13: Bệnh viện | B13: 6-8
+Row 14 : A14: Nhà hát, rạp chiếu bóng | B14: 8
+Row 15 : A15: Sảnh, hành lang, cầu thang, lối ra** | B15: 4
+Row 16 : A16: Phòng tắm, phòng vệ sinh | B16: 10
+Row 17 : A17: Phòng bếp (thương nghiệp, ký túc xá, xí nghiệp) | B17: 20
+Row 18 : A18: Ga ra ô tô | B18: 6*
+Row 19 : A19: Trung tâm cứu hỏa | B19: 6
+Row 20 : A20: Phòng máy bơm cấp thoát nước | B20: 8
+Row 22 : A22: * Áp dụng đối với chiều cao phòng 2,5 m. Khi chiều cao phòng trên 2,5 m, phải tính theo tỷ lệ tăng của chiều cao;
+Row 23 : A23: ** Sảnh có diện tích dưới 10 m² không đòi hỏi phải có thông gió cơ khí.
+Row 24 : A24: Đối với phòng trong tầng hầm, bội số trao đổi không khí có thể tăng thêm từ 20 % đến 50 %.
