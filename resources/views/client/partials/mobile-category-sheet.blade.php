@@ -19,11 +19,11 @@
                 <img src="{{ asset($parent->image_url) }}" alt="" class="cat-group-icon">
               @endif
               <span>{{ $parent->getTranslation('name', app()->getLocale()) }}</span>
-              <a href="{{ route('client.products', ['category' => $parent->slug]) }}" class="cat-group-all" onclick="closeMobileCategorySheet()">Xem tất cả ›</a>
+              <a href="{{ url(app()->getLocale() . '/' . $parent->slug) }}" class="cat-group-all" onclick="closeMobileCategorySheet()">Xem tất cả ›</a>
             </div>
             <div class="cat-grid-tiles">
               @foreach($parent->children as $child)
-                <a href="{{ route('client.products', ['category' => $child->slug]) }}" class="cat-tile-item" onclick="closeMobileCategorySheet()">
+                <a href="{{ url(app()->getLocale() . '/' . $child->slug) }}" class="cat-tile-item" onclick="closeMobileCategorySheet()">
                   <div class="cat-tile-img-wrap">
                     @if($child->image_url)
                       <img src="{{ asset($child->image_url) }}" alt="{{ $child->getTranslation('name', app()->getLocale()) }}" class="cat-tile-img">

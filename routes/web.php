@@ -18,3 +18,10 @@ if (config('app.payment_mock_enabled') && app()->environment(['local', 'testing'
         ->middleware('throttle:10,1')
         ->name('vnpay.mock.submit');
 }
+
+Route::get('/{slug}', function (\Illuminate\Http\Request $request, string $slug) {
+    $queryString = $request->getQueryString();
+    $target = '/vi/' . $slug . ($queryString ? '?' . $queryString : '');
+    return redirect($target, 301);
+})->where('slug', '^(?!vi$|en$|admin|api|login|customer|payment|up)[a-zA-Z0-9\-_]+$');
+

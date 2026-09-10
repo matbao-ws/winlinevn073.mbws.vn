@@ -43,7 +43,7 @@
           @if(isset($globalCategories) && $globalCategories->isNotEmpty())
             @foreach($globalCategories as $parent)
               <div class="mega-col">
-                <a href="{{ route('client.products', ['category' => $parent->slug]) }}" class="mega-col-title-link">
+                <a href="{{ url(app()->getLocale() . '/' . $parent->slug) }}" class="mega-col-title-link">
                   @if($parent->image_url)
                     <img src="{{ asset($parent->image_url) }}" alt="" class="mega-cat-img-l1">
                   @endif
@@ -51,7 +51,7 @@
                 </a>
                 <div class="mega-sub-list">
                   @foreach($parent->children as $child)
-                    <a href="{{ route('client.products', ['category' => $child->slug]) }}" class="mega-item-l2">
+                    <a href="{{ url(app()->getLocale() . '/' . $child->slug) }}" class="mega-item-l2">
                       @if($child->image_url)
                         <img src="{{ asset($child->image_url) }}" alt="" class="mega-cat-img-l2">
                       @endif
@@ -68,7 +68,7 @@
             <div class="mega-brand-pills">
               @if(isset($globalBrands))
                 @foreach($globalBrands->take(8) as $b)
-                  <a href="{{ route('client.products', ['brand' => $b->slug]) }}" class="mb-pill">
+                  <a href="{{ url(app()->getLocale() . '/' . $b->slug) }}" class="mb-pill">
                     @if($b->image_url)
                       <img src="{{ asset($b->image_url) }}" alt="{{ $b->getTranslation('name', app()->getLocale()) }}" style="height:14px; max-width:55px; object-fit:contain;">
                     @else

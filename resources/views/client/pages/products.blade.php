@@ -1,6 +1,16 @@
 @extends("client.layouts.app")
 
-@section("title", ($currentCategory ? $currentCategory->getTranslation("name", app()->getLocale()) : ($currentBrand ? "Quạt " . $currentBrand->getTranslation("name", app()->getLocale()) : "Danh mục sản phẩm")) . " | Winline.vn")
+@php
+  $pageTitle = "Danh mục sản phẩm | Winline.vn";
+  if ($currentCategory && $currentBrand) {
+    $pageTitle = $currentCategory->getTranslation("name", app()->getLocale()) . " " . $currentBrand->getTranslation("name", app()->getLocale()) . " | Winline.vn";
+  } elseif ($currentCategory) {
+    $pageTitle = $currentCategory->getTranslation("name", app()->getLocale()) . " | Winline.vn";
+  } elseif ($currentBrand) {
+    $pageTitle = "Quạt " . $currentBrand->getTranslation("name", app()->getLocale()) . " chính hãng | Winline.vn";
+  }
+@endphp
+@section("title", $pageTitle)
 
 @section("content")
 <div class="product-listing-page">
@@ -8,9 +18,12 @@
   <div class="breadcrumb">
     <a href="{{ route("client.home") }}">Trang chủ</a> › 
     @if($currentCategory && $currentCategory->parent)
-      <a href="{{ route("client.products", ["category" => $currentCategory->parent->slug]) }}">{{ $currentCategory->parent->getTranslation("name", app()->getLocale()) }}</a> › 
+      <a href="{{ url(app()->getLocale() . '/' . $currentCategory->parent->slug) }}">{{ $currentCategory->parent->getTranslation("name", app()->getLocale()) }}</a> › 
     @endif
-    @if($currentCategory)
+    @if($currentCategory && $currentBrand)
+      <a href="{{ url(app()->getLocale() . '/' . $currentCategory->slug) }}">{{ $currentCategory->getTranslation("name", app()->getLocale()) }}</a> › 
+      <span class="current">{{ $currentBrand->getTranslation("name", app()->getLocale()) }}</span>
+    @elseif($currentCategory)
       <span class="current">{{ $currentCategory->getTranslation("name", app()->getLocale()) }}</span>
     @elseif($currentBrand)
       <span class="current">{{ $currentBrand->getTranslation("name", app()->getLocale()) }}</span>
@@ -23,7 +36,9 @@
   <div class="page-head">
     <div class="ph-left">
       <h1>
-        @if($currentCategory)
+        @if($currentCategory && $currentBrand)
+          {{ $currentCategory->getTranslation("name", app()->getLocale()) }} {{ $currentBrand->getTranslation("name", app()->getLocale()) }} chính hãng
+        @elseif($currentCategory)
           {{ $currentCategory->getTranslation("name", app()->getLocale()) }}
         @elseif($currentBrand)
           Quạt {{ $currentBrand->getTranslation("name", app()->getLocale()) }} chính hãng
@@ -44,20 +59,28 @@
       if (is_string($filters["brand"] ?? null)) {
         $selectedBrands = array_filter(explode(",", $filters["brand"]));
       }
+      $allPillUrl = $currentCategory ? url(app()->getLocale() . '/' . $currentCategory->slug) : route("client.products", array_merge($filters, ["brand" => null]));
     @endphp
     <div class="brand-quick-bar">
       <div class="brand-quick-label">Thương hiệu:</div>
       <div class="brand-quick-scroll">
-        <a href="{{ route("client.products", array_merge($filters, ["brand" => null])) }}" class="brand-quick-pill {{ empty($selectedBrands) ? "active" : "" }}">
+        <a href="{{ $allPillUrl }}" class="brand-quick-pill {{ empty($selectedBrands) ? "active" : "" }}">
           <span>Tất cả</span>
         </a>
         @foreach($categoryBrands as $b)
           @php
             $isActive = in_array($b->slug, $selectedBrands);
-            $newBrands = $isActive ? array_diff($selectedBrands, [$b->slug]) : [$b->slug];
-            $brandParam = !empty($newBrands) ? implode(",", $newBrands) : null;
+            if ($currentCategory) {
+              $pillUrl = $isActive 
+                ? url(app()->getLocale() . '/' . $currentCategory->slug) 
+                : url(app()->getLocale() . '/' . $currentCategory->slug . '-' . $b->slug);
+            } else {
+              $newBrands = $isActive ? array_diff($selectedBrands, [$b->slug]) : [$b->slug];
+              $brandParam = !empty($newBrands) ? implode(",", $newBrands) : null;
+              $pillUrl = !empty($brandParam) ? url(app()->getLocale() . '/' . $b->slug) : route("client.products", array_merge($filters, ["brand" => null]));
+            }
           @endphp
-          <a href="{{ route("client.products", array_merge($filters, ["brand" => $brandParam])) }}" class="brand-quick-pill {{ $isActive ? "active" : "" }}" title="{{ $b->getTranslation("name", app()->getLocale()) }}">
+          <a href="{{ $pillUrl }}" class="brand-quick-pill {{ $isActive ? "active" : "" }}" title="{{ $b->getTranslation("name", app()->getLocale()) }}">
             @if($b->image_url)
               <img src="{{ asset($b->image_url) }}" alt="{{ $b->getTranslation("name", app()->getLocale()) }}" class="brand-pill-logo">
             @else

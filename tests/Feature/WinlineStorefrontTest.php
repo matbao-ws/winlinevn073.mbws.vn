@@ -151,5 +151,61 @@ class WinlineStorefrontTest extends TestCase
             'name' => 'Khách hàng dự án',
         ]);
     }
+
+    public function test_root_legacy_category_slug_redirects_301_to_localized_url(): void
+    {
+        $response = $this->get('/quat-tran');
+        $response->assertRedirect('/vi/quat-tran');
+        $response->assertStatus(301);
+    }
+
+    public function test_root_legacy_level3_slug_redirects_301_to_localized_url(): void
+    {
+        $response = $this->get('/quat-tran-vinawind');
+        $response->assertRedirect('/vi/quat-tran-vinawind');
+        $response->assertStatus(301);
+    }
+
+    public function test_localized_category_slug_resolves_successfully(): void
+    {
+        $response = $this->get('/vi/quat-tran');
+        $response->assertOk();
+        $response->assertSee('Quạt trần');
+    }
+
+    public function test_localized_level3_category_brand_slug_resolves_successfully(): void
+    {
+        $response = $this->get('/vi/quat-tran-vinawind');
+        $response->assertOk();
+        $response->assertSee('Quạt trần');
+        $response->assertSee('Vinawind');
+    }
+
+    public function test_localized_brand_slug_resolves_successfully(): void
+    {
+        $response = $this->get('/vi/vinawind');
+        $response->assertOk();
+        $response->assertSee('Vinawind');
+    }
+
+    public function test_localized_flat_product_slug_resolves_successfully(): void
+    {
+        $response = $this->get('/vi/quat-cay-cong-nghiep-komasu-km-750s');
+        $response->assertOk();
+        $response->assertSee('KM-750S');
+    }
+
+    public function test_invalid_slug_returns_404(): void
+    {
+        $response = $this->get('/vi/khong-ton-tai-slug-xyz');
+        $response->assertNotFound();
+    }
+
+    public function test_admin_route_is_not_intercepted_by_catalog_resolver(): void
+    {
+        $response = $this->get('/vi/admin');
+        // Unauthenticated access redirects to admin login, not 404
+        $this->assertTrue(in_array($response->getStatusCode(), [200, 302]));
+    }
 }
 

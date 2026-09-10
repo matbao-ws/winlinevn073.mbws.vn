@@ -3,6 +3,7 @@
 use App\Http\Controllers\Client\AboutController;
 use App\Http\Controllers\Client\BrandController;
 use App\Http\Controllers\Client\CalculatorController;
+use App\Http\Controllers\Client\CatalogResolverController;
 use App\Http\Controllers\Client\CategoryController;
 use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\HomeController;
@@ -55,3 +56,8 @@ if (app()->environment(['local', 'testing'])) {
     Route::view('sandbox/inline-editor-stress', 'client.dev.toolbar-stress')
         ->name('dev.toolbar-stress');
 }
+
+Route::get('/{slug}', [CatalogResolverController::class, 'resolve'])
+    ->where('slug', '^(?!admin|api|login|customer|payment|up)[a-zA-Z0-9\-_]+$')
+    ->name('catalog.resolve');
+
