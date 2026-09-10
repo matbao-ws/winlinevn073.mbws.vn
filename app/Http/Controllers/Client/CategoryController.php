@@ -20,7 +20,7 @@ class CategoryController extends Controller
         private readonly FeatureGate $features,
     ) {}
 
-    public function show(Request $request, string $locale, string $slug): \Illuminate\Http\RedirectResponse
+    public function show(Request $request, string $locale, string $slug): View
     {
         abort_unless($this->features->enabled('catalog'), 404);
 
@@ -28,8 +28,20 @@ class CategoryController extends Controller
 
         abort_unless($category && $category->is_active && ! $category->is_draft, 404);
 
-        $canonical = $category->canonicalSlug(app()->getLocale()) ?: $slug;
+        // Products come from the shared read service, never from a second copy
+        // of the filtering rules living in this controller.
+        $products = $this->products
+            ->listing(['category' => $category->canonicalSlug(app()->getLocale())])
+            ->paginate(12)
+            ->withQueryString();
 
-        return redirect('/' . app()->getLocale() . '/' . $canonical, 301);
+        return view('client.catalog.category', [
+            'category' => $category,
+            'title' => $this->content->get($category, 'name'),
+            'description' => $this->content->get($category, 'description'),
+            'metaTitle' => $this->content->get($category, 'meta_title'),
+            'metaDescription' => $this->content->get($category, 'meta_description'),
+            'products' => $products,
+        ]);
     }
 }
