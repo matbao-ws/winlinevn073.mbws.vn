@@ -90,18 +90,24 @@ class ProductController extends Controller
         if (mb_strlen($q) < 2) {
             return response()->json(['products' => []]);
         }
-        $locale = app()->getLocale();
+        $locale = app()->getLocale() ?: 'vi';
         $products = $this->productQueryService->listing(['q' => $q])
             ->take(8)
             ->get()
             ->map(function ($p) use ($locale) {
+                $img = $p->image_url;
+                if ($img) {
+                    $img = str_starts_with($img, 'http') ? $img : asset($img);
+                } else {
+                    $img = asset('client-assets/images/km750s.jpg');
+                }
                 return [
                     'id' => $p->id,
                     'name' => $p->getTranslation('name', $locale),
                     'sku' => $p->sku,
                     'price' => number_format((float) $p->price, 0, ',', '.') . '₫',
-                    'image' => $p->imageUrl('thumb') ?: asset('client-assets/images/km750s.jpg'),
-                    'url' => route('client.products.detail', ['slug' => $p->canonicalSlug($locale)]),
+                    'image' => $img,
+                    'url' => route('client.products.detail', ['locale' => $locale, 'slug' => $p->canonicalSlug($locale)]),
                     'brand' => $p->brand?->getTranslation('name', $locale),
                 ];
             });
