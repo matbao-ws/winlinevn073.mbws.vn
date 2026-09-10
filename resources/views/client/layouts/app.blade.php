@@ -18,6 +18,14 @@
 
     @include('client.partials.footer')
     @include('client.partials.modals')
+    @include('client.partials.smart-search-modal')
+    @include('client.partials.mobile-category-sheet')
+    @include('client.partials.mobile-nav-drawer')
+
+    {{-- Nút Lên TOP nổi bên phải (hiển thị khi cuộn xuống 2/3 màn hình) --}}
+    <button type="button" id="backToTopBtn" class="floating-back-to-top" onclick="scrollToTop()" aria-label="Lên đầu trang">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
     @include('client.partials.admin-bar')
 

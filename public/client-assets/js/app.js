@@ -960,5 +960,206 @@ document.addEventListener("DOMContentLoaded", () => {
   initLiveSearch();
   initNavDropdowns();
   initMobileToggle();
+  initSmartSearchController();
+  initFloatingBackToTop();
 });
+
+// ==========================================
+// WINLINE 2026 MOBILE & INTERACTION CONTROLLERS
+// ==========================================
+
+// 1. Mobile Text Navigation Drawer (3 lines button)
+function openMobileNavDrawer() {
+  const drawer = document.getElementById("mobileNavDrawer");
+  if (drawer) {
+    drawer.style.display = "block";
+    drawer.offsetHeight;
+    drawer.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeMobileNavDrawer() {
+  const drawer = document.getElementById("mobileNavDrawer");
+  if (drawer) {
+    drawer.classList.remove("active");
+    setTimeout(() => {
+      drawer.style.display = "none";
+      document.body.style.overflow = "";
+    }, 250);
+  }
+}
+
+function toggleMobileDrawer() {
+  const drawer = document.getElementById("mobileNavDrawer");
+  if (drawer && (drawer.classList.contains("active") || drawer.style.display === "block")) {
+    closeMobileNavDrawer();
+  } else {
+    openMobileNavDrawer();
+  }
+}
+
+// 2. Mobile Category Grid Sheet (Bottom bar "Sản phẩm")
+function openMobileCategorySheet() {
+  const sheet = document.getElementById("mobileCatSheet");
+  if (sheet) {
+    sheet.style.display = "flex";
+    sheet.offsetHeight;
+    sheet.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeMobileCategorySheet() {
+  const sheet = document.getElementById("mobileCatSheet");
+  if (sheet) {
+    sheet.classList.remove("open");
+    setTimeout(() => {
+      sheet.style.display = "none";
+      document.body.style.overflow = "";
+    }, 250);
+  }
+}
+
+// 3. Smart Search Modal (Bottom bar "Tìm kiếm")
+function openSmartSearchModal() {
+  const modal = document.getElementById("smartSearchModal");
+  if (modal) {
+    modal.style.display = "flex";
+    modal.offsetHeight;
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+    const input = document.getElementById("smartSearchInput");
+    if (input) {
+      setTimeout(() => input.focus(), 100);
+    }
+  }
+}
+
+function closeSmartSearchModal() {
+  const modal = document.getElementById("smartSearchModal");
+  if (modal) {
+    modal.classList.remove("open");
+    setTimeout(() => {
+      modal.style.display = "none";
+      document.body.style.overflow = "";
+    }, 250);
+  }
+}
+
+function clearSmartSearch() {
+  const input = document.getElementById("smartSearchInput");
+  if (input) {
+    input.value = "";
+    input.focus();
+  }
+  const clearBtn = document.getElementById("btnClearSmartSearch");
+  if (clearBtn) clearBtn.style.display = "none";
+  const results = document.getElementById("smartSearchResults");
+  if (results) results.style.display = "none";
+  const trending = document.getElementById("smartSearchTrending");
+  if (trending) trending.style.display = "block";
+  const cats = document.getElementById("smartSearchCats");
+  if (cats) cats.style.display = "block";
+}
+
+// 4. Smart Search Live Query Controller
+function initSmartSearchController() {
+  const input = document.getElementById("smartSearchInput");
+  if (!input) return;
+
+  let debounceTimer = null;
+  const clearBtn = document.getElementById("btnClearSmartSearch");
+  const resultsBox = document.getElementById("smartSearchResults");
+  const resultsList = document.getElementById("smartSearchResultsList");
+  const trending = document.getElementById("smartSearchTrending");
+  const cats = document.getElementById("smartSearchCats");
+
+  input.addEventListener("input", function() {
+    const q = this.value.trim();
+    if (clearBtn) {
+      clearBtn.style.display = q.length > 0 ? "block" : "none";
+    }
+
+    clearTimeout(debounceTimer);
+    if (q.length < 2) {
+      if (resultsBox) resultsBox.style.display = "none";
+      if (trending) trending.style.display = "block";
+      if (cats) cats.style.display = "block";
+      return;
+    }
+
+    debounceTimer = setTimeout(() => {
+      fetch("/vi/san-pham-search-live?q=" + encodeURIComponent(q))
+        .then(res => res.json())
+        .then(data => {
+          if (trending) trending.style.display = "none";
+          if (cats) cats.style.display = "none";
+          if (resultsBox) resultsBox.style.display = "block";
+
+          if (resultsList) {
+            if (!data.products || data.products.length === 0) {
+              resultsList.innerHTML = '<div class=\"smart-search-empty\">Không tìm thấy sản phẩm phù hợp với \"<strong>' + q + '</strong>\". Thử tìm từ khóa khác.</div>';
+              return;
+            }
+
+            let html = "";
+            data.products.forEach(p => {
+              html += `
+                <a href="${p.url}" class="smart-search-item">
+                  <img src="${p.image}" alt="${p.name}" class="ss-item-img">
+                  <div class="ss-item-info">
+                    <div class="ss-item-brand">${p.brand || 'Winline'}</div>
+                    <div class="ss-item-name">${p.name}</div>
+                    <div class="ss-item-price">${p.price}</div>
+                  </div>
+                  <i class="fas fa-chevron-right ss-item-arrow"></i>
+                </a>
+              `;
+            });
+            resultsList.innerHTML = html;
+          }
+        })
+        .catch(() => {});
+    }, 250);
+  });
+
+  input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      const q = this.value.trim();
+      if (q) {
+        window.location.href = "/vi/san-pham?q=" + encodeURIComponent(q);
+      }
+    }
+  });
+}
+
+// 5. Floating Back-to-Top Controller (Activates when scrolled 2/3 of page)
+function initFloatingBackToTop() {
+  const btn = document.getElementById("backToTopBtn");
+  if (!btn) return;
+
+  function checkScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const docHeight = scrollHeight - windowHeight;
+
+    // Trigger when user scrolls >= 66% (2/3) of page length
+    if (docHeight > 0 && (scrollTop / docHeight) >= 0.66) {
+      btn.classList.add("visible");
+    } else {
+      btn.classList.remove("visible");
+    }
+  }
+
+  window.addEventListener("scroll", checkScroll, { passive: true });
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 

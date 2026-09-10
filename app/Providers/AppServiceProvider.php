@@ -62,6 +62,26 @@ class AppServiceProvider extends ServiceProvider
             $view->with('siteBranding', app(\App\Services\SiteBranding::class)->current());
         });
 
+        view()->composer([
+            'client.layouts.app',
+            'client.partials.*',
+            'client.pages.*',
+        ], function ($view) {
+            $locale = app()->getLocale();
+            $globalCategories = \App\Models\Category::query()
+                ->where('is_active', true)
+                ->whereNull('parent_id')
+                ->with(['children' => fn ($q) => $q->where('is_active', true)->orderBy('sort_order')])
+                ->orderBy('sort_order')
+                ->get();
+            $globalBrands = \App\Models\Brand::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get();
+            $view->with('globalCategories', $globalCategories);
+            $view->with('globalBrands', $globalBrands);
+        });
+
         RateLimiter::for('public-auth', fn (Request $request) => [
             Limit::perMinute(10)->by($request->ip()),
             Limit::perMinute(5)->by(strtolower((string) $request->input('email'))),

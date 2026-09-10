@@ -43,13 +43,31 @@ class ProductQueryService
 
         if (filled($filters['category'] ?? null)) {
             $category = $this->localizedSlugs->find(Category::class, (string) $filters['category'], $locale);
-            // An unknown slug must yield no products rather than every product.
-            $query->where('category_id', $category?->id ?? 0);
+            if ($category) {
+                $categoryIds = array_merge([$category->id], $category->children()->pluck('id')->all());
+                $query->whereIn('category_id', $categoryIds);
+            } else {
+                $query->where('category_id', 0);
+            }
         }
 
         if (filled($filters['brand'] ?? null)) {
-            $brand = $this->localizedSlugs->find(Brand::class, (string) $filters['brand'], $locale);
-            $query->where('brand_id', $brand?->id ?? 0);
+            $brandValues = is_array($filters['brand']) ? $filters['brand'] : explode(',', (string) $filters['brand']);
+            $brandIds = [];
+            foreach ($brandValues as $bSlug) {
+                $bSlug = trim((string) $bSlug);
+                if ($bSlug !== '') {
+                    $brand = $this->localizedSlugs->find(Brand::class, $bSlug, $locale);
+                    if ($brand) {
+                        $brandIds[] = $brand->id;
+                    }
+                }
+            }
+            if (!empty($brandIds)) {
+                $query->whereIn('brand_id', $brandIds);
+            } else {
+                $query->where('brand_id', 0);
+            }
         }
 
         if (filled($filters['q'] ?? null)) {

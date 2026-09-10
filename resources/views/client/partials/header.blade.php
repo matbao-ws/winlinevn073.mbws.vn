@@ -40,49 +40,50 @@
       </a>
       <div class="nav-mega-panel">
         <div class="mega-inner">
-          <div class="mega-col">
-            <div class="mega-col-title"><i class="fas fa-fan"></i> Quạt dân dụng</div>
-            <a href="{{ route('client.products', ['category' => 'quat-dan-dung']) }}"><i class="fas fa-angle-right"></i> Quạt trần &amp; đảo trần</a>
-            <a href="{{ route('client.products', ['category' => 'quat-dan-dung']) }}"><i class="fas fa-angle-right"></i> Quạt cây / quạt đứng gia đình</a>
-            <a href="{{ route('client.products', ['category' => 'quat-dan-dung']) }}"><i class="fas fa-angle-right"></i> Quạt treo tường gia đình</a>
-            <a href="{{ route('client.products', ['category' => 'quat-dan-dung']) }}"><i class="fas fa-angle-right"></i> Quạt sàn / quạt chân quỳ</a>
-            <a href="{{ route('client.products', ['category' => 'quat-dan-dung']) }}"><i class="fas fa-angle-right"></i> Quạt hộp &amp; quạt bàn</a>
-            <a href="{{ route('client.products', ['category' => 'quat-dan-dung']) }}"><i class="fas fa-angle-right"></i> Quạt tháp &amp; quạt không cánh</a>
-          </div>
-          <div class="mega-col">
-            <div class="mega-col-title"><i class="fas fa-wind"></i> Quạt công nghiệp</div>
-            <a href="{{ route('client.products', ['category' => 'quat-cong-nghiep']) }}"><i class="fas fa-angle-right"></i> Quạt cây công nghiệp (KM-750, DHF-750)</a>
-            <a href="{{ route('client.products', ['category' => 'quat-cong-nghiep']) }}"><i class="fas fa-angle-right"></i> Quạt treo tường công nghiệp</a>
-            <a href="{{ route('client.products', ['category' => 'quat-thong-gio-cong-nghiep']) }}"><i class="fas fa-angle-right"></i> Quạt thông gió vuông trang trại &amp; xưởng</a>
-            <a href="{{ route('client.products', ['category' => 'quat-ly-tam']) }}"><i class="fas fa-angle-right"></i> Quạt ly tâm hút bụi &amp; hút khói PCCC</a>
-            <a href="{{ route('client.products', ['category' => 'quat-huong-truc']) }}"><i class="fas fa-angle-right"></i> Quạt hướng trục tăng áp buồng thang</a>
-            <a href="{{ route('client.products', ['category' => 'quat-cong-nghiep']) }}"><i class="fas fa-angle-right"></i> Quạt hút xách tay có ống nối gió</a>
-          </div>
-          <div class="mega-col">
-            <div class="mega-col-title"><i class="fas fa-temperature-low"></i> Thông gió &amp; Làm mát</div>
-            <a href="{{ route('client.products', ['category' => 'may-lam-mat-cong-nghiep']) }}"><i class="fas fa-angle-right"></i> Máy làm mát công nghiệp Air Cooler</a>
-            <a href="{{ route('client.products', ['category' => 'quat-thong-gio-cong-nghiep']) }}"><i class="fas fa-angle-right"></i> Quạt thông gió gắn tường &amp; âm trần</a>
-            <a href="{{ route('client.products', ['category' => 'he-thong-thong-gio-lam-mat']) }}"><i class="fas fa-angle-right"></i> Quạt cắt gió (Air Curtain) chống thoát nhiệt</a>
-            <a href="{{ route('client.products', ['category' => 'tam-lam-mat-cooling-pad']) }}"><i class="fas fa-angle-right"></i> Tấm làm mát Cooling Pad</a>
-            <a href="{{ route('client.products', ['category' => 'he-thong-thong-gio-lam-mat']) }}"><i class="fas fa-angle-right"></i> Quạt thu hồi nhiệt ERV Nedfon</a>
-            <a href="{{ route('client.products', ['category' => 'he-thong-thong-gio-lam-mat']) }}"><i class="fas fa-angle-right"></i> Ống gió mềm &amp; phụ kiện thông gió</a>
-          </div>
+          @if(isset($globalCategories) && $globalCategories->isNotEmpty())
+            @foreach($globalCategories as $parent)
+              <div class="mega-col">
+                <a href="{{ route('client.products', ['category' => $parent->slug]) }}" class="mega-col-title-link">
+                  @if($parent->image_url)
+                    <img src="{{ asset($parent->image_url) }}" alt="" class="mega-cat-img-l1">
+                  @endif
+                  <div class="mega-col-title-text">{{ $parent->getTranslation('name', app()->getLocale()) }}</div>
+                </a>
+                <div class="mega-sub-list">
+                  @foreach($parent->children as $child)
+                    <a href="{{ route('client.products', ['category' => $child->slug]) }}" class="mega-item-l2">
+                      @if($child->image_url)
+                        <img src="{{ asset($child->image_url) }}" alt="" class="mega-cat-img-l2">
+                      @endif
+                      <span class="mega-item-title">{{ $child->getTranslation('name', app()->getLocale()) }}</span>
+                    </a>
+                  @endforeach
+                </div>
+              </div>
+            @endforeach
+          @endif
+
           <div class="mega-col mega-col-featured">
-            <div class="mega-col-title"><i class="fas fa-star"></i> Thương hiệu &amp; Dự án</div>
+            <div class="mega-col-title"><i class="fas fa-star" style="color:#f59e0b;"></i> Thương hiệu &amp; Dự án</div>
             <div class="mega-brand-pills">
-              <a href="{{ route('client.products', ['brand' => 'komasu']) }}" class="mb-pill">Komasu</a>
-              <a href="{{ route('client.products', ['brand' => 'panasonic']) }}" class="mb-pill">Panasonic</a>
-              <a href="{{ route('client.products', ['brand' => 'vinawind']) }}" class="mb-pill">Vinawind</a>
-              <a href="{{ route('client.products', ['brand' => 'deton']) }}" class="mb-pill">Deton</a>
-              <a href="{{ route('client.products', ['brand' => 'dasin']) }}" class="mb-pill">Dasin</a>
-              <a href="{{ route('client.products', ['brand' => 'chinghai']) }}" class="mb-pill">Chinghai</a>
+              @if(isset($globalBrands))
+                @foreach($globalBrands->take(8) as $b)
+                  <a href="{{ route('client.products', ['brand' => $b->slug]) }}" class="mb-pill">
+                    @if($b->image_url)
+                      <img src="{{ asset($b->image_url) }}" alt="{{ $b->getTranslation('name', app()->getLocale()) }}" style="height:14px; max-width:55px; object-fit:contain;">
+                    @else
+                      {{ $b->getTranslation('name', app()->getLocale()) }}
+                    @endif
+                  </a>
+                @endforeach
+              @endif
             </div>
             <div class="mega-promo-box">
               <div class="mp-tag">CHIẾT KHẤU DỰ ÁN</div>
-              <p class="mp-text">Chiết khấu tốt nhất cho đơn hàng từ 6 sản phẩm &amp; nhà thầu M&amp;E.</p>
+              <p class="mp-text">Chiết khấu tốt nhất cho đơn hàng số lượng lớn &amp; nhà thầu M&amp;E.</p>
               <a href="tel:0949761893" class="mp-btn"><i class="fas fa-phone-alt"></i> 0949.761.893</a>
             </div>
-            <a href="{{ route('client.products') }}" class="mega-view-all">Xem toàn bộ 339+ sản phẩm <i class="fas fa-arrow-right"></i></a>
+            <a href="{{ route('client.products') }}" class="mega-view-all">Xem toàn bộ sản phẩm <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
       </div>

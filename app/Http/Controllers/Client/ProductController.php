@@ -29,6 +29,7 @@ class ProductController extends Controller
 
         $brands = Brand::query()
             ->where('is_active', true)
+            ->withCount(['products' => fn ($q) => $q->where('is_active', true)])
             ->orderBy('sort_order')
             ->get();
 
@@ -45,18 +46,66 @@ class ProductController extends Controller
         }
 
         $currentBrand = null;
-        if (!empty($filters['brand'])) {
+        if (!empty($filters['brand']) && is_string($filters['brand']) && !str_contains($filters['brand'], ',')) {
             $currentBrand = $this->localizedSlugs->find(Brand::class, (string) $filters['brand'], $locale);
+        }
+
+        // Brands relevant to this category for the top quick filter bar (Dien May Xanh style)
+        $categoryBrands = $brands;
+        if ($currentCategory) {
+            $catIds = array_merge([$currentCategory->id], $currentCategory->children()->pluck('id')->all());
+            $catBrandIds = Product::query()
+                ->where('is_active', true)
+                ->whereIn('category_id', $catIds)
+                ->whereNotNull('brand_id')
+                ->distinct()
+                ->pluck('brand_id')
+                ->all();
+            if (!empty($catBrandIds)) {
+                $categoryBrands = $brands->whereIn('id', $catBrandIds);
+            }
         }
 
         return view('client.pages.products', [
             'categories' => $categories,
             'brands' => $brands,
+            'categoryBrands' => $categoryBrands,
             'products' => $products,
             'filters' => $filters,
             'currentCategory' => $currentCategory,
             'currentBrand' => $currentBrand,
         ]);
+    }
+
+    public function count(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $filters = $request->only(['q', 'category', 'brand', 'min_price', 'max_price', 'sort_by']);
+        $count = $this->productQueryService->listing($filters)->count();
+        return response()->json(['count' => $count]);
+    }
+
+    public function searchLive(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $q = trim((string) $request->input('q', ''));
+        if (mb_strlen($q) < 2) {
+            return response()->json(['products' => []]);
+        }
+        $locale = app()->getLocale();
+        $products = $this->productQueryService->listing(['q' => $q])
+            ->take(8)
+            ->get()
+            ->map(function ($p) use ($locale) {
+                return [
+                    'id' => $p->id,
+                    'name' => $p->getTranslation('name', $locale),
+                    'sku' => $p->sku,
+                    'price' => number_format((float) $p->price, 0, ',', '.') . '₫',
+                    'image' => $p->imageUrl('thumb') ?: asset('client-assets/images/km750s.jpg'),
+                    'url' => route('client.products.detail', ['slug' => $p->canonicalSlug($locale)]),
+                    'brand' => $p->brand?->getTranslation('name', $locale),
+                ];
+            });
+        return response()->json(['products' => $products]);
     }
 
     public function show(Request $request, string $locale, string $slug): View

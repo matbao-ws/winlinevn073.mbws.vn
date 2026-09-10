@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/gioi-thieu', [AboutController::class, 'index'])->name('about');
 Route::get('/san-pham', [ProductController::class, 'index'])->name('products');
+Route::get('/san-pham-count', [ProductController::class, 'count'])->name('products.count');
+Route::get('/san-pham-search-live', [ProductController::class, 'searchLive'])->name('products.search.live');
 Route::get('/san-pham/{slug}', [ProductController::class, 'show'])->name('products.detail');
 Route::get('/cong-cu-tinh-quat', [CalculatorController::class, 'index'])->name('calculator');
 Route::get('/cong-cu-tinh-quat/products', [CalculatorController::class, 'apiProducts'])->name('calculator.products');
