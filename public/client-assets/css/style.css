@@ -96,41 +96,6 @@ button { font-family: inherit; cursor: pointer; touch-action: manipulation; }
   box-shadow: 0 1px 4px rgba(0, 96, 182, 0.3);
 }
 
-/* Back to Top */
-.back-to-top-btn {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--brand-blue);
-  color: #ffffff;
-  box-shadow: 0 4px 16px rgba(0, 96, 182, 0.35), 0 2px 6px rgba(0, 0, 0, 0.08);
-  border: 2px solid #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 985;
-  opacity: 0;
-  transform: translateY(16px) scale(0.9);
-  pointer-events: none;
-  transition: all 0.25s var(--ease-spring);
-  outline: none;
-  padding: 0;
-}
-.back-to-top-btn.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
-.back-to-top-btn:hover {
-  background: var(--orange);
-  transform: translateY(-3px) scale(1.08);
-  box-shadow: 0 8px 24px rgba(212, 30, 61, 0.4), 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-.back-to-top-btn svg { width: 20px; height: 20px; stroke: #ffffff; }
 
 /* ==========================================================================
    HEADER & NAVIGATION SYSTEM (PERFECTED & ROCK-SOLID)
@@ -3614,8 +3579,8 @@ footer.footer, footer.site-footer {
 /* 9. Nút Lên TOP nổi bên phải (Hiển thị khi cuộn xuống >= 2/3 màn hình) */
 .floating-back-to-top {
   position: fixed;
-  bottom: 74px;
-  right: 18px;
+  bottom: 28px;
+  right: 28px;
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -3643,4 +3608,10 @@ footer.footer, footer.site-footer {
   background: var(--brand-blue, #004e7d);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 35, 70, 0.35);
+}
+@media (max-width: 768px) {
+  .floating-back-to-top {
+    bottom: 74px;
+    right: 18px;
+  }
 }

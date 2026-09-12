@@ -66,28 +66,7 @@ function ensureAppContainers() {
     document.body.appendChild(topBar);
   }
 
-  // 2. Standard Back-to-Top Button
-  if (!document.getElementById("back-to-top-btn")) {
-    const bttBtn = document.createElement("button");
-    bttBtn.id = "back-to-top-btn";
-    bttBtn.className = "back-to-top-btn";
-    bttBtn.setAttribute("aria-label", "Cuộn lên đầu trang");
-    bttBtn.setAttribute("type", "button");
-    bttBtn.title = "Lên đầu trang";
-    bttBtn.innerHTML = `
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <line x1="12" y1="19" x2="12" y2="5"></line>
-        <polyline points="5 12 12 5 19 12"></polyline>
-      </svg>
-    `;
-    bttBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-    document.body.appendChild(bttBtn);
-  }
-
-  // 3. Cart Drawer
+  // 2. Cart Drawer
   if (!document.getElementById("cart-drawer")) {
     const drawerDiv = document.createElement("div");
     drawerDiv.id = "cart-drawer";
@@ -265,13 +244,12 @@ function toggleMobileDrawer() {
   }
 }
 
-// 60fps Smooth Scroll Progress Tracker & Back-to-Top Controller
+// 60fps Smooth Scroll Progress Tracker
 function initScrollProgress() {
   let isTicking = false;
 
   function updateProgress() {
     const topBar = document.getElementById("top-scroll-progress");
-    const bttBtn = document.getElementById("back-to-top-btn");
 
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     const scrollHeight = Math.max(
@@ -289,15 +267,6 @@ function initScrollProgress() {
     // Update Top Reading Bar
     if (topBar) {
       topBar.style.width = progress + "%";
-    }
-
-    // Toggle Back-To-Top button visibility
-    if (bttBtn) {
-      if (scrollTop > 220) {
-        bttBtn.classList.add("visible");
-      } else {
-        bttBtn.classList.remove("visible");
-      }
     }
 
     isTicking = false;
