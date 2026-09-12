@@ -23,6 +23,7 @@ class ProductRequest extends FormRequest
         return [
             'category_id' => ['nullable', 'integer', 'exists:categories,id'],
             'brand_id' => ['nullable', 'integer', 'exists:brands,id'],
+            'model_comparison_table_id' => ['nullable', 'integer', 'exists:model_comparison_tables,id'],
             ...$this->localizedStringRules('name', true, 255),
             ...$this->localizedStringRules('slug', false, 255),
             'sku' => ['nullable', 'string', 'max:100', Rule::unique('products', 'sku')->ignore($productId)],

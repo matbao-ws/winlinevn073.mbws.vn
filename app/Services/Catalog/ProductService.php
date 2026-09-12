@@ -165,6 +165,7 @@ class ProductService
         return [
             'category_id' => $categoryId,
             'brand_id' => $data['brand_id'] ?? null,
+            'model_comparison_table_id' => $data['model_comparison_table_id'] ?? null,
             'name' => $name,
             'slug' => $this->uniqueProductSlug((string) $baseSlug, $product?->id),
             'sku' => $data['sku'] ?? null,

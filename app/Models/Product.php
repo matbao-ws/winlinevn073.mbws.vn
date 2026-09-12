@@ -50,6 +50,7 @@ class Product extends Model
         'is_cooling_pad',
         'pad_area',
         'pad_thickness',
+        'model_comparison_table_id',
     ];
 
     protected $casts = [
@@ -110,5 +111,15 @@ class Product extends Model
     public function inventoryMovements()
     {
         return $this->hasMany(InventoryMovement::class);
+    }
+
+    public function modelComparisonTable()
+    {
+        return $this->belongsTo(ModelComparisonTable::class, 'model_comparison_table_id');
+    }
+
+    public function comparisonItems()
+    {
+        return $this->hasMany(ModelComparisonItem::class, 'product_id');
     }
 }

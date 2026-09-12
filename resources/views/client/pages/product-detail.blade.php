@@ -1212,9 +1212,15 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
     </p>
 
     @if($product->description)
-    <div class="desc-full-text" style="margin-top:14px; line-height:1.7; color:#334155; white-space:pre-line;">
-      {!! nl2br(e($product->description)) !!}
+    <div class="desc-full-text" style="margin-top:14px; line-height:1.7; color:#334155;">
+      {!! app(\App\Services\ContentRenderService::class)->render($product->description, $product->id) !!}
     </div>
+    @endif
+
+    @if($product->modelComparisonTable && $product->modelComparisonTable->is_active)
+      <div class="product-attached-matrix" style="margin-top: 20px;">
+        {!! app(\App\Services\ContentRenderService::class)->renderTable($product->modelComparisonTable, $product->id) !!}
+      </div>
     @endif
 
     <!-- ================================================================= -->

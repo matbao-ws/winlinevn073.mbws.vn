@@ -452,7 +452,7 @@ button { font-family: inherit; cursor: pointer; }
       @endif
 
       <div class="article-rich-text" style="line-height:1.8; color:#334155;">
-        {!! $post->content !!}
+        {!! app(\App\Services\ContentRenderService::class)->render($post->content) !!}
       </div>
 
       <!-- Quick CTA inside article -->

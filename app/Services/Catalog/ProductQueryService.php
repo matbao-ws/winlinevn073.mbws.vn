@@ -119,6 +119,7 @@ class ProductQueryService
             'optionGroups.values' => fn ($query) => $query->where('is_active', true),
             'variants.optionValues.optionGroup',
             'variants' => fn ($query) => $query->where('is_active', true),
+            'modelComparisonTable.items.product.localizedSlugs',
         ];
 
         if ($this->features->enabled('review')) {

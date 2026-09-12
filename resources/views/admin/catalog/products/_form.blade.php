@@ -259,7 +259,23 @@
                         </a>
                     </div>
 
-                    <div class="mt-7">
+                    @php
+                        $modelTables = \App\Models\ModelComparisonTable::where('is_active', true)->orderBy('name')->get();
+                    @endphp
+                    <div class="mt-4 mb-2">
+                        <label class="form-label fw-semibold" for="model_comparison_table_id">Bảng so sánh model đi kèm</label>
+                        <select class="form-select" id="model_comparison_table_id" name="model_comparison_table_id">
+                            <option value="">{{ __('catalog.common.none') }} (Không đính kèm bảng)</option>
+                            @foreach($modelTables as $mTable)
+                                <option value="{{ $mTable->id }}" @selected((string) old('model_comparison_table_id', $product->model_comparison_table_id) === (string) $mTable->id)>
+                                    {{ $mTable->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <p class="fs-2 mb-0 text-muted">Tự động hiển thị bảng thông số &amp; giá real-time các model cùng dòng dưới mô tả sản phẩm này.</p>
+                    </div>
+
+                    <div class="mt-4">
                         <label class="form-label" for="sku">{{ __('catalog.fields.sku') }}</label>
                         <input type="text" class="form-control" id="sku" name="sku" value="{{ old('sku', $product->sku) }}" placeholder="{{ __('catalog.placeholders.product_sku') }}">
                     </div>

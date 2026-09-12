@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuItemController;
+use App\Http\Controllers\Admin\ModelComparisonTableController;
 use App\Http\Controllers\Admin\NotificationSettingController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PageController;
@@ -277,5 +278,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::resource('products.variants', ProductVariantController::class)->only(['create', 'store'])->middleware('can:products.create');
         Route::resource('products.variants', ProductVariantController::class)->only(['edit', 'update'])->middleware('can:products.update');
         Route::resource('products.variants', ProductVariantController::class)->only(['destroy'])->middleware('can:products.delete');
+
+        Route::get('model-tables/search-products', [ModelComparisonTableController::class, 'searchProducts'])->middleware('can:products.view')->name('model-tables.search-products');
+        Route::post('model-tables/{model_table}/duplicate', [ModelComparisonTableController::class, 'duplicate'])->middleware('can:products.create')->name('model-tables.duplicate');
+        Route::resource('model-tables', ModelComparisonTableController::class)->only(['create', 'store'])->middleware('can:products.create');
+        Route::resource('model-tables', ModelComparisonTableController::class)->only(['index'])->middleware('can:products.view');
+        Route::resource('model-tables', ModelComparisonTableController::class)->only(['edit', 'update'])->middleware('can:products.update');
+        Route::resource('model-tables', ModelComparisonTableController::class)->only(['destroy'])->middleware('can:products.delete');
     });
 });

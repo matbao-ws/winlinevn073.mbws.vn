@@ -164,6 +164,11 @@
                                               <span class="icon-small"></span>{{ __('admin.sidebar.brands') }}
                                           </a>
                                       </li>
+                                      <li class="sidebar-item">
+                                          <a class="sidebar-link" href="{{ route('admin.model-tables.index') }}">
+                                              <span class="icon-small"></span>Bảng so sánh model
+                                          </a>
+                                      </li>
                                   </ul>
                               </li>
                               @endcan
