@@ -38,7 +38,7 @@
                                       <div class="row g-4 mb-4">
                                           <!-- Hướng dẫn sử dụng -->
                                           <div class="col-md-6">
-                                              <a href="https://support.matbao.ws" target="_blank" class="d-flex align-items-center text-decoration-none">
+                                              <a href="/huong-dan-su-dung" target="_blank" class="d-flex align-items-center text-decoration-none">
                                                   <div class="rounded me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: #f3ebff;">
                                                       <iconify-icon icon="lucide:life-buoy" class="fs-7" style="color: #8a2be2;"></iconify-icon>
                                                   </div>
@@ -267,7 +267,7 @@
                                   </a>
                                   <ul aria-expanded="false" class="collapse first-level my-3 ps-3">
                                       <li class="sidebar-item py-2">
-                                          <a href="https://support.matbao.ws" target="_blank" class="d-flex align-items-center text-decoration-none">
+                                          <a href="/huong-dan-su-dung" target="_blank" class="d-flex align-items-center text-decoration-none">
                                               <div class="rounded round-48 me-3 d-flex align-items-center justify-content-center" style="background-color: #f3ebff;">
                                                   <iconify-icon icon="lucide:life-buoy" class="fs-7" style="color: #8a2be2;"></iconify-icon>
                                               </div>
@@ -370,7 +370,7 @@
                                       <div class="row g-4 mb-4">
                                           <!-- Hướng dẫn sử dụng -->
                                           <div class="col-md-6">
-                                              <a href="https://support.matbao.ws" target="_blank" class="d-flex align-items-center text-decoration-none">
+                                              <a href="/huong-dan-su-dung" target="_blank" class="d-flex align-items-center text-decoration-none">
                                                   <div class="rounded me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: #f3ebff;">
                                                       <iconify-icon icon="lucide:life-buoy" class="fs-7" style="color: #8a2be2;"></iconify-icon>
                                                   </div>

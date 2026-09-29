@@ -153,8 +153,8 @@ function ensureAppContainers() {
     drawerOverlay.innerHTML = `
       <div class="mobile-drawer-panel">
         <div class="mobile-drawer-head">
-          <a href="index.html" class="site-logo-wrap" onclick="closeMobileDrawer()">
-            <img src="assets/images/logo.png" alt="Winline Việt Nam" class="site-logo-img">
+          <a href="/vi" class="site-logo-wrap" onclick="closeMobileDrawer()">
+            <img src="/client-assets/images/logo.png" alt="Winline Việt Nam" class="site-logo-img">
           </a>
           <button onclick="closeMobileDrawer()" class="mobile-drawer-close" aria-label="Đóng menu">
             <i class="fas fa-times"></i>
@@ -330,7 +330,7 @@ function updateCartUI() {
     subtotal += itemTotal;
     return `
       <div class="cart-item-row">
-        <img src="${item.image}" alt="${item.name}" onerror="this.src='assets/images/km750s.jpg'" class="cart-item-img">
+        <img src="${item.image}" alt="${item.name}" onerror="this.src='/client-assets/images/km750s.jpg'" class="cart-item-img">
         <div class="cart-item-info">
           <div class="cart-item-title">${item.name}</div>
           <div class="cart-item-sku">Model: <strong class="mono" style="color:var(--navy-950);">${item.code || 'Winline'}</strong> ${item.powerText ? '| ' + item.powerText : ''}</div>
@@ -376,7 +376,7 @@ function addToCart(productId, qty = 1) {
       code: productId,
       name: "Quạt công nghiệp Winline " + productId,
       price: 2500000,
-      image: "assets/images/km750s.jpg",
+      image: "/client-assets/images/km750s.jpg",
       powerText: "Chính hãng"
     };
   }
@@ -390,7 +390,7 @@ function addToCart(productId, qty = 1) {
       code: prod.code,
       name: prod.name,
       price: prod.price || 2000000,
-      image: prod.image || "assets/images/km750s.jpg",
+      image: prod.image || "/client-assets/images/km750s.jpg",
       powerText: prod.powerText || "",
       qty: qty
     });
@@ -465,7 +465,7 @@ function openQuickView(productId) {
       bladeText: "750mm",
       voltage: "220V / 50Hz",
       warranty: "12 tháng",
-      image: "assets/images/km750s.jpg",
+      image: "/client-assets/images/km750s.jpg",
       description: "Dòng quạt công nghiệp động cơ 100% dây đồng nguyên chất, vận hành bền bỉ 24/7 trong môi trường nhà xưởng, nhà hàng và kho lưu trữ."
     };
   }
@@ -477,7 +477,7 @@ function openQuickView(productId) {
   content.innerHTML = `
     <div style="padding:28px; display:grid; grid-template-columns:1fr 1.2fr; gap:26px; align-items:start;">
       <div style="background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:20px; display:flex; align-items:center; justify-content:center; aspect-ratio:1/1;">
-        <img src="${prod.image}" alt="${prod.name}" style="max-height:100%; max-width:100%; object-fit:contain;" onerror="this.src='assets/images/km750s.jpg'">
+        <img src="${prod.image}" alt="${prod.name}" style="max-height:100%; max-width:100%; object-fit:contain;" onerror="this.src='/client-assets/images/km750s.jpg'">
       </div>
 
       <div>
@@ -794,7 +794,7 @@ function initLiveSearch() {
                 <div style="display:flex; flex-direction:column; gap:6px;">
                   ${matchedProds.slice(0, 5).map(p => `
                     <a href="chi-tiet-san-pham.html" style="display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid #edf2f7; border-radius:6px; background:#ffffff; text-decoration:none; transition:all 0.15s;" onmouseover="this.style.background='#f8fafc'; this.style.borderColor='#bfdbfe';" onmouseout="this.style.background='#ffffff'; this.style.borderColor='#edf2f7';">
-                      <img src="${p.image}" onerror="this.src='assets/images/km750s.jpg'" style="width:42px; height:42px; object-fit:contain; border:1px solid #dbe4ee; border-radius:4px; padding:2px; flex-shrink:0; background:#fff;">
+                      <img src="${p.image}" onerror="this.src='/client-assets/images/km750s.jpg'" style="width:42px; height:42px; object-fit:contain; border:1px solid #dbe4ee; border-radius:4px; padding:2px; flex-shrink:0; background:#fff;">
                       <div style="flex:1; min-width:0;">
                         <div style="display:flex; align-items:center; gap:5px; margin-bottom:2px;">
                           ${p.code ? `<span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; font-weight:700; background:#eef6fd; color:#072242; padding:1px 4px; border-radius:3px;">${highlightSearchMatch(p.code, q)}</span>` : ''}
