@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cẩm Nang Hướng Dẫn Quản Trị Website Winline.vn - Winline Admin Manual</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    code, pre {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.03);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.25);
+    }
+    .callout-ring {
+      position: absolute;
+      border: 2px solid #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .callout-badge {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background: #ef4444;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 11px;
+      line-height: 22px;
+      text-align: center;
+      border-radius: 9999px;
+      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.4);
+      top: -11px;
+      right: -11px;
+      z-index: 25;
+    }
+    .callout-box {
+      border: 2px solid #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+      border-radius: 6px;
+      position: relative;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 9999px;
+    }
+    .badge-disabled {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+    .badge-active {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+    .btn {
+      display: inline-block;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 4px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .btn-emerald {
+      background: #10b981;
+      color: white;
+    }
+    .btn-blue {
+      background: #2563eb;
+      color: white;
+    }
+    .btn-light {
+      background: #f1f5f9;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+    .alert-banner {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .alert-danger {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+    .alert-success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased flex h-screen overflow-hidden">
+  <aside class="no-print w-80 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col h-full z-10 select-none">
+    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-base shadow-sm">
+          W
+        </div>
+        <div>
+          <h1 class="font-bold text-slate-900 text-sm leading-tight">Winline Admin Guide</h1>
+          <p class="text-[11px] text-slate-400 font-medium">winlinevn073.mbws.vn</p>
+        </div>
+      </div>
+      <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+        v2.0 Chốt
+      </span>
+    </div>
+
+    <div class="p-3 border-b border-slate-100 bg-slate-50/50">
+      <div class="relative">
+        <svg class="w-4 h-4 absolute left-3 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="Tìm chức năng, từ khóa..." 
+          class="w-full pl-9 pr-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+          oninput="handleSearch(this.value)"
+        />
+      </div>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto p-3 space-y-6 text-xs" id="navContainer">
+      
+        <div>
+          <div class="px-2 mb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            TỔNG QUAN (OVERVIEW)
+          </div>
+          <div class="space-y-0.5">
+        
+            <button onclick="switchTab('intro')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors active font-semibold text-blue-700 bg-blue-50/80" data-id="intro">
+              <span>Giới thiệu & Đăng nhập Bảo mật</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">explanation</span>
+            </button>
+            
+            <button onclick="switchTab('dashboard-view')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="dashboard-view">
+              <span>Bảng Điều Khiển & Thống Kê Kinh Doanh (Dashboard)</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">overview</span>
+            </button>
+            
+          </div>
+        </div>
+        
+        <div>
+          <div class="px-2 mb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            TÀI KHOẢN & PHÂN QUYỀN
+          </div>
+          <div class="space-y-0.5">
+        
+            <button onclick="switchTab('enable-disable')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="enable-disable">
+              <span>Khóa hoặc Mở khóa tài khoản nhân viên (Disable / Enable)</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">how-to</span>
+            </button>
+            
+            <button onclick="switchTab('create-user')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="create-user">
+              <span>Thêm Tài Khoản Nhân Viên Mới</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">tutorial</span>
+            </button>
+            
+            <button onclick="switchTab('roles-permission')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="roles-permission">
+              <span>Phân Quyền Vai Trò Chi Tiết (Roles & Permissions)</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+          </div>
+        </div>
+        
+        <div>
+          <div class="px-2 mb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            SẢN PHẨM & KỸ THUẬT HVAC
+          </div>
+          <div class="space-y-0.5">
+        
+            <button onclick="switchTab('add-product')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="add-product">
+              <span>Đăng Sản Phẩm Mới & Quản Lý Giá / Kho</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+            <button onclick="switchTab('hvac-specs')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="hvac-specs">
+              <span>Cấu Hình Thông Số Kỹ Thuật HVAC Cho Quạt</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-bold">core-hvac</span>
+            </button>
+            
+            <button onclick="switchTab('category-brand')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="category-brand">
+              <span>Quản Lý Danh Mục 3 Cấp & Thương Hiệu Hãng</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+          </div>
+        </div>
+        
+        <div>
+          <div class="px-2 mb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            MA TRẬN SO SÁNH MODEL
+          </div>
+          <div class="space-y-0.5">
+        
+            <button onclick="switchTab('model-matrix-create')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="model-matrix-create">
+              <span>Tạo Bảng Ma Trận So Sánh Model Sản Phẩm</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+            <button onclick="switchTab('model-matrix-shortcode')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="model-matrix-shortcode">
+              <span>Gán Vào Sản Phẩm & Nhúng Bài Viết Bằng Shortcode</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+          </div>
+        </div>
+        
+        <div>
+          <div class="px-2 mb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            ĐƠN HÀNG & BÁO GIÁ (RFQ)
+          </div>
+          <div class="space-y-0.5">
+        
+            <button onclick="switchTab('order-flow')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="order-flow">
+              <span>Xử Lý Quy Trình Đơn Hàng & In Phiếu Giao A4</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+            <button onclick="switchTab('rfq-handle')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="rfq-handle">
+              <span>Tiếp Nhận & Xử Lý Yêu Cầu Báo Giá HVAC (RFQ)</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+          </div>
+        </div>
+        
+        <div>
+          <div class="px-2 mb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            MARKETING & CMS
+          </div>
+          <div class="space-y-0.5">
+        
+            <button onclick="switchTab('post-seo')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="post-seo">
+              <span>Đăng Bài Viết & Tối Ưu SEO (PostSeoAnalyzer)</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+            <button onclick="switchTab('banner-menu')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="banner-menu">
+              <span>Quản Lý Banner Slider & Menu Điều Hướng</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+            <button onclick="switchTab('vouchers')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="vouchers">
+              <span>Mã Giảm Giá (Vouchers) & Khuyến Mãi</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">how-to</span>
+            </button>
+            
+          </div>
+        </div>
+        
+        <div>
+          <div class="px-2 mb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            TRA CỨU & XỬ LÝ SỰ CỐ
+          </div>
+          <div class="space-y-0.5">
+        
+            <button onclick="switchTab('ref-image-status')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="ref-image-status">
+              <span>Quy Chuẩn Kích Thước Ảnh & Bảng Trạng Thái</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">reference</span>
+            </button>
+            
+            <button onclick="switchTab('faq-troubleshoot')" class="nav-btn w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between transition-colors font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-id="faq-troubleshoot">
+              <span>Hỏi Đáp Sự Cố Vận Hành Thường Gặp (FAQ)</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded text-slate-400">troubleshooting</span>
+            </button>
+            
+          </div>
+        </div>
+        
+    </nav>
+
+    <div class="p-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 text-[10px]">
+          MB
+        </div>
+        <span class="text-slate-500 font-medium">Mắt Bão WS Support</span>
+      </div>
+      <button onclick="window.print()" class="px-2.5 py-1 bg-white border border-slate-300 rounded text-slate-700 hover:bg-slate-100 font-semibold text-[11px] shadow-sm flex items-center gap-1">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+        In / PDF
+      </button>
+    </div>
+  </aside>
+
+  <main class="flex-1 overflow-y-auto bg-slate-50 p-6 md:p-10 flex justify-center">
+    <div class="w-full max-w-4xl space-y-8">
+      
+        <section id="tab-intro" class="tab-pane  space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              TỔNG QUAN (OVERVIEW) &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Giới thiệu & Đăng nhập Bảo mật
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Hướng dẫn đăng nhập hệ thống quản trị Winline an toàn và cơ chế bảo vệ phiên làm việc chống tấn công dò quét mật khẩu (brute-force).
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Mở trình duyệt (Google Chrome, Edge hoặc Cốc Cốc) và truy cập đường dẫn: <code>https://winline.vn/vi/admin/login</code>.</li><li>Nhập chính xác Email quản trị viên và Mật khẩu được cấp.</li><li>Tích chọn 'Ghi nhớ đăng nhập' nếu sử dụng máy tính cá nhân và bấm nút 'Đăng nhập trang quản trị'.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Cổng đăng nhập quản trị bảo mật (Admin Security Gate)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/login</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="max-width: 400px; margin: 0 auto; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div style="width: 48px; height: 48px; border-radius: 10px; background: #2563eb; color: #fff; font-weight: 900; font-size: 24px; line-height: 48px; margin: 0 auto 10px auto;">W</div>
+            <h3 style="margin: 0; font-size: 16px; color: #0f172a;">ĐĂNG NHẬP QUẢN TRỊ WINLINE</h3>
+            <p style="margin: 4px 0 0 0; font-size: 11px; color: #64748b;">Hệ thống lõi Thương mại & Kỹ thuật HVAC</p>
+          </div>
+
+          <div style="position: relative; margin-bottom: 14px;">
+            <div class="callout-box" style="padding: 10px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <div style="margin-bottom: 8px;">
+                <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Email quản trị viên <span style="color:#ef4444;">*</span></label>
+                <input type="text" value="winlinevietnam@gmail.com" readonly style="width: 100%; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; background:#f8fafc;" />
+              </div>
+              <div>
+                <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Mật khẩu <span style="color:#ef4444;">*</span></label>
+                <input type="password" value="••••••••••••••••" readonly style="width: 100%; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; background:#f8fafc;" />
+              </div>
+            </div>
+          </div>
+
+          <div style="position: relative;">
+            <div class="callout-box" style="padding: 4px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">2</span>
+              <button class="btn btn-blue" style="width: 100%; padding: 8px; font-size: 12px; font-weight: 700;">Đăng nhập trang quản trị</button>
+            </div>
+            <p style="margin: 6px 0 0 0; font-size: 10px; color: #64748b; text-align: center;">Tự động tạm khóa 60 giây nếu đăng nhập sai quá 5 lần liên tiếp.</p>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Ô nhập Email & Mật khẩu</td>
+              <td class="px-4 py-3 text-slate-600">Nhập tài khoản quản trị được phân quyền. Hệ thống chỉ cho phép các tài khoản có cờ is_active = 1 đăng nhập.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">2</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Nút Đăng nhập & Bảo vệ Brute-force</td>
+              <td class="px-4 py-3 text-slate-600">Hệ thống tự động kích hoạt Rate Limiting (chặn IP 60 giây nếu thử sai quá 5 lần) nhằm bảo vệ an toàn dữ liệu.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-dashboard-view" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              TỔNG QUAN (OVERVIEW) &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Bảng Điều Khiển & Thống Kê Kinh Doanh (Dashboard)
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Trung tâm quan sát toàn bộ hiệu quả hoạt động: doanh thu theo ngày/tháng, số lượng đơn hàng mới, danh sách thiết bị bán chạy và yêu cầu báo giá chờ xử lý.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Sau khi đăng nhập thành công, hệ thống tự động đưa bạn về trang Tổng quan (Dashboard).</li><li>Quan sát 4 thẻ chỉ số nhanh trên cùng để nắm bắt tình hình đơn hàng và doanh số tức thời.</li><li>Xem biểu đồ doanh thu và danh sách đơn hàng cần xử lý gấp ở khu vực trung tâm.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Bảng điều khiển kinh doanh Winline (Admin Dashboard)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div>
+          <div style="position: relative; margin-bottom: 14px;">
+            <div class="callout-box" style="padding: 8px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                <div style="background: #ffffff; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px;">
+                  <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Doanh thu tháng</span>
+                  <div style="font-size: 16px; font-weight: 800; color: #2563eb; margin-top: 2px;">485.600.000 đ</div>
+                  <span style="font-size: 10px; color: #16a34a; font-weight: 600;">&uarr; +14.8% so với tháng trước</span>
+                </div>
+                <div style="background: #ffffff; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px;">
+                  <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Đơn hàng mới</span>
+                  <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px;">64 đơn</div>
+                  <span style="font-size: 10px; color: #ea580c; font-weight: 600;">8 đơn chờ xác nhận</span>
+                </div>
+                <div style="background: #ffffff; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px;">
+                  <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Sản phẩm đang bán</span>
+                  <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px;">158 model</div>
+                  <span style="font-size: 10px; color: #16a34a; font-weight: 600;">9 thương hiệu chính hãng</span>
+                </div>
+                <div style="background: #ffffff; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px;">
+                  <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Dự tính & RFQ HVAC</span>
+                  <div style="font-size: 16px; font-weight: 800; color: #7c3aed; margin-top: 2px;">29 bản tính</div>
+                  <span style="font-size: 10px; color: #7c3aed; font-weight: 600;">Khách xuất từ công cụ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="position: relative;">
+            <div class="callout-box" style="padding: 6px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">2</span>
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+                <div style="padding: 8px 12px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-weight: 700; font-size: 11px; display: flex; justify-content: space-between;">
+                  <span>Đơn hàng mới nhất cần xác nhận</span>
+                  <span style="color: #2563eb;">Xem tất cả &rarr;</span>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                  <thead style="background: #f1f5f9; color: #475569;">
+                    <tr>
+                      <th style="padding: 6px 10px; text-align: left;">Mã đơn</th>
+                      <th style="padding: 6px 10px; text-align: left;">Khách hàng</th>
+                      <th style="padding: 6px 10px; text-align: left;">Sản phẩm</th>
+                      <th style="padding: 6px 10px; text-align: right;">Tổng tiền</th>
+                      <th style="padding: 6px 10px; text-align: center;">Trạng thái</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 6px 10px; font-weight: 700; color: #2563eb;">#WL-2609-8472</td>
+                      <td style="padding: 6px 10px;">Cơ Điện Hòa Bình (0912.345.xxx)</td>
+                      <td style="padding: 6px 10px;">Quạt vuông 1380 &bull; SL: 12</td>
+                      <td style="padding: 6px 10px; text-align: right; font-weight: 700;">71.800.000 đ</td>
+                      <td style="padding: 6px 10px; text-align: center;"><span class="badge" style="background:#fef3c7; color:#92400e;">Chờ xác nhận</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Thẻ 4 chỉ số thống kê</td>
+              <td class="px-4 py-3 text-slate-600">Cập nhật doanh thu thực thu, số đơn hàng đang chạy, quy mô sản phẩm và số lượng bản dự tính kỹ thuật khách vừa xuất.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">2</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Khu vực duyệt đơn hàng gấp</td>
+              <td class="px-4 py-3 text-slate-600">Nhân viên kinh doanh có thể nhấp trực tiếp vào mã đơn để mở nhanh màn hình gọi điện xác nhận chốt đơn.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-enable-disable" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              TÀI KHOẢN & PHÂN QUYỀN &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Khóa hoặc Mở khóa tài khoản nhân viên (Disable / Enable)
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Khi nhân viên nghỉ việc hoặc chuyển vị trí, Quản trị viên có thể vô hiệu hóa tài khoản ngay lập tức để hủy mọi phiên đăng nhập đang hoạt động. Khi cần đưa nhân sự trở lại làm việc, bạn có thể mở khóa nguyên vẹn mà không làm mất mật khẩu hay lịch sử thao tác của họ.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Truy cập danh sách người dùng, bấm chọn tài khoản đang ở trạng thái Bị khóa (Disabled).</li><li>Tại form chỉnh sửa hoặc thẻ trạng thái, chọn Kích hoạt (Enable) và bấm Lưu thay đổi.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Chi tiết tài khoản nhân viên (Trạng thái trước và sau khi kích hoạt)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/users/15</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div>
+          <!-- BEFORE: DISABLED -->
+          <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-weight: 700; color: #991b1b; font-size: 12px;">Màn hình 1: Trạng thái tài khoản đang Bị Khóa (Disabled)</span>
+              <span class="badge badge-disabled">Bị khóa (Disabled)</span>
+            </div>
+
+            <!-- ① KHOANH VÙNG BANNER BỊ KHÓA -->
+            <div class="callout-wrapper" style="margin-bottom: 10px;">
+              <div class="callout-box">
+                <span class="callout-badge">1</span>
+                <div class="alert-banner alert-danger" style="margin: 0;">
+                  <svg style="width: 14px; height: 14px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                  <span><strong>Tài khoản đã bị vô hiệu hóa:</strong> Mọi phiên đăng nhập của người dùng này đã bị chấm dứt ngay lập tức.</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #475569;">MT</div>
+                <div>
+                  <div style="font-weight: 700; color: #0f172a;">Mai Trần (Nhân viên Sale)</div>
+                  <div style="color: #64748b; font-size: 11px;">guide-junior@winline.vn</div>
+                </div>
+              </div>
+
+              <div style="border-top: 1px solid #f1f5f9; padding-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; gap: 6px;">
+                  <span class="btn btn-light">Sửa</span>
+                  <span class="btn btn-light">Đặt lại mật khẩu</span>
+                </div>
+
+                <!-- ② KHOANH VÙNG NÚT MỞ KHÓA -->
+                <div style="position: relative;">
+                  <div style="border: 2px solid #ef4444; border-radius: 4px; padding: 1px; display: inline-block;">
+                    <span class="callout-badge" style="top: -8px; right: -8px;">2</span>
+                    <span class="btn btn-emerald">Kích hoạt lại (Enable)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AFTER: ENABLED -->
+          <div style="border-top: 1px dashed #cbd5e1; padding-top: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-weight: 700; color: #166534; font-size: 12px;">Màn hình 2: Trạng thái sau khi bấm Kích hoạt (Enabled)</span>
+              <span class="badge badge-active">Đang hoạt động (Active)</span>
+            </div>
+
+            <!-- ① KHOANH VÙNG BANNER THÀNH CÔNG -->
+            <div class="callout-wrapper" style="margin-bottom: 10px;">
+              <div class="callout-box">
+                <span class="callout-badge">1</span>
+                <div class="alert-banner alert-success" style="margin: 0;">
+                  <svg style="width: 14px; height: 14px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span><strong>Thành công:</strong> Tài khoản đã được kích hoạt. Người dùng có thể đăng nhập bình thường.</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 40px; height: 40px; border-radius: 50%; background: #dbeafe; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #1d4ed8;">MT</div>
+                  <div>
+                    <div style="font-weight: 700; color: #0f172a;">Mai Trần (Nhân viên Sale)</div>
+                    <div style="color: #64748b; font-size: 11px;">guide-junior@winline.vn</div>
+                  </div>
+                </div>
+                <span class="btn btn-danger" style="background:#fee2e2; color:#b91c1c; border-color:#fecaca;">Khóa tài khoản (Disable)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Thẻ cảnh báo vô hiệu hóa</td>
+              <td class="px-4 py-3 text-slate-600">Thông báo xác nhận tài khoản đã bị khóa hoàn toàn. Tài khoản này không thể truy cập bất kỳ dữ liệu nào trong admin.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">2</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Nút Kích hoạt lại (Enable)</td>
+              <td class="px-4 py-3 text-slate-600">Bấm vào nút này để mở lại tài khoản, phục hồi quyền hạn làm việc cho nhân viên ngay lập tức.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-create-user" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              TÀI KHOẢN & PHÂN QUYỀN &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Thêm Tài Khoản Nhân Viên Mới
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Tạo tài khoản quản trị riêng cho từng nhân viên kinh doanh, kế toán hoặc kỹ thuật viên để phân tách trách nhiệm và ghi lại nhật ký hoạt động (Audit Trail).
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào menu 'Quản lý người dùng' &rarr; chọn 'Danh sách người dùng'.</li><li>Bấm nút '+ Thêm người dùng mới' ở góc trên bên phải.</li><li>Điền đầy đủ thông tin: Họ tên, Email, Mật khẩu và chọn Vai trò phù hợp.</li><li>Bấm 'Lưu thông tin' để kích hoạt tài khoản.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Form thêm người dùng mới (Create Admin User)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/users/create</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
+          <!-- ① KHOANH VÙNG THÔNG TIN CƠ BẢN -->
+          <div style="position: relative; margin-bottom: 12px;">
+            <div class="callout-box" style="padding: 8px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+                <div>
+                  <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Họ và tên <span style="color:#ef4444;">*</span></label>
+                  <input type="text" value="Nguyễn Văn B (Kỹ thuật)" readonly style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;" />
+                </div>
+                <div>
+                  <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Email đăng nhập <span style="color:#ef4444;">*</span></label>
+                  <input type="text" value="vanb.kythuat@winline.vn" readonly style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;" />
+                </div>
+              </div>
+              <div>
+                <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Mật khẩu khởi tạo <span style="color:#ef4444;">*</span></label>
+                <input type="password" value="••••••••••••••••" readonly style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;" />
+              </div>
+            </div>
+          </div>
+
+          <!-- ② KHOANH VÙNG VAI TRÒ (ROLE) -->
+          <div style="position: relative; margin-bottom: 12px;">
+            <div class="callout-box" style="padding: 8px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">2</span>
+              <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Chọn Vai trò phân quyền (Role) <span style="color:#ef4444;">*</span></label>
+              <select style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;">
+                <option selected>Nhân viên Kinh doanh HVAC</option>
+                <option>Biên tập viên nội dung (Content Editor)</option>
+                <option>Quản trị viên (Admin)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <span class="btn btn-light">Hủy</span>
+            <span class="btn btn-blue">Lưu thông tin</span>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Thông tin đăng nhập bắt buộc</td>
+              <td class="px-4 py-3 text-slate-600">Email phải là duy nhất trong hệ thống; mật khẩu có độ dài tối thiểu 8 ký tự.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">2</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Chọn Vai trò (Role)</td>
+              <td class="px-4 py-3 text-slate-600">Quyết định những module nào nhân viên được phép xem, sửa hoặc xóa sau khi đăng nhập.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-roles-permission" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              TÀI KHOẢN & PHÂN QUYỀN &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Phân Quyền Vai Trò Chi Tiết (Roles & Permissions)
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Tạo nhóm quyền chuẩn theo ma trận hạt nhân <module>.<action> (ví dụ: orders.view, products.update) giúp bảo mật dữ liệu công ty tối đa.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào 'Quản lý người dùng' &rarr; chọn 'Vai trò & Quyền hạn'.</li><li>Bấm 'Thêm vai trò' và đặt tên nhóm (ví dụ: 'Kế toán kho').</li><li>Tích chọn các quyền hạn tương ứng được phép thực thi và bấm Lưu.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Ma trận phân quyền vai trò (Role Permission Matrix)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/roles/3/edit</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+          <div style="margin-bottom: 12px;">
+            <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Tên vai trò</label>
+            <input type="text" value="Nhân viên Kinh doanh HVAC" readonly style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;" />
+          </div>
+
+          <!-- ① KHOANH VÙNG MA TRẬN QUYỀN -->
+          <div style="position: relative;">
+            <div class="callout-box" style="padding: 8px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                <thead style="background: #f1f5f9; color: #475569;">
+                  <tr>
+                    <th style="padding: 5px 8px; text-align: left;">Phân hệ</th>
+                    <th style="padding: 5px 8px; text-align: center;">Xem (View)</th>
+                    <th style="padding: 5px 8px; text-align: center;">Thêm (Create)</th>
+                    <th style="padding: 5px 8px; text-align: center;">Sửa (Update)</th>
+                    <th style="padding: 5px 8px; text-align: center;">Xóa (Delete)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 5px 8px; font-weight: 700;">Đơn hàng (Orders)</td>
+                    <td style="text-align: center;"><input type="checkbox" checked disabled /></td>
+                    <td style="text-align: center;"><input type="checkbox" checked disabled /></td>
+                    <td style="text-align: center;"><input type="checkbox" checked disabled /></td>
+                    <td style="text-align: center;"><input type="checkbox" disabled /></td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 5px 8px; font-weight: 700;">Sản phẩm (Products)</td>
+                    <td style="text-align: center;"><input type="checkbox" checked disabled /></td>
+                    <td style="text-align: center;"><input type="checkbox" disabled /></td>
+                    <td style="text-align: center;"><input type="checkbox" disabled /></td>
+                    <td style="text-align: center;"><input type="checkbox" disabled /></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 8px; font-weight: 700;">Báo giá & Liên hệ (Contacts)</td>
+                    <td style="text-align: center;"><input type="checkbox" checked disabled /></td>
+                    <td style="text-align: center;"><input type="checkbox" disabled /></td>
+                    <td style="text-align: center;"><input type="checkbox" checked disabled /></td>
+                    <td style="text-align: center;"><input type="checkbox" disabled /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Ma trận phân quyền chi tiết</td>
+              <td class="px-4 py-3 text-slate-600">Đảm bảo nhân viên chỉ thao tác đúng nghiệp vụ của mình; ngăn chặn việc vô tình xóa sản phẩm hoặc rò rỉ cấu hình hệ thống.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-add-product" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              SẢN PHẨM & KỸ THUẬT HVAC &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Đăng Sản Phẩm Mới & Quản Lý Giá / Kho
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Hướng dẫn đăng tải sản phẩm quạt hoặc phụ kiện mới lên website với đầy đủ mã SKU, giá bán, ảnh đại diện và quản lý số lượng tồn kho.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào menu 'Sản phẩm' &rarr; chọn 'Danh sách sản phẩm'.</li><li>Bấm nút 'Thêm sản phẩm mới' ở góc trên bên phải.</li><li>Điền Tên sản phẩm, Mã SKU duy nhất, chọn Danh mục và Hãng sản xuất.</li><li>Nhập Giá bán, Giá niêm yết (gạch ngang) và tải lên hình ảnh sản phẩm.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Form thêm sản phẩm quạt mới (Create Product)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/products/create</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px;">
+            <div>
+              <div style="margin-bottom: 10px;">
+                <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Tên sản phẩm <span style="color:#ef4444;">*</span></label>
+                <input type="text" value="Quạt cây công nghiệp Komasu KM-750S (250W)" readonly style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;" />
+              </div>
+
+              <!-- ① KHOANH VÙNG SKU & GIÁ -->
+              <div style="position: relative; margin-bottom: 10px;">
+                <div class="callout-box" style="padding: 6px; border: 2px solid #ef4444; border-radius: 6px;">
+                  <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                    <div>
+                      <label style="display:block; font-size: 10px; font-weight: 700;">Mã SKU <span style="color:#ef4444;">*</span></label>
+                      <input type="text" value="KM-750S" readonly style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-weight: 700; font-size: 11px; background:#f8fafc;" />
+                    </div>
+                    <div>
+                      <label style="display:block; font-size: 10px; font-weight: 700;">Giá bán (đ) <span style="color:#ef4444;">*</span></label>
+                      <input type="text" value="2.630.000" readonly style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-weight: 700; color:#2563eb; font-size: 11px; background:#f8fafc;" />
+                    </div>
+                    <div>
+                      <label style="display:block; font-size: 10px; font-weight: 700;">Giá niêm yết (đ)</label>
+                      <input type="text" value="2.950.000" readonly style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Mô tả kỹ thuật</label>
+                <textarea rows="3" style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;" readonly>Sải cánh 750mm, 100% dây đồng nguyên chất, bảo hành chính hãng 12 tháng tận nơi.</textarea>
+              </div>
+            </div>
+
+            <!-- ② KHOANH VÙNG ẢNH & DANH MỤC -->
+            <div style="position: relative;">
+              <div class="callout-box" style="padding: 6px; border: 2px solid #ef4444; border-radius: 6px;">
+                <span class="callout-badge" style="top: -8px; right: -8px;">2</span>
+                <label style="display:block; font-size: 10px; font-weight: 700; margin-bottom: 3px;">Danh mục & Hãng</label>
+                <select style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; margin-bottom: 6px; background:#f8fafc;">
+                  <option selected>Quạt công nghiệp</option>
+                </select>
+                <select style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; margin-bottom: 8px; background:#f8fafc;">
+                  <option selected>Komasu</option>
+                </select>
+                <div style="border: 1px dashed #cbd5e1; border-radius: 4px; padding: 15px; text-align: center; background: #f8fafc;">
+                  <div style="font-size: 10px; color: #64748b;">Ảnh vuông 800x800px</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Mã SKU & Giá bán</td>
+              <td class="px-4 py-3 text-slate-600">SKU là mã định danh thao tác quan trọng để nhân viên bán hàng tra cứu nhanh và có nút sao chép ngoài giao diện.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">2</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Phân loại Danh mục & Thương hiệu</td>
+              <td class="px-4 py-3 text-slate-600">Quyết định sản phẩm xuất hiện trong menu nào và hiển thị trong bộ lọc ngang phong cách Điện Máy Xanh.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-hvac-specs" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              SẢN PHẨM & KỸ THUẬT HVAC &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Cấu Hình Thông Số Kỹ Thuật HVAC Cho Quạt
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Khai báo lưu lượng gió, kích thước, công suất để sản phẩm tự động hiển thị trong Công cụ tính quạt theo tiêu chuẩn kỹ thuật v05 của Winline.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào Sản phẩm &rarr; Danh sách sản phẩm &rarr; Chọn Sửa sản phẩm quạt cần cấu hình.</li><li>Cuộn xuống mục 'Thông số kỹ thuật HVAC & Công cụ tính'.</li><li>Nhập chính xác các trường được khoanh vùng đỏ và bấm 'Lưu sản phẩm'.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Form nhập liệu thông số HVAC chuyên biệt Winline
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/products/5/edit</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            
+            <!-- ① Lưu lượng gió -->
+            <div style="position: relative;">
+              <div class="callout-box" style="padding: 4px; border: 2px solid #ef4444; border-radius: 4px;">
+                <span class="callout-badge" style="top: -6px; right: -6px;">1</span>
+                <label style="display: block; font-weight: 700; font-size: 11px; margin-bottom: 2px;">Lưu lượng gió (m³/h) <span style="color:#ef4444;">*</span></label>
+                <input type="text" value="44500" readonly style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-weight: 700; background: #f8fafc;" />
+              </div>
+              <span style="font-size: 10px; color: #64748b;">Dùng để chia tự động số lượng quạt cần lắp.</span>
+            </div>
+
+            <!-- ② Công suất & Điện áp -->
+            <div style="position: relative;">
+              <div class="callout-box" style="padding: 4px; border: 2px solid #ef4444; border-radius: 4px;">
+                <span class="callout-badge" style="top: -6px; right: -6px;">2</span>
+                <label style="display: block; font-weight: 700; font-size: 11px; margin-bottom: 2px;">Công suất & Nguồn điện</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                  <input type="text" value="1.1 kW" readonly style="padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; background: #f8fafc;" />
+                  <input type="text" value="380V" readonly style="padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; background: #f8fafc;" />
+                </div>
+              </div>
+              <span style="font-size: 10px; color: #64748b;">Lọc theo nguồn điện 1 pha (220V) hoặc 3 pha (380V).</span>
+            </div>
+
+            <!-- ③ Kích thước phủ bì & lỗ chờ -->
+            <div style="position: relative;">
+              <div class="callout-box" style="padding: 4px; border: 2px solid #ef4444; border-radius: 4px;">
+                <span class="callout-badge" style="top: -6px; right: -6px;">3</span>
+                <label style="display: block; font-weight: 700; font-size: 11px; margin-bottom: 2px;">Kích thước & Lỗ chờ thi công</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                  <input type="text" value="1380x1380x400 mm" readonly style="padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; background: #f8fafc;" />
+                  <input type="text" value="1380x1380 mm" readonly style="padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; background: #f8fafc;" />
+                </div>
+              </div>
+              <span style="font-size: 10px; color: #64748b;">Xuất file PDF cho kỹ sư cơ khí cắt vách tường.</span>
+            </div>
+
+            <!-- ④ Mục đích sử dụng -->
+            <div style="position: relative;">
+              <div class="callout-box" style="padding: 6px; border: 2px solid #ef4444; border-radius: 4px;">
+                <span class="callout-badge" style="top: -6px; right: -6px;">4</span>
+                <label style="display: block; font-weight: 700; font-size: 11px; margin-bottom: 4px;">Phân nhóm trong Công cụ tính</label>
+                <label style="display: block; font-size: 11px;"><input type="checkbox" checked disabled /> Dùng cho Thông gió - Hút khí (Tab 1, Tab 3)</label>
+                <label style="display: block; font-size: 11px;"><input type="checkbox" disabled /> Dùng cho Làm mát Cooling Pad (Tab 2)</label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ⑤ Gán bảng ma trận so sánh -->
+          <div style="position: relative; background: #ffffff; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px;">
+            <div class="callout-box" style="padding: 6px; border: 2px solid #ef4444; border-radius: 4px;">
+              <span class="callout-badge" style="top: -6px; right: -6px;">5</span>
+              <label style="display: block; font-weight: 700; font-size: 11px; margin-bottom: 2px;">Bảng so sánh model liên kết (Model Comparison Table)</label>
+              <input type="text" value="Bảng so sánh Quạt thông gió vuông Komasu Series (1380, 1220, 1060, 900)" readonly style="width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background: #f8fafc;" />
+            </div>
+            <p style="margin: 4px 0 0 0; font-size: 10px; color: #64748b;">Tự động hiển thị bảng ma trận đối chiếu thông số trên trang chi tiết sản phẩm.</p>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Lưu lượng gió (Airflow)</td>
+              <td class="px-4 py-3 text-slate-600">Bắt buộc nhập số nguyên (m³/h). Công thức v05 sẽ lấy thể tích xưởng chia số này để tính số quạt cần lắp.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">2</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Điện áp & Công suất</td>
+              <td class="px-4 py-3 text-slate-600">Phân loại chuẩn quạt dùng điện 380V (3 pha) hay 220V (1 pha) để khách hàng lọc đúng nguồn điện tại nhà máy.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">3</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Kích thước phủ bì & Lỗ chờ</td>
+              <td class="px-4 py-3 text-slate-600">Thông số kích thước thực tế hiển thị trên bảng báo giá và bản dự tính kỹ thuật.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">4</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Mục đích sử dụng</td>
+              <td class="px-4 py-3 text-slate-600">Tích chọn để sản phẩm xuất hiện trong danh sách đề xuất của Tab 1 (Hút khí) hay Tab 2 (Cooling Pad áp suất âm).</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">5</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Bảng so sánh model</td>
+              <td class="px-4 py-3 text-slate-600">Chọn bảng ma trận thông số kỹ thuật tương ứng để khách hàng đối chiếu các kích thước khác nhau trong cùng dòng quạt.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-category-brand" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              SẢN PHẨM & KỸ THUẬT HVAC &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Quản Lý Danh Mục 3 Cấp & Thương Hiệu Hãng
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Cấu trúc danh mục đa cấp thông minh tự động kết hợp thương hiệu (Cấp 3 tự động) và quản lý logo các hãng phân phối chính hãng.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào 'Sản phẩm' &rarr; chọn 'Danh mục sản phẩm' để tạo danh mục Cấp 1 và Cấp 2.</li><li>Vào 'Sản phẩm' &rarr; chọn 'Thương hiệu' để cập nhật logo SVG và bài giới thiệu hãng.</li><li>Hệ thống tự động sinh Cấp 3 dạng kết hợp (ví dụ /vi/quat-tran-vinawind) mà không cần tạo thủ công.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Quản lý Cây Danh mục & Logo Thương hiệu
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/categories</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+          <!-- ① KHOANH VÙNG DANH MỤC -->
+          <div style="position: relative; margin-bottom: 12px;">
+            <div class="callout-box" style="padding: 6px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                <thead style="background: #f1f5f9; color: #475569;">
+                  <tr>
+                    <th style="padding: 5px 8px; text-align: left;">Tên Danh mục</th>
+                    <th style="padding: 5px 8px; text-align: left;">Slug URL</th>
+                    <th style="padding: 5px 8px; text-align: center;">Số sản phẩm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 5px 8px; font-weight: 700;">Quạt công nghiệp (Cấp 1)</td>
+                    <td style="padding: 5px 8px; font-family: monospace;">/vi/quat-cong-nghiep</td>
+                    <td style="text-align: center; font-weight: 700;">38</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 8px; padding-left: 20px;">&bull; Quạt thông gió công nghiệp (Cấp 2)</td>
+                    <td style="padding: 5px 8px; font-family: monospace;">/vi/quat-thong-gio-cong-nghiep</td>
+                    <td style="text-align: center; font-weight: 700;">19</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ② KHOANH VÙNG THƯƠNG HIỆU -->
+          <div style="position: relative;">
+            <div class="callout-box" style="padding: 6px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">2</span>
+              <div style="display: flex; gap: 8px; align-items: center; padding: 4px;">
+                <span style="font-size: 10px; font-weight: 700; color: #64748b;">Hãng đối tác:</span>
+                <span class="badge" style="background:#f1f5f9; color:#0f172a;">Komasu</span>
+                <span class="badge" style="background:#f1f5f9; color:#0f172a;">Vinawind</span>
+                <span class="badge" style="background:#f1f5f9; color:#0f172a;">Deton</span>
+                <span class="badge" style="background:#f1f5f9; color:#0f172a;">Dasin</span>
+                <span class="badge" style="background:#f1f5f9; color:#0f172a;">Panasonic</span>
+                <span class="badge" style="background:#f1f5f9; color:#0f172a;">Nedfon</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Cây Danh mục Cấp 1 & Cấp 2</td>
+              <td class="px-4 py-3 text-slate-600">Phân tầng trực quan, hỗ trợ thiết lập thẻ SEO tiêu đề và mô tả riêng cho từng danh mục.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">2</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Thương hiệu & Cấp 3 Tự động</td>
+              <td class="px-4 py-3 text-slate-600">CatalogResolver tự động nhận diện URL ghép như /vi/quat-cong-nghiep-komasu để lọc tức thì theo hãng.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-model-matrix-create" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              MA TRẬN SO SÁNH MODEL &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Tạo Bảng Ma Trận So Sánh Model Sản Phẩm
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Tạo bảng thông số kỹ thuật đa model cho một dòng sản phẩm (ví dụ dòng quạt cắt gió Nanyoo Z-series), tự động cập nhật giá realtime từ kho hàng.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào menu 'Sản phẩm' &rarr; chọn 'Bảng so sánh model'.</li><li>Bấm nút 'Thêm mới' và đặt tiêu đề bảng hiển thị.</li><li>Thêm các dòng model, gõ tìm kiếm để liên kết sản phẩm trong kho và nhập các thông số chi tiết.</li><li>Bấm 'Lưu bảng so sánh'.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Cấu hình Bảng so sánh Quạt cắt gió Nanyoo-Z
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/model-tables/1/edit</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+            <thead style="background: #f1f5f9; border-bottom: 1px solid #cbd5e1;">
+              <tr>
+                <th style="padding: 6px 8px; text-align: left;">Model</th>
+                <th style="padding: 6px 8px; text-align: left;">Sản phẩm liên kết</th>
+                <th style="padding: 6px 8px; text-align: left;">Điện áp</th>
+                <th style="padding: 6px 8px; text-align: left;">Công suất</th>
+                <th style="padding: 6px 8px; text-align: left;">Lưu lượng</th>
+                <th style="padding: 6px 8px; text-align: left;">Giá bán kho</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 6px 8px; font-weight: 700; color: #1d4ed8;">FM-5509Z-L/Y</td>
+                <td style="padding: 6px 8px;"><span class="badge" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe;">SKU: FM-5509Z</span></td>
+                <td style="padding: 6px 8px;">220V</td>
+                <td style="padding: 6px 8px;">420W</td>
+                <td style="padding: 6px 8px;">1.450 m³/h</td>
+                <td style="padding: 6px 8px; font-weight: 700; color: #15803d;">3.200.000 đ</td>
+              </tr>
+              <tr style="background: #eff6ff;">
+                <td style="padding: 6px 8px; font-weight: 700; color: #1d4ed8;">FM-5512Z-L/Y</td>
+                <td style="padding: 4px 6px; position: relative;">
+                  <div class="callout-box" style="padding: 2px; border: 2px solid #ef4444; border-radius: 4px; display: inline-block;">
+                    <span class="callout-badge" style="top: -6px; right: -6px;">1</span>
+                    <span class="badge" style="background: #ffffff; color: #1d4ed8; border: 1px solid #93c5fd;">SKU: FM-5512Z</span>
+                  </div>
+                </td>
+                <td style="padding: 6px 8px;">220V</td>
+                <td style="padding: 6px 8px;">540W</td>
+                <td style="padding: 6px 8px;">1.950 m³/h</td>
+                <td style="padding: 4px 6px; position: relative;">
+                  <div class="callout-box" style="padding: 2px; border: 2px solid #ef4444; border-radius: 4px; display: inline-block;">
+                    <span class="callout-badge" style="top: -6px; right: -6px;">2</span>
+                    <span style="font-weight: 700; color: #15803d;">3.850.000 đ</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Liên kết Sản phẩm (Product ID)</td>
+              <td class="px-4 py-3 text-slate-600">Gõ SKU hoặc tên sản phẩm để liên kết. Khách xem bảng bấm vào tên model sẽ dẫn thẳng tới trang mua hàng.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">2</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Giá bán đồng bộ Realtime</td>
+              <td class="px-4 py-3 text-slate-600">Giá bán tự động lấy theo giá trong kho hàng. Nếu sản phẩm giảm giá, bảng so sánh tự động cập nhật ngay.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-model-matrix-shortcode" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              MA TRẬN SO SÁNH MODEL &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Gán Vào Sản Phẩm & Nhúng Bài Viết Bằng Shortcode
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Cách hiển thị bảng so sánh trên trang chi tiết sản phẩm hoặc nhúng vào bài viết phân tích, tư vấn kỹ thuật bằng mã ngắn [bang_so_sanh id='...'].
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Cách 1: Mở sản phẩm cần hiển thị, tại ô 'Bảng so sánh model liên kết', chọn bảng tương ứng và bấm Lưu.</li><li>Cách 2: Trong danh sách bảng so sánh, sao chép mã shortcode dạng: <code>[bang_so_sanh id="1"]</code>.</li><li>Dán đoạn mã shortcode này vào nội dung bài viết tin tức hoặc trang CMS để hiển thị bảng ma trận.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Nhúng bảng so sánh bằng mã Shortcode
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/posts/8/edit</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+          <div style="margin-bottom: 10px;">
+            <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 3px;">Tiêu đề bài viết tư vấn kỹ thuật</label>
+            <input type="text" value="Đánh giá chi tiết dòng Quạt cắt gió Nanyoo Z-series cho cửa siêu thị" readonly style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;" />
+          </div>
+
+          <!-- ① KHOANH VÙNG CHÈN SHORTCODE -->
+          <div style="position: relative;">
+            <div class="callout-box" style="padding: 8px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <label style="display:block; font-size: 10px; font-weight: 700; margin-bottom: 3px;">Nội dung bài viết (Trình soạn thảo)</label>
+              <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 4px; padding: 10px; font-size: 11px; color: #334155; line-height: 1.6;">
+                Dưới đây là bảng thông số so sánh trực quan các model quạt cắt gió Nanyoo Z-series để quý khách dễ dàng lựa chọn theo chiều cao cửa:<br>
+                <div style="margin: 6px 0; padding: 4px 8px; background: #ecfdf5; border: 1px dashed #10b981; border-radius: 4px; font-family: monospace; font-weight: 700; color: #065f46; display: inline-block;">
+                  [bang_so_sanh id="1"]
+                </div><br>
+                Quý khách cần tư vấn lắp đặt tận nơi xin vui lòng liên hệ Hotline 0949.761.888.
+              </div>
+            </div>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Vị trí đặt mã Shortcode</td>
+              <td class="px-4 py-3 text-slate-600">ContentRenderService sẽ tự động phân tích và thay thế mã [bang_so_sanh id='X'] thành bảng HTML chuẩn đẹp mắt ngoài website.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-order-flow" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              ĐƠN HÀNG & BÁO GIÁ (RFQ) &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Xử Lý Quy Trình Đơn Hàng & In Phiếu Giao A4
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Quy trình xử lý trạng thái đơn hàng 4 bước khép kín và xuất phiếu giao nhận khổ A4 có đầy đủ logo, thông tin thiết bị và chữ ký xác nhận.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào menu 'Đơn hàng' &rarr; nhấp vào mã đơn để mở chi tiết.</li><li>Gọi điện cho khách xác nhận thiết bị và chuyển sang 'Đang xử lý (Processing)'.</li><li>Bấm nút 'In Phiếu Giao Hàng A4' để in cho nhân viên kho đóng gói.</li><li>Khi giao hàng xong và khách đã thanh toán, chuyển sang 'Hoàn thành (Completed)'.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Chi tiết đơn hàng #WL-2609-8472
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/orders/8472</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div style="background: #f8fafc; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px;">
+              <strong style="color: #0f172a; font-size: 12px;">Cơ Điện Hòa Bình (0912.345.xxx)</strong>
+              <div style="font-size: 11px; color: #475569; margin-top: 3px;">KCN Quế Võ 2, Ngọc Xá, Quế Võ, Bắc Ninh</div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Hình thức: Xe tải Winline giao tận nơi &bull; Thanh toán: VietQR</div>
+            </div>
+
+            <!-- ① KHOANH VÙNG CHUYỂN TRẠNG THÁI -->
+            <div style="position: relative;">
+              <div class="callout-box" style="padding: 6px; border: 2px solid #ef4444; border-radius: 6px;">
+                <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+                <span style="display: block; font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase;">Cập nhật trạng thái</span>
+                <select style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; margin-top: 3px; background: #f8fafc;">
+                  <option selected>Đang xử lý / Đóng gói (Processing)</option>
+                  <option>Đang giao hàng (Shipping)</option>
+                  <option>Hoàn thành (Completed)</option>
+                  <option>Đã hủy (Cancelled)</option>
+                </select>
+                <span class="btn btn-blue" style="width: 100%; text-align: center; margin-top: 5px; padding: 4px;">Lưu trạng thái</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+              <thead style="background: #f1f5f9;">
+                <tr>
+                  <th style="padding: 6px 8px; text-align: left;">Sản phẩm</th>
+                  <th style="padding: 6px 8px; text-align: center;">SL</th>
+                  <th style="padding: 6px 8px; text-align: right;">Đơn giá</th>
+                  <th style="padding: 6px 8px; text-align: right;">Thành tiền</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #f1f5f9;">
+                  <td style="padding: 6px 8px;"><strong>Quạt thông gió vuông Komasu 1380 (380V)</strong></td>
+                  <td style="padding: 6px 8px; text-align: center;">12</td>
+                  <td style="padding: 6px 8px; text-align: right;">4.150.000 đ</td>
+                  <td style="padding: 6px 8px; text-align: right; font-weight: 700;">49.800.000 đ</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px;"><strong>Tấm làm mát chống rêu Cooling Pad 7090</strong></td>
+                  <td style="padding: 6px 8px; text-align: center;">40</td>
+                  <td style="padding: 6px 8px; text-align: right;">550.000 đ</td>
+                  <td style="padding: 6px 8px; text-align: right; font-weight: 700;">22.000.000 đ</td>
+                </tr>
+                <tr style="background: #f8fafc; font-weight: 700; border-top: 1px solid #cbd5e1;">
+                  <td colspan="3" style="padding: 8px; text-align: right;">TỔNG TIỀN ĐƠN HÀNG:</td>
+                  <td style="padding: 8px; text-align: right; color: #1d4ed8; font-size: 13px;">71.800.000 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Cập nhật trạng thái đơn</td>
+              <td class="px-4 py-3 text-slate-600">Khi chuyển sang Đã hủy (Cancelled), hệ thống tự động hoàn kho số lượng sản phẩm. Khi chuyển Hoàn thành, giao dịch kết thúc thành công.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-rfq-handle" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              ĐƠN HÀNG & BÁO GIÁ (RFQ) &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Tiếp Nhận & Xử Lý Yêu Cầu Báo Giá HVAC (RFQ)
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Quản lý các bản dự tính do khách hàng tự tính toán từ Công cụ tính quạt (/vi/cong-cu-tinh-quat) và gửi yêu cầu tư vấn báo giá chính thức.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào menu 'Liên hệ' &rarr; xem danh sách các lượt gửi mới.</li><li>Kiểm tra thông tin công ty, mã số thuế và mã dự tính đính kèm (ví dụ: EST-948210).</li><li>Nhấp vào liên kết bản dự tính để mở bảng thông số chi tiết khổ A4 hoặc bấm nút chat Zalo trực tiếp với khách.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Yêu cầu báo giá từ Công cụ tính quạt (Fan Calculation RFQ)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/contact-submissions/38</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+          <!-- ① KHOANH VÙNG THÔNG TIN KHÁCH HÀNG & BẢN DỰ TÍNH -->
+          <div style="position: relative; margin-bottom: 12px;">
+            <div class="callout-box" style="padding: 8px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                  <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Khách hàng / Công ty:</span>
+                  <div style="font-weight: 700; color: #0f172a; margin-top: 2px;">Công ty TNHH May Xuất Khẩu Việt Tiến</div>
+                  <div style="font-size: 11px; color: #475569;">Người liên hệ: Chị Loan &bull; SĐT: 0988.776.xxx</div>
+                  <div style="font-size: 11px; color: #64748b;">Dự án: Xưởng may 2.400m² tại KCN Đại An, Hải Dương</div>
+                </div>
+                <div>
+                  <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Mã bản dự tính HVAC:</span>
+                  <div style="font-weight: 800; color: #2563eb; font-size: 14px; margin-top: 2px;">EST-948210</div>
+                  <div style="font-size: 11px; color: #16a34a; font-weight: 600;">Tổng tạm tính: 54.200.000 đ</div>
+                  <a href="#" style="font-size: 11px; color: #2563eb; font-weight: 600; text-decoration: underline;">&rarr; Mở xem bản in kỹ thuật A4</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 10px;">
+            <span style="font-size: 11px; color: #64748b;">Trạng thái: <strong>Chờ sale liên hệ báo giá</strong></span>
+            <span class="btn btn-emerald" style="display: flex; align-items: center; gap: 4px;">
+              Chat Zalo với khách (Hotline 0949.761.888)
+            </span>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Thông tin RFQ & Mã dự tính</td>
+              <td class="px-4 py-3 text-slate-600">Mỗi lượt tính toán của khách sinh ra một mã duy nhất EST-XXXXXX lưu trọn vẹn kích thước xưởng, số lượng quạt và cooling pad đã chọn.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-post-seo" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              MARKETING & CMS &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Đăng Bài Viết & Tối Ưu SEO (PostSeoAnalyzer)
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Soạn thảo bài viết tư vấn giải pháp HVAC và sử dụng bộ công cụ chấm điểm SEO tự động để đảm bảo bài viết đạt thứ hạng cao trên Google.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào 'Bài viết' &rarr; chọn 'Thêm bài viết mới'.</li><li>Nhập Tiêu đề, chọn Chuyên mục và tải Ảnh đại diện bài viết.</li><li>Điền Từ khóa chính (Focus keyword), Thẻ tiêu đề SEO và Thẻ mô tả SEO.</li><li>Quan sát bảng chấm điểm tự động (Xanh = Đạt, Vàng = Cần chỉnh, Đỏ = Chưa đạt) trước khi xuất bản.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Bộ chấm điểm chuẩn SEO tự động (SEO Analyzer)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/posts/create</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+          <!-- ① KHOANH VÙNG THẺ SEO -->
+          <div style="position: relative; margin-bottom: 12px;">
+            <div class="callout-box" style="padding: 8px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <div style="margin-bottom: 8px;">
+                <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 2px;">Thẻ tiêu đề SEO (Meta Title) &bull; <span style="color:#16a34a;">58/65 ký tự</span></label>
+                <input type="text" value="Giải Pháp Thông Gió Làm Mát Nhà Xưởng May Mặc Tiêu Chuẩn 2026" readonly style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;" />
+              </div>
+              <div>
+                <label style="display:block; font-size: 11px; font-weight: 700; margin-bottom: 2px;">Thẻ mô tả SEO (Meta Description) &bull; <span style="color:#16a34a;">148/160 ký tự</span></label>
+                <textarea rows="2" readonly style="width: 100%; padding: 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background:#f8fafc;">Hướng dẫn tính toán lưu lượng gió, diện tích tấm cooling pad và lựa chọn quạt thông gió vuông cho xưởng may mặc giúp giảm 6-8 độ C hiệu quả.</textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- ② KHOANH VÙNG BẢNG CHẤM ĐIỂM -->
+          <div style="position: relative;">
+            <div class="callout-box" style="padding: 6px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">2</span>
+              <div style="display: flex; gap: 10px; font-size: 11px;">
+                <span style="color:#16a34a; font-weight: 700;">&check; Độ dài tiêu đề chuẩn</span>
+                <span style="color:#16a34a; font-weight: 700;">&check; Thẻ mô tả chứa từ khóa</span>
+                <span style="color:#16a34a; font-weight: 700;">&check; Mật độ từ khóa đạt 1.8%</span>
+                <span class="badge" style="background:#dcfce7; color:#15803d; font-weight: 800;">Điểm SEO: 95/100 (Tốt)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Thẻ Tiêu đề & Mô tả SEO</td>
+              <td class="px-4 py-3 text-slate-600">Hiển thị trực tiếp trên kết quả tìm kiếm Google. Tiêu đề cần chứa từ khóa chính ở đầu câu.</td>
+            </tr>
+            
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">2</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Bộ chấm điểm PostSeoAnalyzer</td>
+              <td class="px-4 py-3 text-slate-600">Tự động phân tích nội dung bài viết và cảnh báo các lỗi SEO trước khi bấm Đăng bài.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-banner-menu" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              MARKETING & CMS &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Quản Lý Banner Slider & Menu Điều Hướng
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Cập nhật các chương trình quảng cáo trên trang chủ theo 2 kích thước riêng biệt (Desktop và Mobile) và sắp xếp cấu trúc thanh menu.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào menu 'Banner' để thêm ảnh quảng cáo mới (tải cả ảnh Desktop 1920x600 và Mobile 800x600).</li><li>Vào menu 'Menu điều hướng' để kéo thả thứ tự các mục menu trên đầu trang hoặc chân trang.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Cấu hình Banner 2 phiên bản màn hình
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/banners/create</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+          <!-- ① KHOANH VÙNG 2 KÍCH THƯỚC BANNER -->
+          <div style="position: relative;">
+            <div class="callout-box" style="padding: 8px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div style="border: 1px dashed #cbd5e1; border-radius: 4px; padding: 15px; text-align: center; background:#f8fafc;">
+                  <strong style="display:block; font-size: 11px; color:#0f172a;">Ảnh Máy tính (Desktop)</strong>
+                  <span style="font-size: 10px; color:#64748b;">1920 &times; 600 px (Tỉ lệ 16:5)</span>
+                </div>
+                <div style="border: 1px dashed #cbd5e1; border-radius: 4px; padding: 15px; text-align: center; background:#f8fafc;">
+                  <strong style="display:block; font-size: 11px; color:#0f172a;">Ảnh Điện thoại (Mobile)</strong>
+                  <span style="font-size: 10px; color:#64748b;">800 &times; 600 px (Tỉ lệ 4:3)</span>
+                </div>
+              </div>
+            </div>
+            <p style="margin: 6px 0 0 0; font-size: 10px; color: #64748b;">Tải riêng 2 ảnh giúp banner trên smartphone hiển thị chữ to rõ, không bị co rúm.</p>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Tối ưu hiển thị đa thiết bị</td>
+              <td class="px-4 py-3 text-slate-600">Hệ thống tự động nạp đúng kích thước ảnh phù hợp với thiết bị của khách hàng để tối ưu tốc độ tải trang.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-vouchers" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              MARKETING & CMS &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Mã Giảm Giá (Vouchers) & Khuyến Mãi
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Tạo mã coupon giảm giá theo phần trăm hoặc số tiền cố định, thiết lập đơn hàng tối thiểu và giới hạn lượt sử dụng.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Vào 'Khuyến mãi' &rarr; chọn 'Mã giảm giá (Vouchers)'.</li><li>Bấm 'Thêm mới' &rarr; đặt Mã (ví dụ: WINLINE50K) và Giá trị giảm.</li><li>Thiết lập điều kiện Đơn hàng tối thiểu và Thời hạn áp dụng rồi bấm Lưu.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Tạo mã giảm giá mới (Create Voucher)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/vouchers/create</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+          <!-- ① KHOANH VÙNG MÃ & GIÁ TRỊ GIẢM -->
+          <div style="position: relative;">
+            <div class="callout-box" style="padding: 8px; border: 2px solid #ef4444; border-radius: 6px;">
+              <span class="callout-badge" style="top: -8px; right: -8px;">1</span>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                <div>
+                  <label style="display:block; font-size: 10px; font-weight: 700;">Mã Voucher <span style="color:#ef4444;">*</span></label>
+                  <input type="text" value="WINLINE50K" readonly style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-weight: 700; font-family: monospace; background:#f8fafc;" />
+                </div>
+                <div>
+                  <label style="display:block; font-size: 10px; font-weight: 700;">Số tiền giảm <span style="color:#ef4444;">*</span></label>
+                  <input type="text" value="50.000 đ" readonly style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-weight: 700; color:#16a34a; background:#f8fafc;" />
+                </div>
+                <div>
+                  <label style="display:block; font-size: 10px; font-weight: 700;">Đơn tối thiểu</label>
+                  <input type="text" value="1.000.000 đ" readonly style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; background:#f8fafc;" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Mã & Giá trị giảm</td>
+              <td class="px-4 py-3 text-slate-600">Mã voucher viết hoa không dấu. Hệ thống tự động kiểm tra điều kiện đơn hàng tối thiểu trước khi trừ tiền giỏ hàng.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-ref-image-status" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              TRA CỨU & XỬ LÝ SỰ CỐ &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Quy Chuẩn Kích Thước Ảnh & Bảng Trạng Thái
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Bảng tra cứu kích thước hình ảnh tối ưu nhằm đảm bảo website tải nhanh dưới 1.5 giây và ý nghĩa các mã trạng thái đơn hàng.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Tra cứu kích thước đồ họa chuẩn trước khi thiết kế banner hoặc chụp ảnh sản phẩm.</li><li>Đối chiếu mã trạng thái đơn hàng để thực hiện đúng quy trình kho vận và tài chính.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Bảng chuẩn hóa đồ họa & Trạng thái
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/settings/reference</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+            <thead style="background: #f1f5f9; color: #475569;">
+              <tr>
+                <th style="padding: 6px; text-align: left;">Vị trí ảnh</th>
+                <th style="padding: 6px; text-align: left;">Kích thước chuẩn (px)</th>
+                <th style="padding: 6px; text-align: left;">Tỉ lệ</th>
+                <th style="padding: 6px; text-align: left;">Định dạng tốt nhất</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 6px; font-weight: 700;">Ảnh sản phẩm</td>
+                <td style="padding: 6px; font-family: monospace; color:#2563eb;">800 &times; 800</td>
+                <td style="padding: 6px;">1 : 1</td>
+                <td style="padding: 6px;">JPG, WebP (Nền trắng)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 6px; font-weight: 700;">Banner Máy tính</td>
+                <td style="padding: 6px; font-family: monospace; color:#2563eb;">1920 &times; 600</td>
+                <td style="padding: 6px;">16 : 5</td>
+                <td style="padding: 6px;">JPG, WebP (&lt; 350KB)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 6px; font-weight: 700;">Banner Mobile</td>
+                <td style="padding: 6px; font-family: monospace; color:#2563eb;">800 &times; 600</td>
+                <td style="padding: 6px;">4 : 3</td>
+                <td style="padding: 6px;">JPG, WebP (&lt; 150KB)</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px; font-weight: 700;">Logo thương hiệu</td>
+                <td style="padding: 6px; font-family: monospace; color:#2563eb;">300 &times; 150</td>
+                <td style="padding: 6px;">2 : 1</td>
+                <td style="padding: 6px;">SVG hoặc PNG trong suốt</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Tối ưu hóa ảnh trước khi tải lên</td>
+              <td class="px-4 py-3 text-slate-600">Nên nén qua công cụ tinypng.com để giảm 70% dung lượng mà không làm suy giảm chất lượng hình ảnh.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section id="tab-faq-troubleshoot" class="tab-pane hidden space-y-6">
+          <div class="border-b border-slate-200 pb-5">
+            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+              TRA CỨU & XỬ LÝ SỰ CỐ &bull; HƯỚNG DẪN THAO TÁC
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Hỏi Đáp Sự Cố Vận Hành Thường Gặp (FAQ)
+            </h2>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-3xl">
+              Tổng hợp các trường hợp thực tế nhân viên quản trị thường thắc mắc và giải pháp xử lý nhanh chóng.
+            </p>
+          </div>
+
+          <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 space-y-1.5">
+            <div class="font-bold text-blue-900 text-sm mb-1 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">i</span>
+              Các bước thực hiện:
+            </div>
+            <ol class="list-decimal list-inside space-y-1 text-slate-700 font-medium pl-1">
+              <li>Đọc kỹ các tình huống bên dưới khi gặp sự cố trong quá trình vận hành.</li><li>Nếu gặp lỗi ngoài danh sách, liên hệ ngay Kỹ thuật Mắt Bão WS để được hỗ trợ 24/7.</li>
+            </ol>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Giao diện thực tế &bull; Trung tâm trợ giúp sự cố quản trị (Help Center)
+              </h3>
+              <span class="text-xs text-slate-400">Mô phỏng có khoanh vùng đỏ ① ② ③</span>
+            </div>
+
+            <div class="border border-slate-300 rounded-xl bg-white shadow-sm overflow-hidden text-xs">
+              <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                  <span class="text-[11px] text-slate-500 ml-2 font-mono">winline.vn/vi/admin/faq</span>
+                </div>
+                <span class="text-[11px] font-semibold text-slate-600">Winline Admin Panel</span>
+              </div>
+              <div class="p-6 space-y-5 bg-slate-50/40">
+                
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; space-y-3;">
+          <div style="border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 10px;">
+            <strong style="color: #0f172a; font-size: 11px;">Q1: Tôi đăng sản phẩm quạt mới nhưng khách vào 'Công cụ tính quạt' không thấy hiện?</strong>
+            <p style="margin: 4px 0 0 0; font-size: 11px; color: #475569;">
+              <strong>Giải pháp:</strong> Kiểm tra xem sản phẩm đã nhập <strong>Lưu lượng gió (Airflow)</strong> chưa và đã tích chọn <em>Dùng cho thông gió</em> chưa. Nếu thiếu lưu lượng, công cụ tính không thể chia số lượng quạt.
+            </p>
+          </div>
+
+          <div style="border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 10px;">
+            <strong style="color: #0f172a; font-size: 11px;">Q2: Tôi thay đổi giá bán sản phẩm nhưng sao bảng so sánh model không đổi giá?</strong>
+            <p style="margin: 4px 0 0 0; font-size: 11px; color: #475569;">
+              <strong>Giải pháp:</strong> Mở Bảng so sánh model, kiểm tra dòng đó đã chọn <strong>Sản phẩm liên kết</strong> chưa. Nếu đang nhập giá thủ công cố định, hệ thống sẽ ưu tiên giá thủ công. Chọn đúng sản phẩm để kích hoạt giá realtime.
+            </p>
+          </div>
+
+          <div>
+            <strong style="color: #0f172a; font-size: 11px;">Q3: Khách đặt hàng nhưng công ty không nhận được email thông báo đơn mới?</strong>
+            <p style="margin: 4px 0 0 0; font-size: 11px; color: #475569;">
+              <strong>Giải pháp:</strong> Vào Cấu hình &rarr; Cấu hình thông báo &rarr; Bấm 'Gửi email thử nghiệm'. Nếu báo lỗi, hãy kiểm tra lại Mật khẩu ứng dụng (App Password) của tài khoản Gmail/SMTP.
+            </p>
+          </div>
+        </div>
+        
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 w-12 text-center">#</th>
+                  <th class="px-4 py-3 w-48">KHU VỰC THAO TÁC</th>
+                  <th class="px-4 py-3">Ý NGHĨA & HÀNH ĐỘNG CỤ THỂ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                
+            <tr class="hover:bg-slate-50/50">
+              <td class="px-4 py-3 text-center font-bold text-red-600">1</td>
+              <td class="px-4 py-3 text-slate-900 font-bold">Đường dây nóng hỗ trợ kỹ thuật</td>
+              <td class="px-4 py-3 text-slate-600">Hotline Kỹ thuật Mắt Bão WS sẵn sàng hỗ trợ kiểm tra cấu hình hosting, chứng chỉ SSL và sao lưu dữ liệu.</td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+    </div>
+  </main>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+
+      const target = document.getElementById('tab-' + tabId);
+      if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('active');
+      }
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active', 'font-semibold', 'text-blue-700', 'bg-blue-50/80');
+        btn.classList.add('text-slate-600', 'font-medium');
+      });
+
+      const activeBtn = document.querySelector(`.nav-btn[data-id="${tabId}"]`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-600', 'font-medium');
+        activeBtn.classList.add('active', 'font-semibold', 'text-blue-700', 'bg-blue-50/80');
+      }
+
+      document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleSearch(keyword) {
+      const term = keyword.toLowerCase().trim();
+      const buttons = document.querySelectorAll('.nav-btn');
+      
+      buttons.forEach(btn => {
+        const text = btn.innerText.toLowerCase();
+        if (text.includes(term) || term === '') {
+          btn.style.display = 'flex';
+        } else {
+          btn.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
