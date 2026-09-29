@@ -28,14 +28,23 @@ Route::get('/docs/user-manual-print.html', function() {
 Route::get('/docs/Huong_Dan_Su_Dung_Admin_Winline.pdf', function() {
     return response()->file(base_path('docs/Huong_Dan_Su_Dung_Admin_Winline.pdf'), ['Content-Type' => 'application/pdf']);
 });
+Route::get('/docs/bien-ban-ban-giao.html', function() {
+    return response()->file(base_path('docs/bien-ban-ban-giao.html'), ['Content-Type' => 'text/html; charset=UTF-8']);
+});
+Route::get('/docs/Bien_Ban_Ban_Giao_Va_Nghiem_Thu_Winline.pdf', function() {
+    return response()->file(base_path('docs/Bien_Ban_Ban_Giao_Va_Nghiem_Thu_Winline.pdf'), ['Content-Type' => 'application/pdf']);
+});
 Route::get('/huong-dan-su-dung', function() {
     return response()->file(base_path('docs/user-manual.html'), ['Content-Type' => 'text/html; charset=UTF-8']);
 })->name('user-manual');
+Route::get('/bien-ban-ban-giao', function() {
+    return response()->file(base_path('docs/bien-ban-ban-giao.html'), ['Content-Type' => 'text/html; charset=UTF-8']);
+})->name('handover-certificate');
 
 Route::get('/{slug}', function (\Illuminate\Http\Request $request, string $slug) {
     $queryString = $request->getQueryString();
     $target = '/vi/' . $slug . ($queryString ? '?' . $queryString : '');
     return redirect($target, 301);
-})->where('slug', '^(?!vi$|en$|admin|api|login|customer|payment|up|docs|huong-dan-su-dung)[a-zA-Z0-9\-_]+$');
+})->where('slug', '^(?!vi$|en$|admin|api|login|customer|payment|up|docs|huong-dan-su-dung|bien-ban-ban-giao)[a-zA-Z0-9\-_]+$');
 
 
