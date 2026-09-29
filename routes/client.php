@@ -22,6 +22,7 @@ Route::get('/san-pham-count', [ProductController::class, 'count'])->name('produc
 Route::get('/san-pham-search-live', [ProductController::class, 'searchLive'])->name('products.search.live');
 Route::get('/san-pham/{slug}', [ProductController::class, 'show'])->name('products.detail');
 Route::get('/cong-cu-tinh-quat', [CalculatorController::class, 'index'])->name('calculator');
+Route::redirect('/cong-cu-tinh-toan-chon-quat', '/vi/cong-cu-tinh-quat');
 Route::get('/cong-cu-tinh-quat/products', [CalculatorController::class, 'apiProducts'])->name('calculator.products');
 Route::post('/cong-cu-tinh-quat/balance', [CalculatorController::class, 'balance'])->name('calculator.balance');
 Route::post('/cong-cu-tinh-quat/save', [CalculatorController::class, 'save'])->name('calculator.save');

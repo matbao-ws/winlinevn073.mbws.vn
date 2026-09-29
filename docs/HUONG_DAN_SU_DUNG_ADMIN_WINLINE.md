@@ -515,19 +515,21 @@
 **Mô tả tổng quan:** Bộ công cụ tính toán tự động lưu lượng thông gió nhà xưởng, văn phòng, tầng hầm và đề xuất chính xác các model quạt Winline đáp ứng tiêu chuẩn kỹ thuật.
 
 ### 1. Quy trình thao tác chuẩn từng bước
-1. Truy cập đường dẫn công cụ ngoài website: `http://winline.vn/vi/cong-cu-tinh-toan-chon-quat`.
+1. Truy cập đường dẫn công cụ kỹ thuật ngoài website: `http://winline.vn/vi/cong-cu-tinh-quat`.
 2. Nhập các thông số hình học của công trình: Chiều dài ($m$), Chiều rộng ($m$), Chiều cao ($m$).
 3. Chọn Loại hình không gian (Nhà xưởng cơ khí, May mặc, Tầng hầm tòa nhà, Bếp ăn công nghiệp) để hệ thống tự động gán hệ số bội số trao đổi khí ($lần/giờ$).
 4. Bấm 'Tính toán & Chọn quạt phù hợp' để nhận kết quả tức thì.
 
 ### 2. Giao diện thực tế & Khoanh vùng chức năng (Screenshots)
-> 🌐 **Đường dẫn màn hình:** `https://winline.vn/vi/cong-cu-tinh-toan-chon-quat`
+> 🌐 **Đường dẫn màn hình:** `https://winline.vn/vi/cong-cu-tinh-quat`
 ![Giao diện thực tế Công Cụ Tính Toán Lưu Lượng Quạt Storefront (HVAC Calculator)](assets/screenshots/17_fan_calculation_annotated.png)
 
 ### 3. Bảng tra cứu hành động & Ký hiệu thao tác
 | Ký hiệu | Khu vực / Tên trường | Hướng dẫn thao tác & Lưu ý nghiệp vụ |
 | :---: | :--- | :--- |
-| **①** | **Biểu mẫu nhập thông số công trình & Bảng kết quả** | Khu vực nhập liệu kích thước phòng ($D \times R \times C$), tính ra thể tích $V = D \times R \times C$ ($m^3$). Tự động nhân với bội số trao đổi khí để ra Tổng lưu lượng yêu cầu $Q_{yc} = V \times X$ ($m^3/h$). Hệ thống đề xuất danh sách quạt Winline có lưu lượng phù hợp nhất kèm nút Xem chi tiết và Yêu cầu báo giá. |
+| **①** | **Biểu mẫu nhập kích thước & Loại không gian** | Nhập thông số công trình: Chiều dài ($D$), Rộng ($R$), Cao ($C$) để tính thể tích $V = D \times R \times C$ ($m^3$). Lựa chọn loại hình công trình để áp dụng bội số trao đổi không khí chuẩn TCVN ($X$ lần/giờ). |
+| **②** | **Khối hiển thị kết quả tính lưu lượng** | Hiển thị Tổng lưu lượng gió yêu cầu $Q_{yc} = V \times X$ ($m^3/h$), lưu lượng gió hút thải và tổng áp suất tĩnh cần thiết cho hệ thống ống gió. |
+| **③** | **Danh sách model quạt Winline đề xuất** | Hệ thống tự động đối chiếu cơ sở dữ liệu quạt công nghiệp Winline và lọc ra các model quạt đáp ứng dải lưu lượng, tính toán số lượng quạt cần lắp đặt và cung cấp nút gửi Yêu cầu báo giá kỹ thuật (RFQ). |
 
 ### 4. Lưu ý nghiệp vụ quan trọng
 - 💡 **Công thức chuẩn kỹ thuật HVAC:** Thuật toán vận hành dựa trên Tiêu chuẩn Xây dựng Việt Nam (TCVN) và tài liệu thiết kế cơ điện. Dữ liệu quạt đề xuất được đồng bộ trực tiếp từ danh mục quạt công nghiệp trong trang quản trị Winline.
