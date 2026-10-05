@@ -19,8 +19,28 @@ class CatalogResolverController extends Controller
         private readonly LocalizedSlugService $localizedSlugs,
     ) {}
 
-    public function resolve(Request $request, string $locale, string $slug): View
+    public function resolve(Request $request, string $locale, string $slug): View|\Illuminate\Http\RedirectResponse
     {
+        // 0. Alias checks (Bảo toàn 100% URL hợp đồng & Excel maps)
+        $aliases = [
+            'danh-muc-san-pham' => null,
+            'san-pham' => null,
+            'he-thong-lam-mat-trang-trai' => 'tam-lam-mat-cooling-pad',
+            'quat-thong-gio-noi-ong-cabinet-tieu-am' => 'quat-ly-tam',
+            'quat-hut-cong-nghiep-vuong' => 'quat-thong-gio-vuong',
+            'quat-thong-gio-cong-nghiep-tron' => 'quat-huong-truc',
+            'quat-ly-tam-hut-bep' => 'quat-ly-tam',
+            'quat-hut-di-dong' => 'quat-hut-xach-tay',
+        ];
+
+        if (array_key_exists($slug, $aliases)) {
+            $target = $aliases[$slug];
+            if ($target === null) {
+                return $this->productController->index($request, $locale);
+            }
+            return redirect('/' . $locale . '/' . $target, 301);
+        }
+
         // 1. Kiểm tra Category (Cấp 1 & Cấp 2, ví dụ: 'quat-tran', 'quat-cong-nghiep')
         $category = $this->localizedSlugs->find(Category::class, $slug, $locale);
         if ($category && $category->is_active && ! $category->is_draft) {

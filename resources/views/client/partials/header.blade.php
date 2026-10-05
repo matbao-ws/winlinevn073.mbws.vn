@@ -40,21 +40,47 @@
       </a>
       <div class="nav-mega-panel">
         <div class="mega-inner">
+          @php
+            $catThumbMap = [
+              'quat-tran' => 'client-assets/images/panasonic-tran.jpg',
+              'quat-cay' => 'client-assets/images/km750s.jpg',
+              'quat-cay-cong-nghiep' => 'client-assets/images/km750s.jpg',
+              'quat-treo-tuong' => 'client-assets/images/km-treo-750.jpg',
+              'quat-treo-cong-nghiep' => 'client-assets/images/km-treo-750.jpg',
+              'quat-dao-tran' => 'client-assets/images/panasonic-tran.jpg',
+              'quat-hop' => 'client-assets/images/placeholder.png',
+              'quat-san' => 'client-assets/images/dasin-san.jpg',
+              'quat-san-cong-nghiep' => 'client-assets/images/dasin-san.jpg',
+              'quat-thong-gio' => 'client-assets/images/km-vuong-1380.jpg',
+              'quat-thong-gio-vuong' => 'client-assets/images/km-vuong-1380.jpg',
+              'quat-hut-xach-tay' => 'client-assets/images/air-cooler-18000.jpg',
+              'quat-ly-tam' => 'client-assets/images/deton-lytam.jpg',
+              'quat-huong-truc' => 'client-assets/images/deton-fag1380.jpg',
+              'tam-lam-mat-cooling-pad' => 'client-assets/images/cooling-pad.jpg',
+              'may-lam-mat-cong-nghiep' => 'client-assets/images/air-cooler-18000.jpg',
+              'quat-cat-gio' => 'client-assets/images/nedfon-noi-ong.jpg',
+              'quat-cap-khi-tuoi-erv' => 'client-assets/images/nedfon-noi-ong.jpg',
+            ];
+          @endphp
           @if(isset($globalCategories) && $globalCategories->isNotEmpty())
             @foreach($globalCategories as $parent)
               <div class="mega-col">
                 <a href="{{ url(app()->getLocale() . '/' . $parent->slug) }}" class="mega-col-title-link">
-                  @if($parent->image_url)
-                    <img src="{{ asset($parent->image_url) }}" alt="" class="mega-cat-img-l1">
+                  @php
+                    $pImg = $parent->image_url ?: ($catThumbMap[$parent->slug] ?? null);
+                  @endphp
+                  @if($pImg)
+                    <img src="{{ asset($pImg) }}" alt="" class="mega-cat-img-l1">
                   @endif
                   <div class="mega-col-title-text">{{ $parent->getTranslation('name', app()->getLocale()) }}</div>
                 </a>
                 <div class="mega-sub-list">
                   @foreach($parent->children as $child)
+                    @php
+                      $cImg = $child->image_url ?: ($catThumbMap[$child->slug] ?? 'client-assets/images/placeholder.png');
+                    @endphp
                     <a href="{{ url(app()->getLocale() . '/' . $child->slug) }}" class="mega-item-l2">
-                      @if($child->image_url)
-                        <img src="{{ asset($child->image_url) }}" alt="" class="mega-cat-img-l2">
-                      @endif
+                      <img src="{{ asset($cImg) }}" alt="{{ $child->getTranslation('name', app()->getLocale()) }}" class="mega-cat-img-l2">
                       <span class="mega-item-title">{{ $child->getTranslation('name', app()->getLocale()) }}</span>
                     </a>
                   @endforeach
@@ -64,7 +90,7 @@
           @endif
 
           <div class="mega-col mega-col-featured">
-            <div class="mega-col-title"><i class="fas fa-star" style="color:#f59e0b;"></i> Thương hiệu &amp; Dự án</div>
+            <div class="mega-col-title"><i class="fas fa-star" style="color:#f59e0b;"></i> Thương hiệu tiêu biểu</div>
             <div class="mega-brand-pills">
               @if(isset($globalBrands))
                 @foreach($globalBrands->take(8) as $b)
@@ -79,8 +105,8 @@
               @endif
             </div>
             <div class="mega-promo-box">
-              <div class="mp-tag">CHIẾT KHẤU DỰ ÁN</div>
-              <p class="mp-text">Chiết khấu tốt nhất cho đơn hàng số lượng lớn &amp; nhà thầu M&amp;E.</p>
+              <div class="mp-tag">CHIẾT KHẤU DOANH NGHIỆP</div>
+              <p class="mp-text">Chiết khấu tốt nhất cho đơn hàng số lượng lớn, dự án &amp; nhà thầu M&amp;E.</p>
               <a href="tel:0949761893" class="mp-btn"><i class="fas fa-phone-alt"></i> 0949.761.893</a>
             </div>
             <a href="{{ route('client.products') }}" class="mega-view-all">Xem toàn bộ sản phẩm <i class="fas fa-arrow-right"></i></a>
@@ -95,19 +121,16 @@
     <!-- 3. Chọn theo nhu cầu -->
     <a href="{{ route('client.demands') }}" class="nav-top {{ request()->routeIs('client.solutions') || request()->routeIs('client.demands') ? 'active' : '' }}">Chọn theo nhu cầu</a>
 
-    <!-- 4. Dự án -->
-    <a href="{{ route('client.projects') }}" class="nav-top {{ request()->routeIs('client.projects') ? 'active' : '' }}">Dự án</a>
+    <!-- 4. Thương hiệu -->
+    <a href="{{ route('client.brands') }}" class="nav-top {{ request()->routeIs('client.brands') ? 'active' : '' }}">Thương hiệu</a>
 
     <!-- 5. Công cụ tính quạt -->
     <a href="{{ route('client.calculator') }}" class="nav-top {{ request()->routeIs('client.calculator') ? 'active' : '' }}"><i class="fas fa-calculator" style="color:var(--orange);"></i> Công cụ tính quạt</a>
 
-    <!-- 6. Thương hiệu -->
-    <a href="{{ route('client.brands') }}" class="nav-top {{ request()->routeIs('client.brands') ? 'active' : '' }}">Thương hiệu</a>
-
-    <!-- 7. Tin tức & Hỗ trợ -->
+    <!-- 6. Tin tức & tư vấn -->
     <div class="nav-drop">
       <a href="{{ route('client.news') }}" class="nav-top {{ request()->routeIs('client.news*') ? 'active' : '' }}">
-        Tin tức &amp; Hỗ trợ <i class="fas fa-chevron-down nav-arrow"></i>
+        Tin tức &amp; tư vấn <i class="fas fa-chevron-down nav-arrow"></i>
       </a>
       <div class="nav-panel" style="min-width:240px; padding:8px 0;">
         <a href="{{ route('client.about') }}"><i class="fas fa-file-invoice" style="margin-right:8px;color:var(--brand-blue);"></i> Hồ sơ năng lực &amp; CQ/CO</a>
@@ -118,7 +141,7 @@
       </div>
     </div>
 
-    <!-- 8. Liên hệ & Báo giá -->
+    <!-- 7. Liên hệ & Báo giá -->
     <a href="{{ route('client.contact') }}" class="nav-top {{ request()->routeIs('client.contact') ? 'active' : '' }}">Liên hệ &amp; Báo giá</a>
   </div>
 </nav>

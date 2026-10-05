@@ -201,11 +201,115 @@ class WinlineStorefrontTest extends TestCase
         $response->assertNotFound();
     }
 
-    public function test_admin_route_is_not_intercepted_by_catalog_resolver(): void
+    public function test_danh_muc_san_pham_contract_urls_resolve_ok(): void
     {
-        $response = $this->get('/vi/admin');
-        // Unauthenticated access redirects to admin login, not 404
-        $this->assertTrue(in_array($response->getStatusCode(), [200, 302]));
+        // 1. Root /danh-muc-san-pham redirects 301 to /vi/danh-muc-san-pham
+        $response = $this->get('/danh-muc-san-pham');
+        $response->assertStatus(301);
+        $response->assertRedirect('/vi/danh-muc-san-pham');
+
+        // 2. /vi/danh-muc-san-pham must return 200 OK and show products catalog
+        $response2 = $this->get('/vi/danh-muc-san-pham');
+        $response2->assertOk();
+        $response2->assertSee('Winline');
+    }
+
+    public function test_san_pham_contract_urls_resolve_ok(): void
+    {
+        // 1. Root /san-pham redirects 301 to /vi/san-pham
+        $response = $this->get('/san-pham');
+        $response->assertStatus(301);
+        $response->assertRedirect('/vi/san-pham');
+
+        // 2. /vi/san-pham returns 200 OK
+        $response2 = $this->get('/vi/san-pham');
+        $response2->assertOk();
+    }
+
+    public function test_legacy_aliases_redirect_301_to_destinations(): void
+    {
+        $this->get('/he-thong-lam-mat-trang-trai')
+            ->assertStatus(301)
+            ->assertRedirect('/vi/tam-lam-mat-cooling-pad');
+
+        $this->get('/vi/he-thong-lam-mat-trang-trai')
+            ->assertStatus(301)
+            ->assertRedirect('/vi/tam-lam-mat-cooling-pad');
+
+        $this->get('/loai-quat/quat-cong-nghiep')
+            ->assertStatus(301)
+            ->assertRedirect('/vi/quat-cong-nghiep');
+
+        $this->get('/vi/loai-quat/quat-cong-nghiep')
+            ->assertStatus(301)
+            ->assertRedirect('/vi/quat-cong-nghiep');
+    }
+
+    public function test_header_navigation_does_not_contain_projects_link(): void
+    {
+        $response = $this->get('/vi');
+        $response->assertOk();
+        // The project route link was removed from storefront layout as requested by customer
+        $response->assertDontSee('/vi/du-an');
+    }
+
+    public function test_v8_homepage_renders_all_required_blocks_and_branding(): void
+    {
+        $response = $this->get('/vi');
+        $response->assertOk();
+
+        // 1. Top bar 3 utility entries
+        $response->assertSee('Giao hàng &amp; phí', false);
+        $response->assertSee('0949 761 893');
+        $response->assertSee('Địa chỉ &amp; chỉ đường', false);
+
+        // 2. Hero Section B2B + B2C
+        $response->assertSee('GIẢI PHÁP THÔNG GIÓ VÀ LÀM MÁT');
+        $response->assertSee('Quạt cho gia đình');
+        $response->assertSee('và nơi làm việc');
+        $response->assertSee('Khám phá sản phẩm →', false);
+
+        // 3. Khối Chọn theo nhu cầu
+        $response->assertSee('Chọn theo nhu cầu');
+        $response->assertSee('Quạt cho gia đình, văn phòng');
+        $response->assertSee('Quạt cho nhà xưởng, kho bãi');
+        $response->assertSee('Làm mát nhà xưởng');
+
+        // 4. Khối Danh mục sản phẩm (12 ô)
+        $response->assertSee('Danh mục sản phẩm');
+        $response->assertSee('Xem tất cả danh mục →', false);
+        $response->assertSee('Quạt trần');
+        $response->assertSee('Quạt đứng');
+        $response->assertSee('Quạt treo tường');
+        $response->assertSee('Quạt hộp');
+        $response->assertSee('Quạt thông gió');
+        $response->assertSee('Quạt công nghiệp');
+
+        // 5. Khối B2B Hồ sơ cho đơn hàng doanh nghiệp (50/50)
+        $response->assertSee('Hồ sơ cho đơn hàng');
+        $response->assertSee('doanh nghiệp');
+        $response->assertSee('Xem thông tin doanh nghiệp →', false);
+
+        // 6. Sản phẩm nổi bật (5 cards)
+        $response->assertSee('Sản phẩm nổi bật');
+
+        // 7. Dải 4 thương hiệu liên tục (Vinawind, KOMASU, Chinghai, NANYOO)
+        $response->assertSee('v8-brand-banner-strip', false);
+        $response->assertSee('Vinawind');
+        $response->assertSee('KOMASU');
+        $response->assertSee('Chinghai');
+        $response->assertSee('NANYOO');
+
+        // 8. Sản phẩm vừa cập nhật
+        $response->assertSee('Sản phẩm vừa cập nhật');
+
+        // 9. 2 cột ngành hàng
+        $response->assertSee('Quạt điện dân dụng');
+        $response->assertSee('Quạt công nghiệp');
+
+        // 10. Khối Giới thiệu & Uy tín
+        $response->assertSee('Winline cung cấp quạt điện và thiết bị thông gió');
+        $response->assertSee('Tìm hiểu về Winline →', false);
     }
 }
 

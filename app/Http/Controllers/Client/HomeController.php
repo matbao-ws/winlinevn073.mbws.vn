@@ -27,14 +27,65 @@ class HomeController extends Controller
         $featuredProducts = $this->products
             ->listing(['sort_by' => 'latest'])
             ->where('is_featured', true)
-            ->take(8)
+            ->take(5)
             ->get();
 
-        if ($featuredProducts->isEmpty()) {
-            $featuredProducts = $this->products
+        if ($featuredProducts->count() < 5) {
+            $fallback = $this->products
                 ->listing(['sort_by' => 'latest'])
-                ->take(8)
+                ->take(5)
                 ->get();
+            $featuredProducts = $featuredProducts->merge($fallback)->unique('id')->take(5);
+        }
+
+        $featuredIds = $featuredProducts->pluck('id')->all();
+
+        $recentProducts = $this->products
+            ->listing(['sort_by' => 'latest'])
+            ->whereNotIn('id', $featuredIds)
+            ->take(5)
+            ->get();
+
+        if ($recentProducts->count() < 5) {
+            $recentProducts = $this->products
+                ->listing(['sort_by' => 'price_desc'])
+                ->take(5)
+                ->get();
+        }
+
+        // Residential products (Quạt điện dân dụng)
+        $residentialCat = Category::query()->where('slug', 'quat-dan-dung')->first();
+        $residentialProducts = collect();
+        if ($residentialCat) {
+            $catIds = array_merge([$residentialCat->id], $residentialCat->children()->pluck('id')->all());
+            $residentialProducts = \App\Models\Product::query()
+                ->where('is_active', true)
+                ->whereIn('category_id', $catIds)
+                ->with('localizedSlugs')
+                ->take(3)
+                ->get();
+        }
+        if ($residentialProducts->count() < 3) {
+            $residentialProducts = $this->products->listing()->take(3)->get();
+        }
+
+        // Industrial products (Quạt công nghiệp)
+        $industrialCat = Category::query()->where('slug', 'quat-cong-nghiep')->first();
+        $industrialProducts = collect();
+        if ($industrialCat) {
+            $catIds = array_merge([$industrialCat->id], $industrialCat->children()->pluck('id')->all());
+            $industrialProducts = \App\Models\Product::query()
+                ->where('is_active', true)
+                ->whereIn('category_id', $catIds)
+                ->with('localizedSlugs')
+                ->take(3)
+                ->get();
+        }
+        if ($industrialProducts->count() < 3) {
+            $industrialProducts = $this->products->listing()->skip(3)->take(3)->get();
+            if ($industrialProducts->count() < 3) {
+                $industrialProducts = $this->products->listing()->take(3)->get();
+            }
         }
 
         $brands = Brand::query()
@@ -51,6 +102,9 @@ class HomeController extends Controller
         return view('client.pages.home', [
             'categories' => $categories,
             'featuredProducts' => $featuredProducts,
+            'recentProducts' => $recentProducts,
+            'residentialProducts' => $residentialProducts,
+            'industrialProducts' => $industrialProducts,
             'brands' => $brands,
             'posts' => $posts,
         ]);

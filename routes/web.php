@@ -32,6 +32,19 @@ Route::get('/huong-dan-su-dung', function() {
     return response()->file(base_path('docs/user-manual.html'), ['Content-Type' => 'text/html; charset=UTF-8']);
 })->name('user-manual');
 
+Route::get('/he-thong-lam-mat-trang-trai', fn () => redirect('/vi/tam-lam-mat-cooling-pad', 301));
+Route::get('/quat-thong-gio-noi-ong-cabinet-tieu-am', fn () => redirect('/vi/quat-ly-tam', 301));
+Route::get('/quat-hut-cong-nghiep-vuong', fn () => redirect('/vi/quat-thong-gio-vuong', 301));
+Route::get('/quat-thong-gio-cong-nghiep-tron', fn () => redirect('/vi/quat-huong-truc', 301));
+Route::get('/quat-ly-tam-hut-bep', fn () => redirect('/vi/quat-ly-tam', 301));
+Route::get('/quat-hut-di-dong', fn () => redirect('/vi/quat-hut-xach-tay', 301));
+
+Route::get('/loai-quat/{slug}', function (\Illuminate\Http\Request $request, string $slug) {
+    $queryString = $request->getQueryString();
+    $target = '/vi/' . $slug . ($queryString ? '?' . $queryString : '');
+    return redirect($target, 301);
+});
+
 Route::get('/{slug}', function (\Illuminate\Http\Request $request, string $slug) {
     $queryString = $request->getQueryString();
     $target = '/vi/' . $slug . ($queryString ? '?' . $queryString : '');

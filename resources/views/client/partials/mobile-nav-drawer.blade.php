@@ -32,11 +32,6 @@
         <i class="fas fa-chevron-right arrow"></i>
       </a>
 
-      <a href="{{ route('client.projects') }}" class="mobile-drawer-link" onclick="closeMobileNavDrawer()">
-        <span><i class="fas fa-building-circle-check icon-lead"></i> Dự án &amp; Công trình</span>
-        <i class="fas fa-chevron-right arrow"></i>
-      </a>
-
       <a href="{{ route('client.calculator') }}" class="mobile-drawer-link hot-item" onclick="closeMobileNavDrawer()">
         <span><i class="fas fa-calculator icon-lead" style="color:#f59e0b;"></i> Công cụ tính quạt HVAC</span>
         <span class="badge-hot">HOT</span>
