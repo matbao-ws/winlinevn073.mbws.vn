@@ -90,16 +90,12 @@
           @endif
 
           <div class="mega-col mega-col-featured">
-            <div class="mega-col-title"><i class="fas fa-star" style="color:#f59e0b;"></i> Thương hiệu tiêu biểu</div>
+            <div class="mega-col-title"><i class="fas fa-certificate" style="color:var(--brand-blue, #004e7d);"></i> Thương hiệu chính hãng</div>
             <div class="mega-brand-pills">
               @if(isset($globalBrands))
-                @foreach($globalBrands->take(8) as $b)
-                  <a href="{{ url(app()->getLocale() . '/' . $b->slug) }}" class="mb-pill">
-                    @if($b->image_url)
-                      <img src="{{ asset($b->image_url) }}" alt="{{ $b->getTranslation('name', app()->getLocale()) }}" style="height:14px; max-width:55px; object-fit:contain;">
-                    @else
-                      {{ $b->getTranslation('name', app()->getLocale()) }}
-                    @endif
+                @foreach($globalBrands->take(10) as $b)
+                  <a href="{{ url(app()->getLocale() . '/' . ($b->canonicalSlug(app()->getLocale()) ?: $b->slug)) }}" class="mb-pill" title="Quạt {{ $b->getTranslation('name', app()->getLocale()) }} chính hãng">
+                    {{ $b->getTranslation('name', app()->getLocale()) }}
                   </a>
                 @endforeach
               @endif
@@ -109,7 +105,7 @@
               <p class="mp-text">Chiết khấu tốt nhất cho đơn hàng số lượng lớn, dự án &amp; nhà thầu M&amp;E.</p>
               <a href="tel:0949761893" class="mp-btn"><i class="fas fa-phone-alt"></i> 0949.761.893</a>
             </div>
-            <a href="{{ route('client.products') }}" class="mega-view-all">Xem toàn bộ sản phẩm <i class="fas fa-arrow-right"></i></a>
+            <a href="{{ route('client.brands') }}" class="mega-view-all">Xem tất cả thương hiệu <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
       </div>

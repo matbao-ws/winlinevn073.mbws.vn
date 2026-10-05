@@ -12,20 +12,20 @@ return new class extends Migration
     {
         $slugService = app(LocalizedSlugService::class);
 
-        // 1. Update/Add Brands with logos
+        // 1. Update/Add Brands with logos (Strategic order: Vinawind, Komasu, Chinghai, Nanyoo first)
         $brandsData = [
-            ['slug' => 'komasu', 'name' => ['vi' => 'Komasu', 'en' => 'Komasu'], 'image_url' => 'client-assets/images/brands/komasu.svg', 'sort_order' => 1],
-            ['slug' => 'vinawind', 'name' => ['vi' => 'Vinawind', 'en' => 'Vinawind'], 'image_url' => 'client-assets/images/brands/vinawind.svg', 'sort_order' => 2],
-            ['slug' => 'panasonic', 'name' => ['vi' => 'Panasonic', 'en' => 'Panasonic'], 'image_url' => 'client-assets/images/brands/panasonic.svg', 'sort_order' => 3],
-            ['slug' => 'deton', 'name' => ['vi' => 'Deton', 'en' => 'Deton'], 'image_url' => 'client-assets/images/brands/deton.svg', 'sort_order' => 4],
-            ['slug' => 'dasin', 'name' => ['vi' => 'Dasin', 'en' => 'Dasin'], 'image_url' => 'client-assets/images/brands/dasin.svg', 'sort_order' => 5],
-            ['slug' => 'chinghai', 'name' => ['vi' => 'Chinghai', 'en' => 'Chinghai'], 'image_url' => 'client-assets/images/brands/chinghai.svg', 'sort_order' => 6],
-            ['slug' => 'hatari', 'name' => ['vi' => 'Hatari', 'en' => 'Hatari'], 'image_url' => 'client-assets/images/brands/hatari.svg', 'sort_order' => 7],
-            ['slug' => 'nedfon', 'name' => ['vi' => 'Nedfon', 'en' => 'Nedfon'], 'image_url' => 'client-assets/images/brands/nedfon.svg', 'sort_order' => 8],
-            ['slug' => 'nanyoo', 'name' => ['vi' => 'Nanyoo', 'en' => 'Nanyoo'], 'image_url' => 'client-assets/images/brands/nanyoo.svg', 'sort_order' => 9],
-            ['slug' => 'tico', 'name' => ['vi' => 'Tico', 'en' => 'Tico'], 'image_url' => 'client-assets/images/brands/tico.svg', 'sort_order' => 10],
-            ['slug' => 'mitsubishi', 'name' => ['vi' => 'Mitsubishi', 'en' => 'Mitsubishi'], 'image_url' => 'client-assets/images/brands/mitsubishi.svg', 'sort_order' => 11],
-            ['slug' => 'kdk', 'name' => ['vi' => 'KDK', 'en' => 'KDK'], 'image_url' => 'client-assets/images/brands/kdk.svg', 'sort_order' => 12],
+            ['slug' => 'vinawind', 'name' => ['vi' => 'Vinawind', 'en' => 'Vinawind'], 'image_url' => 'client-assets/images/brands/vinawind.svg', 'sort_order' => 1],
+            ['slug' => 'komasu', 'name' => ['vi' => 'Komasu', 'en' => 'Komasu'], 'image_url' => 'client-assets/images/brands/komasu.svg', 'sort_order' => 2],
+            ['slug' => 'chinghai', 'name' => ['vi' => 'Chinghai', 'en' => 'Chinghai'], 'image_url' => 'client-assets/images/brands/chinghai.svg', 'sort_order' => 3],
+            ['slug' => 'nanyoo', 'name' => ['vi' => 'Nanyoo', 'en' => 'Nanyoo'], 'image_url' => 'client-assets/images/brands/nanyoo.svg', 'sort_order' => 4],
+            ['slug' => 'panasonic', 'name' => ['vi' => 'Panasonic', 'en' => 'Panasonic'], 'image_url' => 'client-assets/images/brands/panasonic.svg', 'sort_order' => 5],
+            ['slug' => 'nedfon', 'name' => ['vi' => 'Nedfon', 'en' => 'Nedfon'], 'image_url' => 'client-assets/images/brands/nedfon.svg', 'sort_order' => 6],
+            ['slug' => 'deton', 'name' => ['vi' => 'Deton', 'en' => 'Deton'], 'image_url' => 'client-assets/images/brands/deton.svg', 'sort_order' => 7],
+            ['slug' => 'dasin', 'name' => ['vi' => 'Dasin', 'en' => 'Dasin'], 'image_url' => 'client-assets/images/brands/dasin.svg', 'sort_order' => 8],
+            ['slug' => 'kdk', 'name' => ['vi' => 'KDK', 'en' => 'KDK'], 'image_url' => 'client-assets/images/brands/kdk.svg', 'sort_order' => 9],
+            ['slug' => 'mitsubishi', 'name' => ['vi' => 'Mitsubishi', 'en' => 'Mitsubishi'], 'image_url' => 'client-assets/images/brands/mitsubishi.svg', 'sort_order' => 10],
+            ['slug' => 'tico', 'name' => ['vi' => 'Tico', 'en' => 'Tico'], 'image_url' => 'client-assets/images/brands/tico.svg', 'sort_order' => 11],
+            ['slug' => 'hatari', 'name' => ['vi' => 'Hatari', 'en' => 'Hatari'], 'image_url' => 'client-assets/images/brands/hatari.svg', 'sort_order' => 12],
         ];
 
         foreach ($brandsData as $bData) {

@@ -1,5 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
-  <rect width="160" height="50" rx="6" fill="#c2185b"/>
-  <text x="80" y="28" font-family="'Arial Black', 'Impact', 'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">TICO</text>
-  <text x="80" y="41" font-family="Arial, sans-serif" font-size="7.5" font-weight="700" fill="#ffffff" opacity="0.85" text-anchor="middle" letter-spacing="1.5">VIETNAM</text>
+  <text x="80" y="26" font-family="'Be Vietnam Pro', 'Arial Black', sans-serif" font-size="22" font-weight="900" fill="#00354f" text-anchor="middle" letter-spacing="1">TICO</text>
+  <text x="80" y="41" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="7.5" font-weight="700" fill="#64748b" text-anchor="middle" letter-spacing="1.5">VIỆT NAM</text>
 </svg>

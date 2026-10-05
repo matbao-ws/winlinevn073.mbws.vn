@@ -43,6 +43,7 @@ Route::get('/du-tinh/{publicId}/pdf', [CalculatorController::class, 'pdf'])->nam
 Route::post('/du-tinh/{publicId}/submit', [CalculatorController::class, 'submitRfq'])->name('calculator.submit');
 
 Route::get('/thuong-hieu', [BrandController::class, 'index'])->name('brands');
+Route::get('/thuong-hieu/{slug}', fn (\Illuminate\Http\Request $request, string $locale, string $slug) => redirect('/' . $locale . '/' . $slug, 301));
 Route::get('/giai-phap', [SolutionController::class, 'index'])->name('solutions');
 Route::get('/chon-theo-nhu-cau', [SolutionController::class, 'index'])->name('demands');
 Route::get('/tin-tuc', [NewsController::class, 'index'])->name('news');

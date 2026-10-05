@@ -40,6 +40,13 @@ Route::get('/quat-ly-tam-hut-bep', fn () => redirect('/vi/quat-ly-tam', 301));
 Route::get('/quat-hut-di-dong', fn () => redirect('/vi/quat-hut-xach-tay', 301));
 Route::get('/du-an', fn () => redirect('/vi/gioi-thieu', 301));
 
+Route::get('/thuong-hieu/{slug}', function (\Illuminate\Http\Request $request, string $slug) {
+    $queryString = $request->getQueryString();
+    $target = '/vi/' . $slug . ($queryString ? '?' . $queryString : '');
+    return redirect($target, 301);
+});
+Route::get('/thuong-hieu', fn () => redirect('/vi/thuong-hieu', 301));
+
 Route::get('/loai-quat/{slug}', function (\Illuminate\Http\Request $request, string $slug) {
     $queryString = $request->getQueryString();
     $target = '/vi/' . $slug . ($queryString ? '?' . $queryString : '');

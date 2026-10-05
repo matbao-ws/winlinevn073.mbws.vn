@@ -359,5 +359,66 @@ class WinlineStorefrontTest extends TestCase
         $response->assertSee('Winline cung cấp quạt điện và thiết bị thông gió');
         $response->assertSee('Tìm hiểu về Winline →', false);
     }
+
+    public function test_mega_menu_brand_pills_include_strategic_brands(): void
+    {
+        $response = $this->get('/vi');
+        $response->assertOk();
+
+        // Must have B2B title
+        $response->assertSee('Thương hiệu chính hãng');
+        $response->assertDontSee('fa-star');
+
+        // Must include all 4 strategic pillars
+        $response->assertSee('Vinawind');
+        $response->assertSee('Komasu');
+        $response->assertSee('Chinghai');
+        $response->assertSee('Nanyoo');
+
+        // Link to brand hub
+        $response->assertSee('/vi/thuong-hieu');
+    }
+
+    public function test_brand_hub_page_renders_all_brands_and_strategic_pillars(): void
+    {
+        $response = $this->get('/vi/thuong-hieu');
+        $response->assertOk();
+
+        // Hero H1
+        $response->assertSee('Hệ thống thương hiệu quạt');
+        $response->assertSee('thiết bị thông gió chính hãng');
+
+        // 4 Core strategic pillars
+        $response->assertSee('4 Thương Hiệu Chủ Lực Chiến Lược');
+        $response->assertSee('Vinawind');
+        $response->assertSee('Komasu');
+        $response->assertSee('Chinghai');
+        $response->assertSee('Nanyoo');
+
+        // All 12 brands
+        $response->assertSee('Panasonic');
+        $response->assertSee('Nedfon');
+        $response->assertSee('Deton');
+        $response->assertSee('Dasin');
+        $response->assertSee('KDK');
+        $response->assertSee('Mitsubishi');
+        $response->assertSee('Tico');
+        $response->assertSee('Hatari');
+
+        // B2B Assurances
+        $response->assertSee('100% Chính Hãng');
+        $response->assertSee('Hồ Sơ CO/CQ Đầy Đủ');
+        $response->assertSee('Chiết Khấu Dự Án Tốt Nhất');
+        $response->assertSee('Bảo Hành &amp; Linh Kiện', false);
+    }
+
+    public function test_brand_routes_and_redirects(): void
+    {
+        $this->get('/thuong-hieu')->assertRedirect('/vi/thuong-hieu');
+        $this->get('/thuong-hieu/vinawind')->assertRedirect('/vi/vinawind');
+        $this->get('/vi/thuong-hieu/vinawind')->assertRedirect('/vi/vinawind');
+        $this->get('/vi/vinawind')->assertOk()->assertSee('Vinawind');
+        $this->get('/vi/nanyoo')->assertOk()->assertSee('Nanyoo');
+    }
 }
 
