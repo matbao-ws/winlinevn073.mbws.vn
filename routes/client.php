@@ -19,6 +19,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/gioi-thieu', [AboutController::class, 'index'])->name('about');
 Route::get('/san-pham', [ProductController::class, 'index'])->name('products');
 Route::get('/danh-muc-san-pham', [ProductController::class, 'index'])->name('products.catalog.alias');
+Route::get('/danh-muc', [ProductController::class, 'index'])->name('products.danh-muc.alias');
+Route::get('/tim-kiem', [ProductController::class, 'index'])->name('products.tim-kiem.alias');
+Route::get('/search', [ProductController::class, 'index'])->name('products.search.alias');
 Route::get('/loai-quat/{slug}', fn (\Illuminate\Http\Request $request, string $locale, string $slug) => redirect('/' . $locale . '/' . $slug, 301));
 Route::get('/he-thong-lam-mat-trang-trai', fn (\Illuminate\Http\Request $request, string $locale) => redirect('/' . $locale . '/tam-lam-mat-cooling-pad', 301));
 Route::get('/quat-thong-gio-noi-ong-cabinet-tieu-am', fn (\Illuminate\Http\Request $request, string $locale) => redirect('/' . $locale . '/quat-ly-tam', 301));
@@ -26,6 +29,7 @@ Route::get('/quat-hut-cong-nghiep-vuong', fn (\Illuminate\Http\Request $request,
 Route::get('/quat-thong-gio-cong-nghiep-tron', fn (\Illuminate\Http\Request $request, string $locale) => redirect('/' . $locale . '/quat-huong-truc', 301));
 Route::get('/quat-ly-tam-hut-bep', fn (\Illuminate\Http\Request $request, string $locale) => redirect('/' . $locale . '/quat-ly-tam', 301));
 Route::get('/quat-hut-di-dong', fn (\Illuminate\Http\Request $request, string $locale) => redirect('/' . $locale . '/quat-hut-xach-tay', 301));
+Route::get('/du-an', fn (\Illuminate\Http\Request $request, string $locale) => redirect('/' . $locale . '/gioi-thieu', 301))->name('projects');
 Route::get('/san-pham-count', [ProductController::class, 'count'])->name('products.count');
 Route::get('/san-pham-search-live', [ProductController::class, 'searchLive'])->name('products.search.live');
 Route::get('/san-pham/{slug}', [ProductController::class, 'show'])->name('products.detail');
@@ -41,7 +45,6 @@ Route::post('/du-tinh/{publicId}/submit', [CalculatorController::class, 'submitR
 Route::get('/thuong-hieu', [BrandController::class, 'index'])->name('brands');
 Route::get('/giai-phap', [SolutionController::class, 'index'])->name('solutions');
 Route::get('/chon-theo-nhu-cau', [SolutionController::class, 'index'])->name('demands');
-Route::get('/du-an', [ProjectController::class, 'index'])->name('projects');
 Route::get('/tin-tuc', [NewsController::class, 'index'])->name('news');
 Route::get('/tin-tuc/{slug}', [NewsController::class, 'show'])->name('news.detail');
 Route::get('/lien-he', [ContactController::class, 'index'])->name('contact');

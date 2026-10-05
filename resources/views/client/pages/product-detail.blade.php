@@ -1575,7 +1575,7 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
           <div class="proof-photo">Ảnh thực tế</div>
         </div>
         <p class="proof-caption">Một số công trình, kho xưởng đã lắp đặt quạt Winline — nhu cầu thực tế và cách xử lý.</p>
-        <a class="proof-link" href="{{ route('client.projects') }}">Xem case study →</a>
+        <a class="proof-link" href="{{ route('client.about') }}#ho-so-nang-luc">Xem hồ sơ năng lực →</a>
       </div>
     </div>
     <!-- Tagline này cần đưa vào quản trị web (CMS) để founder tự sửa khi cần — không hardcode cứng ở bản triển

@@ -38,6 +38,7 @@ Route::get('/quat-hut-cong-nghiep-vuong', fn () => redirect('/vi/quat-thong-gio-
 Route::get('/quat-thong-gio-cong-nghiep-tron', fn () => redirect('/vi/quat-huong-truc', 301));
 Route::get('/quat-ly-tam-hut-bep', fn () => redirect('/vi/quat-ly-tam', 301));
 Route::get('/quat-hut-di-dong', fn () => redirect('/vi/quat-hut-xach-tay', 301));
+Route::get('/du-an', fn () => redirect('/vi/gioi-thieu', 301));
 
 Route::get('/loai-quat/{slug}', function (\Illuminate\Http\Request $request, string $slug) {
     $queryString = $request->getQueryString();

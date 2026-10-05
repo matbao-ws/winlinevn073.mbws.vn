@@ -31,10 +31,11 @@ class WinlineStorefrontTest extends TestCase
             '/vi',
             '/vi/gioi-thieu',
             '/vi/san-pham',
+            '/vi/danh-muc-san-pham',
+            '/vi/chon-theo-nhu-cau',
             '/vi/cong-cu-tinh-quat',
             '/vi/thuong-hieu',
             '/vi/giai-phap',
-            '/vi/du-an',
             '/vi/tin-tuc',
             '/vi/lien-he',
         ];
@@ -243,6 +244,53 @@ class WinlineStorefrontTest extends TestCase
         $this->get('/vi/loai-quat/quat-cong-nghiep')
             ->assertStatus(301)
             ->assertRedirect('/vi/quat-cong-nghiep');
+
+        // Test additional aliases from Excel and old site
+        $this->get('/vi/quat-cay-cn-komasu-km750s')
+            ->assertStatus(301)
+            ->assertRedirect('/vi/quat-cay-cong-nghiep-komasu-km-750s');
+
+        $this->get('/vi/quat-cat-gio-nanyoo-fm-1209x-2-y')
+            ->assertStatus(301)
+            ->assertRedirect('/vi/quat-cat-gio-nanyoo-fm-5509z-l-y');
+
+        // Test root and localized /du-an redirect 301 to /vi/gioi-thieu
+        $this->get('/du-an')
+            ->assertStatus(301)
+            ->assertRedirect('/vi/gioi-thieu');
+
+        $this->get('/vi/du-an')
+            ->assertStatus(301)
+            ->assertRedirect('/vi/gioi-thieu');
+
+        // Test /danh-muc and /tim-kiem and /search
+        $this->get('/danh-muc')->assertStatus(301)->assertRedirect('/vi/danh-muc');
+        $this->get('/vi/danh-muc')->assertOk();
+        $this->get('/tim-kiem')->assertStatus(301)->assertRedirect('/vi/tim-kiem');
+        $this->get('/vi/tim-kiem')->assertOk();
+        $this->get('/search')->assertStatus(301)->assertRedirect('/vi/search');
+        $this->get('/vi/search')->assertOk();
+    }
+
+    public function test_all_12_homepage_categories_resolve_200(): void
+    {
+        $catSlugs = [
+            'quat-tran',
+            'quat-cay',
+            'quat-treo-tuong',
+            'quat-hop',
+            'quat-thong-gio',
+            'quat-cong-nghiep',
+            'quat-cat-gio',
+            'quat-dan-dung',
+            'quat-thong-gio-vuong',
+            'quat-ly-tam',
+            'tam-lam-mat-cooling-pad',
+        ];
+
+        foreach ($catSlugs as $slug) {
+            $this->get('/vi/' . $slug)->assertOk();
+        }
     }
 
     public function test_header_navigation_does_not_contain_projects_link(): void
