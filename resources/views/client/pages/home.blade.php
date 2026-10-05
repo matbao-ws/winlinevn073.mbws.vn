@@ -100,9 +100,10 @@
   }
   .v8-hero-img {
     width: 100%;
-    max-height: 320px;
+    max-height: 340px;
     object-fit: cover;
     border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   }
 
   /* Section Header */
@@ -242,38 +243,45 @@
   .v8-cat-tile {
     background: #ffffff;
     border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 14px 10px;
+    border-radius: 8px;
+    padding: 16px 10px 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     text-decoration: none;
-    transition: all 0.15s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   }
   .v8-cat-tile:hover {
     border-color: var(--brand-blue);
-    box-shadow: 0 4px 12px rgba(0, 78, 125, 0.08);
-    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 78, 125, 0.12);
+    transform: translateY(-3px);
   }
   .v8-cat-tile-thumb {
-    width: 72px;
-    height: 72px;
+    width: 86px;
+    height: 86px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
   }
   .v8-cat-tile-thumb img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    transition: transform 0.25s ease;
+  }
+  .v8-cat-tile:hover .v8-cat-tile-thumb img {
+    transform: scale(1.08);
   }
   .v8-cat-tile-name {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--navy-950);
     line-height: 1.35;
+    transition: color 0.15s ease;
   }
   .v8-cat-tile:hover .v8-cat-tile-name {
     color: var(--brand-blue);
@@ -486,16 +494,25 @@
     text-transform: uppercase;
   }
   .v8-brand-img-box {
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    border-radius: 6px;
     overflow: hidden;
-    height: 160px;
+    height: 170px;
     background: #00354f;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
   }
   .v8-brand-img-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+  .v8-brand-col:hover .v8-brand-img-box {
+    border-color: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+  .v8-brand-col:hover .v8-brand-img-box img {
+    transform: scale(1.05);
   }
 
   /* 8. Sector 2 Columns */
@@ -552,16 +569,21 @@
     text-decoration: underline;
   }
   .v8-sector-banner-thumb {
-    width: 110px;
-    height: 60px;
-    border-radius: 4px;
+    width: 120px;
+    height: 68px;
+    border-radius: 6px;
     overflow: hidden;
     flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
   .v8-sector-banner-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .v8-sector-card:hover .v8-sector-banner-thumb img {
+    transform: scale(1.06);
   }
   .v8-sector-items {
     display: grid;
