@@ -27,52 +27,68 @@
     padding: 0 20px;
   }
 
-  /* 1. Hero Section */
+  /* 1. Hero Section - Full Background Panoramic Banner */
   .v8-hero {
-    background: #ffffff;
+    position: relative;
+    width: 100%;
+    background-color: #f8fafc;
     border-bottom: 1px solid var(--line);
-    padding: 24px 0 0;
     overflow: hidden;
   }
-  .v8-hero-inner {
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 0 20px 24px;
-    display: grid;
-    grid-template-columns: 1fr 1.35fr;
-    gap: 32px;
+  .v8-hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: 460px;
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
+    display: flex;
     align-items: center;
   }
-  @media (max-width: 900px) {
-    .v8-hero-inner {
-      grid-template-columns: 1fr;
-      gap: 20px;
-      padding-bottom: 16px;
-    }
+  .v8-hero-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.90) 36%, rgba(255,255,255,0.52) 52%, rgba(255,255,255,0) 72%);
+  }
+  .v8-hero .v8-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+  .v8-hero-content {
+    max-width: 520px;
+    padding: 56px 0;
   }
   .v8-hero-tag {
     display: inline-block;
-    font-size: 11.5px;
+    font-size: 12.5px;
     font-weight: 800;
     color: var(--brand-blue);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
   .v8-hero-title {
-    font-size: 34px;
-    line-height: 1.25;
+    font-size: 38px;
+    line-height: 1.22;
     font-weight: 800;
     color: var(--navy-950);
-    margin: 0 0 14px;
-    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    letter-spacing: -0.025em;
   }
   .v8-hero-desc {
-    font-size: 14.5px;
-    color: var(--ink-soft);
+    font-size: 15px;
+    color: #334155;
     line-height: 1.6;
     margin: 0 0 24px;
-    max-width: 480px;
+    max-width: 460px;
+    font-weight: 450;
+  }
+  .v8-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
   .v8-btn-cta {
     display: inline-flex;
@@ -82,28 +98,53 @@
     color: #ffffff !important;
     font-size: 14.5px;
     font-weight: 700;
-    padding: 12px 24px;
+    padding: 13px 28px;
     border-radius: 6px;
     text-decoration: none;
-    transition: background-color 0.15s ease, transform 0.15s ease;
-    box-shadow: 0 4px 12px rgba(203, 32, 39, 0.25);
+    transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 4px 14px rgba(203, 32, 39, 0.28);
   }
   .v8-btn-cta:hover {
     background: var(--red-cta-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(203, 32, 39, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(203, 32, 39, 0.38);
   }
-  .v8-hero-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  @media (max-width: 1024px) {
+    .v8-hero-banner {
+      min-height: 400px;
+      background-position: 75% center;
+    }
+    .v8-hero-title {
+      font-size: 32px;
+    }
+    .v8-hero-content {
+      padding: 40px 0;
+      max-width: 460px;
+    }
   }
-  .v8-hero-img {
-    width: 100%;
-    max-height: 340px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  @media (max-width: 768px) {
+    .v8-hero-banner {
+      min-height: 360px;
+      background-position: 70% center;
+    }
+    .v8-hero-overlay {
+      background: linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.92) 65%, rgba(255,255,255,0.7) 100%);
+    }
+    .v8-hero-title {
+      font-size: 26px;
+    }
+    .v8-hero-desc {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .v8-hero-content {
+      padding: 32px 0;
+      max-width: 100%;
+    }
+    .v8-btn-cta {
+      padding: 11px 22px;
+      font-size: 14px;
+    }
   }
 
   /* Section Header */
@@ -691,15 +732,17 @@
 
 <!-- 1. HERO SECTION (B2B + B2C) -->
 <section class="v8-hero">
-  <div class="v8-hero-inner">
-    <div class="v8-hero-content">
-      <span class="v8-hero-tag">GIẢI PHÁP THÔNG GIÓ VÀ LÀM MÁT</span>
-      <h1 class="v8-hero-title">Quạt cho gia đình<br>và nơi làm việc</h1>
-      <p class="v8-hero-desc">Đa dạng sản phẩm, phù hợp cho không gian sống, văn phòng, nhà xưởng và kho bãi.</p>
-      <a href="{{ route('client.products') }}" class="v8-btn-cta">Khám phá sản phẩm →</a>
-    </div>
-    <div class="v8-hero-visual">
-      <img src="{{ asset('client-assets/images/v8/hero_collage.jpg') }}" alt="Quạt cho gia đình và nơi làm việc - Winline Việt Nam" class="v8-hero-img">
+  <div class="v8-hero-banner" style="background-image: url('{{ asset('client-assets/images/v8/hero_collage.jpg') }}');">
+    <div class="v8-hero-overlay"></div>
+    <div class="v8-container">
+      <div class="v8-hero-content">
+        <span class="v8-hero-tag">GIẢI PHÁP THÔNG GIÓ VÀ LÀM MÁT</span>
+        <h1 class="v8-hero-title">Quạt cho gia đình<br>và nơi làm việc</h1>
+        <p class="v8-hero-desc">Đa dạng sản phẩm, phù hợp cho không gian sống, văn phòng, nhà xưởng và kho bãi.</p>
+        <div class="v8-hero-actions">
+          <a href="{{ route('client.products') }}" class="v8-btn-cta">Khám phá sản phẩm →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
