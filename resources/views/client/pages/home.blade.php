@@ -27,13 +27,29 @@
     padding: 0 20px;
   }
 
-  /* 1. Hero Section - Full Background Panoramic Banner */
+  /* 1. Hero Section - Full Width Edge-to-Edge Panoramic Banner */
+  section.v8-hero,
   .v8-hero {
     position: relative;
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
     background-color: #f8fafc;
     border-bottom: 1px solid var(--line);
     overflow: hidden;
+  }
+
+  section.v8-demand-section,
+  section.v8-cat-section,
+  section.v8-b2b-section,
+  section.v8-product-section,
+  section.v8-brand-strip-section,
+  section.v8-sector-section,
+  section.v8-about-section {
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
   .v8-hero-banner {
     position: relative;
