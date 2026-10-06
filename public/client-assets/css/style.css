@@ -2101,6 +2101,43 @@ footer.footer, footer.site-footer {
   border-color: #38bdf8 !important;
   transform: translateY(-2px);
 }
+@media (max-width: 768px) {
+  .tt-footer-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .tt-newsletter-wrap {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+  }
+  .tt-collapse-title {
+    white-space: normal;
+    text-align: center;
+    font-size: 13.5px;
+  }
+  .tt-newsletter-form {
+    max-width: 100%;
+    width: 100%;
+  }
+  .tt-social-icon {
+    justify-content: center;
+    width: 100%;
+  }
+}
+@media (max-width: 480px) {
+  .tt-newsletter-form button {
+    padding: 8px 12px;
+    font-size: 12.5px;
+  }
+  .tt-newsletter-form input {
+    padding: 8px 10px;
+    font-size: 12.5px;
+  }
+}
 
 /* Main 4-Column Footer Area */
 .site-footer {
