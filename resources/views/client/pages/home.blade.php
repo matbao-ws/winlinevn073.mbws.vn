@@ -38,9 +38,9 @@
   .v8-hero-banner {
     position: relative;
     width: 100%;
-    min-height: 460px;
+    min-height: 480px;
     background-size: cover;
-    background-position: right 42%;
+    background-position: center 20%;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
@@ -49,7 +49,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 32%, rgba(255,255,255,0.40) 48%, rgba(255,255,255,0) 64%);
+    background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 36%, rgba(255,255,255,0.40) 52%, rgba(255,255,255,0) 68%);
   }
   .v8-hero .v8-container {
     position: relative;
@@ -111,24 +111,24 @@
   }
   @media (max-width: 1024px) {
     .v8-hero-banner {
-      min-height: 400px;
-      background-position: 70% 42%;
+      min-height: 420px;
+      background-position: 65% 20%;
     }
     .v8-hero-title {
       font-size: 32px;
     }
     .v8-hero-content {
-      padding: 40px 0;
+      padding: 44px 0;
       max-width: 460px;
     }
   }
   @media (max-width: 768px) {
     .v8-hero-banner {
-      min-height: 360px;
-      background-position: 70% 40%;
+      min-height: 380px;
+      background-position: 60% 15%;
     }
     .v8-hero-overlay {
-      background: linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.92) 65%, rgba(255,255,255,0.7) 100%);
+      background: linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.90) 68%, rgba(255,255,255,0.70) 100%);
     }
     .v8-hero-title {
       font-size: 26px;
@@ -138,11 +138,11 @@
       margin-bottom: 20px;
     }
     .v8-hero-content {
-      padding: 32px 0;
+      padding: 36px 0;
       max-width: 100%;
     }
     .v8-btn-cta {
-      padding: 11px 22px;
+      padding: 12px 24px;
       font-size: 14px;
     }
   }
