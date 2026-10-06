@@ -1968,23 +1968,23 @@ nav.catnav {
    EXACT 100% WINLINE.VN FOOTER SYSTEM (LIGHT THEME + BLUE TOP BAR)
    ========================================================================== */
 /* ==========================================================================
-   FOOTER (DARK BACKGROUND #080d14, TEXT OFF-WHITE COOL BLUE #cbd5e1 / #f0f7ff)
+   FOOTER (FULL BRAND BLUE #004e7d THEME, HIGH CONTRAST UX/UI)
    ========================================================================== */
 footer.footer, footer.site-footer {
-  background: #080d14 !important;
-  color: #cbd5e1 !important;
+  background: #004e7d !important;
+  color: #e0f2fe !important;
   padding: 0;
   margin-top: 40px;
   font-size: 13px;
   line-height: 1.6;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+  border-top: 3px solid #003e63;
+  box-shadow: 0 -4px 20px rgba(0, 78, 125, 0.2);
 }
 
-/* Top Bar: Newsletter & Social Icons (Official Brand Blue #004e7d) */
+/* Top Bar: Newsletter & Social Icons (Brand Blue Darker Accent #003e63 / #004e7d) */
 .tt-footer-default {
-  background: #004e7d !important;
-  background: linear-gradient(90deg, #004e7d 0%, #005b92 100%) !important;
+  background: #003e63 !important;
+  background: linear-gradient(90deg, #003859 0%, #004e7d 100%) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   padding: 14px 20px;
   color: #ffffff;
@@ -2142,7 +2142,7 @@ footer.footer, footer.site-footer {
 
 /* Main 4-Column Footer Area */
 .site-footer {
-  background: #080d14 !important;
+  background: #004e7d !important;
 }
 .site-footer-inner {
   max-width: 1240px;
@@ -2165,12 +2165,12 @@ footer.footer, footer.site-footer {
 .footer-widget h3 {
   font-size: 13.5px;
   font-weight: 800;
-  color: #f0f7ff !important;
+  color: #ffffff !important;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin: 0 0 16px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #004e7d !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3) !important;
   display: flex;
   align-items: center;
 }
@@ -2185,24 +2185,25 @@ footer.footer, footer.site-footer {
   line-height: 1.5;
 }
 .list-menu li a {
-  color: #cbd5e1 !important;
+  color: #e0f2fe !important;
   text-decoration: none;
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition: all 0.15s ease;
   display: inline-block;
 }
 .list-menu li a:hover {
-  color: #38bdf8 !important;
+  color: #ffffff !important;
   transform: translateX(4px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Contact List in Col 3 */
 .ul-footer-contact li {
-  color: #cbd5e1 !important;
+  color: #e0f2fe !important;
   margin-bottom: 11px;
   line-height: 1.5;
 }
 .ul-footer-contact li strong {
-  color: #f0f7ff !important;
+  color: #ffffff !important;
   font-size: 12.5px;
   display: inline-block;
   margin-bottom: 2px;
@@ -2213,11 +2214,18 @@ footer.footer, footer.site-footer {
   gap: 8px;
 }
 .ul-footer-contact li i {
-  color: #38bdf8 !important;
-  font-size: 13px;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.18);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
 }
 .ul-footer-contact li a {
-  color: #f87171 !important;
+  color: #fef08a !important;
   font-weight: 700;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 14px;
@@ -2263,18 +2271,18 @@ footer.footer, footer.site-footer {
   transition: all 0.15s ease;
 }
 .payment-methods-grid span:hover {
-  background: rgba(255, 255, 255, 0.12) !important;
-  border-color: #38bdf8 !important;
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: #ffffff !important;
   transform: translateY(-1px);
 }
 
 /* Corporate Info Block */
 .fot-col-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
   padding-top: 22px;
   margin-top: 16px;
   font-size: 12.5px;
-  color: #94a3b8 !important;
+  color: #cbe2f3 !important;
   line-height: 1.8;
   text-align: center;
 }
@@ -2282,20 +2290,20 @@ footer.footer, footer.site-footer {
   margin: 0 0 6px;
 }
 .fot-col-bottom strong {
-  color: #f0f7ff !important;
+  color: #ffffff !important;
 }
 
 /* Copyright Strip */
 .copyright {
-  background: #03060a !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+  background: #003859 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
   padding: 14px 20px;
   text-align: center;
   font-size: 12px;
-  color: #64748b !important;
+  color: #93c5fd !important;
 }
 .copyright strong {
-  color: #cbd5e1 !important;
+  color: #ffffff !important;
 }
 .copyright span {
   display: inline-block;

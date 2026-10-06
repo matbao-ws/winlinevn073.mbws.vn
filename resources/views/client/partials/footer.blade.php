@@ -62,10 +62,10 @@
               <span><i class="fas fa-tools"></i> <a href="tel:0963230665">0963.230.665</a></span>
             </li>
             <li><strong>Email liên hệ:</strong><br>
-              <span><i class="fas fa-envelope"></i> <a href="mailto:Winlinevietnam@gmail.com" style="color:#7dd3fc; font-size:12.5px; font-weight:600; text-decoration:none;">Winlinevietnam@gmail.com</a></span>
+              <span><i class="fas fa-envelope"></i> <a href="mailto:Winlinevietnam@gmail.com" style="color:#ffffff; font-size:12.5px; font-weight:600; text-decoration:underline;">Winlinevietnam@gmail.com</a></span>
             </li>
             <li><strong>Thời gian làm việc:</strong><br>
-              <span style="font-size:12px; color:#94a3b8;">8h00 - 17h30 (Thứ 2 đến Thứ 7)</span>
+              <span style="font-size:12px; color:#cbe2f3;">8h00 - 17h30 (Thứ 2 đến Thứ 7)</span>
             </li>
           </ul>
         </div>
@@ -82,17 +82,17 @@
             </a>
           </div>
           
-          <div style="font-size:12px; font-weight:700; color:#f0f7ff; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.03em;">Chấp nhận thanh toán</div>
+          <div style="font-size:12px; font-weight:700; color:#ffffff; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.03em;">Chấp nhận thanh toán</div>
           <div class="payment-methods-grid" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;">
-            <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#e2e8f0; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-university" style="color:#004e7d;"></i> Chuyển khoản</span>
-            <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#e2e8f0; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-money-bill-wave" style="color:#34d399;"></i> Tiền mặt (COD)</span>
-            <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#e2e8f0; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-qrcode" style="color:#f87171;"></i> VNPAY-QR</span>
-            <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#e2e8f0; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-credit-card" style="color:#fbbf24;"></i> Thẻ ATM / Visa</span>
+            <span style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#ffffff; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-university" style="color:#ffffff;"></i> Chuyển khoản</span>
+            <span style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#ffffff; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-money-bill-wave" style="color:#86efac;"></i> Tiền mặt (COD)</span>
+            <span style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#ffffff; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-qrcode" style="color:#fca5a5;"></i> VNPAY-QR</span>
+            <span style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#ffffff; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-credit-card" style="color:#fde047;"></i> Thẻ ATM / Visa</span>
           </div>
 
-          <div style="font-size:11.5px; color:#94a3b8; line-height:1.6;">
-            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;"><i class="fas fa-shield-alt" style="color:#34d399;"></i> Cam kết 100% chính hãng, có CO/CQ</div>
-            <div style="display:flex; align-items:center; gap:6px;"><i class="fas fa-truck" style="color:#004e7d;"></i> Giao hàng hỏa tốc toàn quốc</div>
+          <div style="font-size:11.5px; color:#e0f2fe; line-height:1.6;">
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;"><i class="fas fa-shield-alt" style="color:#86efac;"></i> Cam kết 100% chính hãng, có CO/CQ</div>
+            <div style="display:flex; align-items:center; gap:6px;"><i class="fas fa-truck" style="color:#ffffff;"></i> Giao hàng hỏa tốc toàn quốc</div>
           </div>
         </div>
 
@@ -103,7 +103,7 @@
         <p><strong>Công ty TNHH Winline Việt Nam</strong> - Giấy chứng nhận ĐKKD &amp; MST: <strong>0106085370</strong> do Sở KH &amp; ĐT TP Hà Nội cấp ngày 15/01/2013.</p>
         <p><strong>Địa chỉ ĐKKD:</strong> Số 7 BT6, Khu đô thị Pháp Vân - Tứ Hiệp, Phường Hoàng Liệt, Quận Hoàng Mai, TP Hà Nội.</p>
         <p><strong>Cửa hàng &amp; VPGD:</strong> Số 17, ngõ 46, Quan Nhân, Phường Thanh Xuân, TP Hà Nội - Hotline: <strong>0949.761.893</strong> - Email: <strong>Winlinevietnam@gmail.com</strong></p>
-        <p style="color:#94a3b8; font-size:11.5px; margin-top:8px;">Hệ thống Website: <a href="https://winline.vn" target="_blank" style="color:#7dd3fc;text-decoration:none;">Winline.vn</a> | <a href="https://quatdiencothongnhat.vn" target="_blank" style="color:#7dd3fc;text-decoration:none;">Quatdiencothongnhat.vn</a> | <a href="https://chinghaihanoi.vn" target="_blank" style="color:#7dd3fc;text-decoration:none;">Chinghaihanoi.vn</a> | <a href="https://quatdienco.vn" target="_blank" style="color:#7dd3fc;text-decoration:none;">Quatdienco.vn</a></p>
+        <p style="color:#cbe2f3; font-size:11.5px; margin-top:8px;">Hệ thống Website: <a href="https://winline.vn" target="_blank" style="color:#ffffff;text-decoration:underline;">Winline.vn</a> | <a href="https://quatdiencothongnhat.vn" target="_blank" style="color:#ffffff;text-decoration:underline;">Quatdiencothongnhat.vn</a> | <a href="https://chinghaihanoi.vn" target="_blank" style="color:#ffffff;text-decoration:underline;">Chinghaihanoi.vn</a> | <a href="https://quatdienco.vn" target="_blank" style="color:#ffffff;text-decoration:underline;">Quatdienco.vn</a></p>
       </div>
 
     </div>
