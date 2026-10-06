@@ -17,7 +17,7 @@
         {{-- Tiêu đề Bảng theo đúng mẫu Winline --}}
         <div class="model-matrix-header" style="padding: 14px 18px; border-bottom: 2px solid #0070ba; background: #f8fafc; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
             <div>
-                <h4 style="margin: 0; font-size: 16px; font-weight: 800; color: #00354f; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px;">
+                <h4 style="margin: 0; font-size: 16px; font-weight: 800; color: #004e7d; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px;">
                     <span style="display: inline-block; width: 4px; height: 16px; background: #0070ba; border-radius: 2px;"></span>
                     {{ $table->title ?: $table->name }}
                 </h4>
@@ -70,12 +70,12 @@
                                     <a href="{{ $rowUrl }}" 
                                        title="Xem chi tiết {{ $item->model_name }}"
                                        class="matrix-model-link"
-                                       style="color: #00354f; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                                       style="color: #004e7d; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
                                         {{ $item->model_name }}
                                         <i class="fas fa-external-link-alt" style="font-size: 10px; opacity: 0.5;"></i>
                                     </a>
                                 @else
-                                    <span style="color: #00354f; font-weight: 700;">{{ $item->model_name }}</span>
+                                    <span style="color: #004e7d; font-weight: 700;">{{ $item->model_name }}</span>
                                 @endif
 
                                 @if($isCurrent)
@@ -108,7 +108,7 @@
                                     @if($rowUrl && $rowUrl !== '#')
                                         <a href="{{ $rowUrl }}" 
                                            class="btn-matrix-view"
-                                           style="display: inline-block; background: {{ $isCurrent ? '#64748b' : '#00354f' }}; color: #ffffff; font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 4px; text-decoration: none; transition: background 0.2s ease;">
+                                           style="display: inline-block; background: {{ $isCurrent ? '#64748b' : '#004e7d' }}; color: #ffffff; font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 4px; text-decoration: none; transition: background 0.2s ease;">
                                             {{ $isCurrent ? 'Hiện tại' : 'Xem' }}
                                         </a>
                                     @else

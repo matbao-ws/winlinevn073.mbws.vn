@@ -5,7 +5,7 @@
 @push('styles')
 <style>
   .est-hero {
-    background: linear-gradient(135deg, #00354f 0%, #004e7d 100%);
+    background: linear-gradient(135deg, #004e7d 0%, #004e7d 100%);
     color: #ffffff;
     padding: 36px 0;
     margin-bottom: 28px;
@@ -65,7 +65,7 @@
   }
   .btn-est-white {
     background: #ffffff;
-    color: #00354f;
+    color: #004e7d;
   }
   .btn-est-white:hover {
     background: #f8fafc;
@@ -114,7 +114,7 @@
   .box-title {
     font-size: 14px;
     font-weight: 700;
-    color: #00354f;
+    color: #004e7d;
     text-transform: uppercase;
     padding-bottom: 10px;
     margin-bottom: 12px;
@@ -179,7 +179,7 @@
     gap: 6px;
     font-family: monospace;
     font-weight: 700;
-    color: #00354f;
+    color: #004e7d;
     background: #e0f2fe;
     padding: 2px 8px;
     border-radius: 4px;
@@ -195,7 +195,7 @@
     align-items: center;
   }
   .copy-btn:hover {
-    color: #00354f;
+    color: #004e7d;
   }
 
   .tolerance-banner {
@@ -220,7 +220,7 @@
 
   .summary-panel {
     background: #f8fafc;
-    border: 2px solid #00354f;
+    border: 2px solid #004e7d;
     border-radius: 8px;
     padding: 20px 24px;
     margin-bottom: 28px;
@@ -243,7 +243,7 @@
   .policy-note {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-left: 4px solid #00354f;
+    border-left: 4px solid #004e7d;
     padding: 16px 20px;
     border-radius: 6px;
     font-size: 12.5px;
@@ -275,7 +275,7 @@
     overflow: hidden;
   }
   .modal-header {
-    background: #00354f;
+    background: #004e7d;
     color: #ffffff;
     padding: 16px 20px;
     display: flex;
@@ -316,7 +316,7 @@
     box-sizing: border-box;
   }
   .form-control:focus {
-    border-color: #00354f;
+    border-color: #004e7d;
     outline: none;
   }
 </style>
@@ -436,7 +436,7 @@
       </div>
       <div class="param-row">
         <span class="param-label">Lưu lượng gió cần thiết:</span>
-        <span class="param-val" style="color: #00354f; font-size: 15px;">
+        <span class="param-val" style="color: #004e7d; font-size: 15px;">
           <strong>{{ number_format($results['required_airflow'] ?? 0, 0, ',', '.') }} m³/h</strong>
         </span>
       </div>
@@ -477,7 +477,7 @@
         $items = $calculation->selected_items;
     }
   @endphp
-  <h3 style="font-size: 16px; font-weight: 800; color: #00354f; margin-bottom: 12px; text-transform: uppercase;">
+  <h3 style="font-size: 16px; font-weight: 800; color: #004e7d; margin-bottom: 12px; text-transform: uppercase;">
     1. Danh mục thiết bị quạt đã chọn
   </h3>
   <div class="table-responsive">
@@ -517,11 +517,11 @@
             </td>
             <td>
               @if(!empty($item['slug']))
-                <a href="{{ route('client.products.detail', ['locale' => app()->getLocale(), 'slug' => $item['slug']]) }}" target="_blank" style="color: #00354f; font-weight: 700; text-decoration: none;">
+                <a href="{{ route('client.products.detail', ['locale' => app()->getLocale(), 'slug' => $item['slug']]) }}" target="_blank" style="color: #004e7d; font-weight: 700; text-decoration: none;">
                   {{ $item['name'] ?? $item['sku'] }}
                 </a>
               @else
-                <strong style="color: #00354f;">{{ $item['name'] ?? $item['sku'] }}</strong>
+                <strong style="color: #004e7d;">{{ $item['name'] ?? $item['sku'] }}</strong>
               @endif
               <div style="font-size: 11.5px; color: #64748b; margin-top: 3px;">
                 {{ $item['fan_type'] ?? '' }}
@@ -534,7 +534,7 @@
             <td style="text-align: right; font-weight: 700;">{{ number_format($flow, 0, ',', '.') }} m³/h</td>
             <td style="text-align: center; font-weight: 800; font-size: 14px;">{{ $qty }}</td>
             <td style="text-align: right;">{{ number_format($price, 0, ',', '.') }} đ</td>
-            <td style="text-align: right; font-weight: 700; color: #00354f;">{{ number_format($subtotal, 0, ',', '.') }} đ</td>
+            <td style="text-align: right; font-weight: 700; color: #004e7d;">{{ number_format($subtotal, 0, ',', '.') }} đ</td>
           </tr>
         @empty
           <tr>
@@ -554,7 +554,7 @@
       $padData = $calculation->results['cooling_pads'] ?? [];
       $nominalArea = $results['nominal_pad_area'] ?? ($padData['required_pad_area'] ?? 0);
     @endphp
-    <h3 style="font-size: 16px; font-weight: 800; color: #00354f; margin: 28px 0 12px; text-transform: uppercase;">
+    <h3 style="font-size: 16px; font-weight: 800; color: #004e7d; margin: 28px 0 12px; text-transform: uppercase;">
       2. Tấm làm mát Cooling Pad (Năng suất cơ sở: 9.000 m³/h/m²)
     </h3>
     <div class="table-responsive">
@@ -584,7 +584,7 @@
               <td style="text-align: center; font-weight: 600;">{{ $pIdx + 1 }}</td>
               <td><span class="sku-badge">{{ $pad['sku'] ?? 'COOLING-PAD' }}</span></td>
               <td>
-                <strong style="color: #00354f;">{{ $pad['name'] ?? 'Tấm làm mát Cooling Pad' }}</strong>
+                <strong style="color: #004e7d;">{{ $pad['name'] ?? 'Tấm làm mát Cooling Pad' }}</strong>
                 <div style="font-size: 11.5px; color: #64748b; margin-top: 3px;">
                   Kích thước: {{ $pad['dimensions'] ?? '1800x600x150mm' }} (Độ dày 150mm tiêu chuẩn, khung mua riêng)
                 </div>
@@ -593,7 +593,7 @@
               <td style="text-align: center; font-weight: 800; font-size: 14px;">{{ $pQty }}</td>
               <td style="text-align: right; font-weight: 700;">{{ number_format($pTotalArea, 2, ',', '.') }} m²</td>
               <td style="text-align: right;">{{ number_format($pPrice, 0, ',', '.') }} đ</td>
-              <td style="text-align: right; font-weight: 700; color: #00354f;">{{ number_format($pSubtotal, 0, ',', '.') }} đ</td>
+              <td style="text-align: right; font-weight: 700; color: #004e7d;">{{ number_format($pSubtotal, 0, ',', '.') }} đ</td>
             </tr>
           @empty
             <tr>

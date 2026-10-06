@@ -7,7 +7,7 @@
   <link rel="icon" type="image/x-icon" href="{{ asset('client-assets/images/favicon.ico') }}">
   <style>
     :root {
-      --primary: #00354f;
+      --primary: #004e7d;
       --primary-light: #004e7d;
       --accent: #d41e3d;
       --dark: #1e293b;

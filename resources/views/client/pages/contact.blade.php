@@ -5,7 +5,7 @@
 @push('styles')
 <style>
 :root {
-  --navy-950:#00354f;
+  --navy-950:#004e7d;
   --navy-800:#004e7d;
   --navy-700:#1f6690;
   --navy-100: #e6eef3;

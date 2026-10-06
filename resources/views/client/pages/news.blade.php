@@ -7,7 +7,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap");
 
 :root {
-  --navy-950:#00354f;
+  --navy-950:#004e7d;
   --navy-800:#004e7d;
   --navy-700:#1f6690;
   --navy-100: #e6eef3;
@@ -42,7 +42,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* News Hero Header */
 .news-hero {
-  background: linear-gradient(135deg, #00354f 0%, #00354f 60%, #004e7d 100%);
+  background: linear-gradient(135deg, #004e7d 0%, #004e7d 60%, #004e7d 100%);
   color: #ffffff;
   padding: 40px 20px 48px;
   text-align: center;
@@ -379,7 +379,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* Promo Calculation Widget */
 .calc-promo-widget {
-  background: linear-gradient(135deg, #00354f 0%, #00354f 60%, #004e7d 100%);
+  background: linear-gradient(135deg, #004e7d 0%, #004e7d 60%, #004e7d 100%);
   color: #ffffff;
   border-radius: 10px;
   padding: 24px 20px;

@@ -6,11 +6,11 @@
 <style>
   :root {
     --brand-blue: #004e7d;
-    --brand-blue-hover: #00354f;
+    --brand-blue-hover: #004e7d;
     --brand-blue-light: #e6eef3;
     --brand-blue-subtle: #f8fafc;
-    --navy-950: #00354f;
-    --navy-900: #00354f;
+    --navy-950: #004e7d;
+    --navy-900: #004e7d;
     --navy-800: #004e7d;
     --ink: #1a2230;
     --ink-soft: #5c6773;
@@ -397,7 +397,7 @@
     background: var(--red-cta-hover);
   }
   .v8-b2b-img-col {
-    background: #00354f;
+    background: #004e7d;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -555,7 +555,7 @@
     border-radius: 6px;
     overflow: hidden;
     height: 170px;
-    background: #00354f;
+    background: #004e7d;
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
   }
   .v8-brand-img-box img {

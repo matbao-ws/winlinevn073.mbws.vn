@@ -7,7 +7,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 :root{
-  --navy-950:#00354f;
+  --navy-950:#004e7d;
   --navy-800:#004e7d;
   --navy-700:#1f6690;
   --navy-100:#e6eef3;

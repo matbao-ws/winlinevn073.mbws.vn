@@ -84,7 +84,7 @@
           
           <div style="font-size:12px; font-weight:700; color:#f0f7ff; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.03em;">Chấp nhận thanh toán</div>
           <div class="payment-methods-grid" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;">
-            <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#e2e8f0; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-university" style="color:#38bdf8;"></i> Chuyển khoản</span>
+            <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#e2e8f0; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-university" style="color:#004e7d;"></i> Chuyển khoản</span>
             <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#e2e8f0; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-money-bill-wave" style="color:#34d399;"></i> Tiền mặt (COD)</span>
             <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#e2e8f0; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-qrcode" style="color:#f87171;"></i> VNPAY-QR</span>
             <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:4px; padding:4px 8px; font-size:11px; font-weight:600; color:#e2e8f0; display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-credit-card" style="color:#fbbf24;"></i> Thẻ ATM / Visa</span>
@@ -92,7 +92,7 @@
 
           <div style="font-size:11.5px; color:#94a3b8; line-height:1.6;">
             <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;"><i class="fas fa-shield-alt" style="color:#34d399;"></i> Cam kết 100% chính hãng, có CO/CQ</div>
-            <div style="display:flex; align-items:center; gap:6px;"><i class="fas fa-truck" style="color:#38bdf8;"></i> Giao hàng hỏa tốc toàn quốc</div>
+            <div style="display:flex; align-items:center; gap:6px;"><i class="fas fa-truck" style="color:#004e7d;"></i> Giao hàng hỏa tốc toàn quốc</div>
           </div>
         </div>
 

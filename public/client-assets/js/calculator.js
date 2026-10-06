@@ -314,7 +314,7 @@
 
           <!-- 2. Tên & SKU -->
           <td>
-            <a href="${fan.detail_url}" target="_blank" style="font-weight: 700; color: #00354f; text-decoration: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35;">
+            <a href="${fan.detail_url}" target="_blank" style="font-weight: 700; color: #004e7d; text-decoration: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35;">
               ${fan.name}
             </a>
             <div class="sku-line">
@@ -338,7 +338,7 @@
           <td><span style="font-size: 12px;">${fan.power}</span></td>
 
           <!-- 7. Lưu lượng -->
-          <td style="text-align: right; font-weight: 700; color: #00354f;">
+          <td style="text-align: right; font-weight: 700; color: #004e7d;">
             ${formatNum(fan.airflow)} m³/h
           </td>
 
@@ -546,7 +546,7 @@
             <div style="display: flex; align-items: center; gap: 8px;">
               <span class="sku-line">${item.sku}</span>
               <strong>${item.name}</strong>
-              ${item.is_primary ? '<span style="font-size: 11px; background: #00354f; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: 700;">DÒNG CHÍNH</span>' : ''}
+              ${item.is_primary ? '<span style="font-size: 11px; background: #004e7d; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: 700;">DÒNG CHÍNH</span>' : ''}
             </div>
             <div style="font-size: 11.5px; color: #64748b; margin-top: 3px;">
               Lưu lượng: <strong>${formatNum(item.airflow)} m³/h/quạt</strong> &times; ${item.quantity} = <strong>${formatNum(totalItemFlow)} m³/h</strong> &middot;
@@ -563,7 +563,7 @@
             </div>
 
             <!-- Subtotal -->
-            <div style="min-width: 100px; text-align: right; font-weight: 700; color: #00354f;">
+            <div style="min-width: 100px; text-align: right; font-weight: 700; color: #004e7d;">
               ${formatVnd(subtotal)}
             </div>
 
@@ -627,7 +627,7 @@
           </td>
           <td style="text-align: right; font-weight: 700;">${totalArea} m²</td>
           <td style="text-align: right;">${formatVnd(pad.unit_price)}</td>
-          <td style="text-align: right; font-weight: 700; color: #00354f;">${formatVnd(subtotal)}</td>
+          <td style="text-align: right; font-weight: 700; color: #004e7d;">${formatVnd(subtotal)}</td>
         </tr>
       `;
     });

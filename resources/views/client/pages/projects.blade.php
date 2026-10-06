@@ -5,7 +5,7 @@
 @push('styles')
 <style>
 .project-hero {
-      background: linear-gradient(135deg, #00354f 0%, #00354f 60%, #004e7d 100%);
+      background: linear-gradient(135deg, #004e7d 0%, #004e7d 60%, #004e7d 100%);
       color: #ffffff;
       padding: 44px 0 36px;
       margin-bottom: 28px;

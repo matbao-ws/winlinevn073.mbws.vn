@@ -28,7 +28,7 @@
     text-decoration: underline;
   }
   .bh-hero {
-    background: linear-gradient(135deg, #00354f 0%, #004e7d 100%);
+    background: linear-gradient(135deg, #004e7d 0%, #004e7d 100%);
     border-radius: 12px;
     padding: 36px 32px;
     color: #ffffff;
@@ -88,7 +88,7 @@
   .bh-section-title {
     font-size: 20px;
     font-weight: 800;
-    color: var(--navy-950, #00354f);
+    color: var(--navy-950, #004e7d);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -165,7 +165,7 @@
   .bh-pillar-name {
     font-size: 17px;
     font-weight: 800;
-    color: var(--navy-950, #00354f);
+    color: var(--navy-950, #004e7d);
     margin: 0 0 6px;
   }
   .bh-pillar-tagline {
@@ -288,7 +288,7 @@
   .bh-tile-name {
     font-size: 15px;
     font-weight: 700;
-    color: var(--navy-950, #00354f);
+    color: var(--navy-950, #004e7d);
     margin: 0 0 4px;
     text-align: center;
   }
@@ -354,7 +354,7 @@
   .bh-assurance-title {
     font-size: 14px;
     font-weight: 700;
-    color: var(--navy-950, #00354f);
+    color: var(--navy-950, #004e7d);
     margin: 0 0 4px;
   }
   .bh-assurance-desc {
@@ -375,7 +375,7 @@
   }
   .bh-cta-text {
     font-size: 13.5px;
-    color: var(--navy-950, #00354f);
+    color: var(--navy-950, #004e7d);
     margin: 0;
   }
   .bh-cta-actions {
@@ -395,7 +395,7 @@
     gap: 6px;
   }
   .bh-btn-phone:hover {
-    background: var(--navy-950, #00354f);
+    background: var(--navy-950, #004e7d);
   }
   .bh-btn-zalo {
     background: #0068ff;

@@ -7,7 +7,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap");
 
 :root {
-  --navy-950:#00354f;
+  --navy-950:#004e7d;
   --navy-800:#004e7d;
   --navy-700:#1f6690;
   --navy-100: #e6eef3;
@@ -339,16 +339,16 @@ button { font-family: inherit; cursor: pointer; }
 .info-callout {
   background: #eff6ff;
   border: 1px solid #bfdbfe;
-  border-left: 4px solid #00354f;
+  border-left: 4px solid #004e7d;
 }
-.callout-icon { font-size: 20px; color: #00354f; flex-shrink: 0; margin-top: 2px; }
+.callout-icon { font-size: 20px; color: #004e7d; flex-shrink: 0; margin-top: 2px; }
 .callout-content h4 { font-size: 14px; font-weight: 700; margin: 0 0 4px; color: var(--navy-950); }
 .callout-content p { font-size: 13px; margin: 0; color: #475569; }
 .inline-cta-link { color: var(--navy-800); font-weight: 700; text-decoration: underline; }
 
 /* Formula Card */
 .formula-card {
-  background: linear-gradient(135deg, #00354f 0%, #1f6690 100%);
+  background: linear-gradient(135deg, #004e7d 0%, #1f6690 100%);
   color: #ffffff;
   border-radius: 8px;
   padding: 20px 22px;
@@ -416,7 +416,7 @@ button { font-family: inherit; cursor: pointer; }
     </div>
 
     <!-- Quick Contact Hotline -->
-    <div class="sidebar-box" style="background: linear-gradient(135deg, #00354f 0%, #00354f 100%); color:#fff; border:none; text-align:center; padding:18px;">
+    <div class="sidebar-box" style="background: linear-gradient(135deg, #004e7d 0%, #004e7d 100%); color:#fff; border:none; text-align:center; padding:18px;">
       <i class="fas fa-phone-volume" style="font-size:24px; color:#facc15; margin-bottom:8px;"></i>
       <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:#dbe4ee;">Hotline tư vấn Winline</div>
       <a href="tel:0949761893" style="font-size:18px; font-weight:800; color:#fff; display:block; margin:4px 0 6px;">0949.761.893</a>

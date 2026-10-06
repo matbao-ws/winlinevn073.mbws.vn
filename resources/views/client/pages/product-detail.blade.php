@@ -12,7 +12,7 @@
      hardcode riêng cho nút báo giá, --deal-blue cho vài chi tiết nhỏ). Giờ chỉ còn 1 hue,
      4 sắc độ suy ra từ đúng hue đó — đậm cho khung sườn/tiêu đề, giữa là màu gốc 004e7d
      (dùng cho nút Nhận báo giá + text/icon phụ), nhạt cho nền badge/chip. */
-  --navy-950:#00354f;
+  --navy-950:#004e7d;
   --navy-800:#004e7d;
   --navy-700:#1f6690;
   --navy-100:#e6eef3;
@@ -1227,7 +1227,7 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
     <!-- KHỐI BÁN & GIAO HÀNG TOÀN QUỐC (CHUẨN 100% THEO FILE MẪU KHÁCH HÀNG) -->
     <!-- ================================================================= -->
     <div class="winline-trust-box" style="background:#ffffff; border:1px solid #d0e1fd; border-radius:10px; padding:20px; margin:24px 0; box-shadow:0 2px 12px rgba(0,96,182,0.06);">
-      <div class="wtb-header" style="color:#00354f; font-size:15px; font-weight:700; margin-bottom:12px; letter-spacing:0.01em;">
+      <div class="wtb-header" style="color:#004e7d; font-size:15px; font-weight:700; margin-bottom:12px; letter-spacing:0.01em;">
         CÔNG TY TNHH WINLINE VIỆT NAM - BÁN VÀ GIAO HÀNG TOÀN QUỐC
       </div>
       
@@ -1250,14 +1250,14 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
           <span style="color:#d41e3d; font-weight:700; font-size:15px; display:inline-flex; align-items:center; gap:4px;">
             <i class="fas fa-phone-alt" style="transform:rotate(15deg); font-size:14px;"></i> 0949761893
           </span>
-          <span style="color:#00354f; font-weight:600; margin-left:6px;">Chat zalo</span>
+          <span style="color:#004e7d; font-weight:600; margin-left:6px;">Chat zalo</span>
           <a href="https://zalo.me/0949761893" target="_blank" style="display:inline-flex; align-items:center; background:#0068ff; color:#ffffff; padding:2px 8px; border-radius:4px; font-size:11.5px; font-weight:700; text-decoration:none;">
             Zalo
           </a>
         </div>
 
         <div>
-          <span>Email:</span> <a href="mailto:winlinevietnam@gmail.com" style="color:#00354f; text-decoration:none; font-weight:500;">winlinevietnam@gmail.com</a>
+          <span>Email:</span> <a href="mailto:winlinevietnam@gmail.com" style="color:#004e7d; text-decoration:none; font-weight:500;">winlinevietnam@gmail.com</a>
         </div>
 
         <div>
@@ -1274,8 +1274,8 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
     <!-- KHỐI CÂU HỎI THƯỜNG GẶP (FAQ ACCORDION) -->
     <!-- ================================================================= -->
     <div class="product-faq-box" style="background:#ffffff; border:1px solid #dbe4ee; border-radius:10px; padding:22px; margin-top:20px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
-      <h3 class="pfb-title" style="font-size:17px; font-weight:800; color:#00354f; margin:0 0 6px; display:flex; align-items:center; gap:8px;">
-        <i class="fas fa-circle-question" style="color:#00354f;"></i> Câu Hỏi Thường Gặp Về Sản Phẩm &amp; Dịch Vụ (FAQ)
+      <h3 class="pfb-title" style="font-size:17px; font-weight:800; color:#004e7d; margin:0 0 6px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-circle-question" style="color:#004e7d;"></i> Câu Hỏi Thường Gặp Về Sản Phẩm &amp; Dịch Vụ (FAQ)
       </h3>
       <p class="pfb-sub" style="font-size:13px; color:#5c6773; margin:0 0 16px;">Giải đáp nhanh các thắc mắc của khách hàng cá nhân, công ty và nhà thầu cơ điện.</p>
 
@@ -1326,7 +1326,7 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-a">
-            Quý khách có thể sử dụng <a href="{{ route('client.calculator') }}" style="color:#00354f; font-weight:700; text-decoration:underline;">Công cụ tính toán lưu lượng thông gió HVAC (Q = V x T)</a> của Winline theo chuẩn TCVN 5687:2010 để tính nhanh thể tích và số lượng quạt tối ưu, hoặc liên hệ kỹ sư Winline để được khảo sát thực tế miễn phí.
+            Quý khách có thể sử dụng <a href="{{ route('client.calculator') }}" style="color:#004e7d; font-weight:700; text-decoration:underline;">Công cụ tính toán lưu lượng thông gió HVAC (Q = V x T)</a> của Winline theo chuẩn TCVN 5687:2010 để tính nhanh thể tích và số lượng quạt tối ưu, hoặc liên hệ kỹ sư Winline để được khảo sát thực tế miễn phí.
           </div>
         </div>
       </div>
@@ -1334,12 +1334,12 @@ table.spec-table td:last-child{font-weight:600;color:var(--navy-950);font-family
 
     <!-- Product Tag Cloud -->
     <div class="product-tag-cloud" style="background:#f8fafc; border:1px solid #dbe4ee; border-radius:8px; padding:12px 16px; margin-top:18px; font-size:12.5px; line-height:1.7; color:#5c6773;">
-      <strong style="color:#00354f; margin-right:6px;">Từ khóa tìm kiếm liên quan:</strong>
-      <a href="{{ route('client.products') }}?q=Komasu+750" style="color:#00354f; text-decoration:none; margin-right:8px;">#Quạt cây Komasu 750</a>
-      <a href="{{ route('client.products') }}?q=Quat+cong+nghiep+250W" style="color:#00354f; text-decoration:none; margin-right:8px;">#Quạt công nghiệp 250W</a>
-      <a href="{{ route('client.products') }}?q=Quat+dung+nha+xuong" style="color:#00354f; text-decoration:none; margin-right:8px;">#Quạt đứng nhà xưởng</a>
-      <a href="{{ route('client.products') }}?q=Quat+lam+mat+dien+rong" style="color:#00354f; text-decoration:none; margin-right:8px;">#Quạt làm mát diện rộng</a>
-      <a href="{{ route('client.products') }}?q=Komasu+KM750S" style="color:#00354f; text-decoration:none; margin-right:8px;">#Komasu KM-750S chính hãng</a>
+      <strong style="color:#004e7d; margin-right:6px;">Từ khóa tìm kiếm liên quan:</strong>
+      <a href="{{ route('client.products') }}?q=Komasu+750" style="color:#004e7d; text-decoration:none; margin-right:8px;">#Quạt cây Komasu 750</a>
+      <a href="{{ route('client.products') }}?q=Quat+cong+nghiep+250W" style="color:#004e7d; text-decoration:none; margin-right:8px;">#Quạt công nghiệp 250W</a>
+      <a href="{{ route('client.products') }}?q=Quat+dung+nha+xuong" style="color:#004e7d; text-decoration:none; margin-right:8px;">#Quạt đứng nhà xưởng</a>
+      <a href="{{ route('client.products') }}?q=Quat+lam+mat+dien+rong" style="color:#004e7d; text-decoration:none; margin-right:8px;">#Quạt làm mát diện rộng</a>
+      <a href="{{ route('client.products') }}?q=Komasu+KM750S" style="color:#004e7d; text-decoration:none; margin-right:8px;">#Komasu KM-750S chính hãng</a>
     </div>
   </div>
 

@@ -5,7 +5,7 @@
 @push('styles')
 <style>
   :root {
-    --primary: #00354f;
+    --primary: #004e7d;
     --primary-light: #004e7d;
     --accent: #d41e3d;
     --navy-950: #002233;
@@ -23,7 +23,7 @@
 
   /* Hero Section */
   .calc-hero {
-    background: linear-gradient(135deg, #00354f 0%, #004e7d 100%);
+    background: linear-gradient(135deg, #004e7d 0%, #004e7d 100%);
     color: #ffffff;
     padding: 36px 0 28px;
     margin-bottom: 24px;
@@ -89,13 +89,13 @@
   }
   .tab-btn.active {
     background: #ffffff;
-    color: #00354f;
-    border-color: #00354f;
-    border-top: 3px solid #00354f;
+    color: #004e7d;
+    border-color: #004e7d;
+    border-top: 3px solid #004e7d;
   }
   .tab-btn:hover:not(.active) {
     background: #e2e8f0;
-    color: #00354f;
+    color: #004e7d;
   }
 
   /* Main Grid */
@@ -122,7 +122,7 @@
   .calc-card-title {
     font-size: 15px;
     font-weight: 800;
-    color: #00354f;
+    color: #004e7d;
     text-transform: uppercase;
     margin-bottom: 16px;
     display: flex;
@@ -132,7 +132,7 @@
   .calc-card-title .step-n {
     width: 24px;
     height: 24px;
-    background: #00354f;
+    background: #004e7d;
     color: #ffffff;
     font-size: 12px;
     border-radius: 50%;
@@ -166,7 +166,7 @@
   }
   .form-input:focus {
     outline: none;
-    border-color: #00354f;
+    border-color: #004e7d;
     background: #ffffff;
   }
 
@@ -191,12 +191,12 @@
   }
   .preset-chip:hover {
     background: #e2e8f0;
-    color: #00354f;
+    color: #004e7d;
   }
   .preset-chip.active {
-    background: #00354f;
+    background: #004e7d;
     color: #ffffff;
-    border-color: #00354f;
+    border-color: #004e7d;
   }
 
   /* Voltage Radios */
@@ -219,9 +219,9 @@
     transition: all 0.15s;
   }
   .voltage-btn.active {
-    background: #00354f;
+    background: #004e7d;
     color: #ffffff;
-    border-color: #00354f;
+    border-color: #004e7d;
   }
 
   /* Results Dashboard Metrics */
@@ -255,7 +255,7 @@
   .metric-val {
     font-size: 20px;
     font-weight: 800;
-    color: #00354f;
+    color: #004e7d;
     line-height: 1.2;
   }
   .metric-val small {
@@ -318,7 +318,7 @@
   }
   .filter-reset-btn:hover {
     background: #f1f5f9;
-    color: #00354f;
+    color: #004e7d;
   }
 
   /* Table: 10 columns */
@@ -373,7 +373,7 @@
     gap: 6px;
     font-family: monospace;
     font-weight: 700;
-    color: #00354f;
+    color: #004e7d;
     background: #e0f2fe;
     padding: 2px 6px;
     border-radius: 4px;
@@ -390,7 +390,7 @@
     align-items: center;
   }
   .copy-sku-btn:hover {
-    color: #00354f;
+    color: #004e7d;
   }
 
   .btn-select-product {
@@ -399,14 +399,14 @@
     font-size: 12.5px;
     font-weight: 700;
     cursor: pointer;
-    border: 1px solid #00354f;
+    border: 1px solid #004e7d;
     background: #ffffff;
-    color: #00354f;
+    color: #004e7d;
     transition: all 0.15s;
     white-space: nowrap;
   }
   .btn-select-product:hover {
-    background: #00354f;
+    background: #004e7d;
     color: #ffffff;
   }
   .btn-select-product.selected {
@@ -418,7 +418,7 @@
   /* Selection Summary Sticky Panel */
   .selection-panel {
     background: #ffffff;
-    border: 2px solid #00354f;
+    border: 2px solid #004e7d;
     border-radius: 10px;
     padding: 20px 24px;
     margin-bottom: 24px;
@@ -427,7 +427,7 @@
   .selection-panel-title {
     font-size: 15px;
     font-weight: 800;
-    color: #00354f;
+    color: #004e7d;
     text-transform: uppercase;
     margin-bottom: 14px;
     display: flex;
@@ -446,7 +446,7 @@
     font-size: 13px;
   }
   .selected-item-row.is-primary {
-    border-left: 4px solid #00354f;
+    border-left: 4px solid #004e7d;
     background: #f0f9ff;
   }
   .qty-stepper {
@@ -555,7 +555,7 @@
     transition: all 0.2s;
   }
   .cta-btn-primary {
-    background: #00354f;
+    background: #004e7d;
     color: #ffffff;
   }
   .cta-btn-primary:hover {
@@ -579,7 +579,7 @@
   /* Disclaimer Box */
   .disclaimer-card {
     background: #f8fafc;
-    border-left: 4px solid #00354f;
+    border-left: 4px solid #004e7d;
     padding: 16px 20px;
     border-radius: 6px;
     font-size: 12.5px;
@@ -611,7 +611,7 @@
     overflow: hidden;
   }
   .calc-modal-header {
-    background: #00354f;
+    background: #004e7d;
     color: #ffffff;
     padding: 16px 20px;
     display: flex;
@@ -758,8 +758,8 @@
         </div>
 
         <div class="metric-box highlight">
-          <div class="metric-lbl" style="color: #00354f;">Lưu lượng gió cần thiết</div>
-          <div class="metric-val" id="metric_airflow" style="color: #00354f;">
+          <div class="metric-lbl" style="color: #004e7d;">Lưu lượng gió cần thiết</div>
+          <div class="metric-val" id="metric_airflow" style="color: #004e7d;">
             {{ number_format($initialCalc['required_airflow'] ?? 180000, 0, ',', '.') }} <small>m³/h</small>
           </div>
         </div>
@@ -841,7 +841,7 @@
 
   <!-- Table 1: Candidate Products (Max 6 results) -->
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-    <h3 style="font-size: 15px; font-weight: 800; color: #00354f; text-transform: uppercase; margin: 0;">
+    <h3 style="font-size: 15px; font-weight: 800; color: #004e7d; text-transform: uppercase; margin: 0;">
       GỢI Ý SẢN PHẨM THEO LƯU LƯỢNG TÍNH TOÁN (TỐI ĐA 6 SẢN PHẨM)
     </h3>
     <span style="font-size: 12.5px; color: #64748b;">
@@ -903,7 +903,7 @@
     <!-- Tab 2: Cooling Pad Selection Block (Integrated into same estimation) -->
     <div class="cooling-pad-section" id="cooling_pad_section" style="{{ $activeTab === 'cooling-pad' ? '' : 'display:none;' }}">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <h4 style="margin: 0; font-size: 14px; font-weight: 800; color: #00354f; text-transform: uppercase;">
+        <h4 style="margin: 0; font-size: 14px; font-weight: 800; color: #004e7d; text-transform: uppercase;">
           BẢNG CHỌN TẤM LÀM MÁT COOLING PAD (THEO LƯU LƯỢNG QUẠT ĐÃ CHỌN)
         </h4>
         <span style="font-size: 12.5px; color: #065f46; font-weight: 700;">
@@ -1025,7 +1025,7 @@
     </div>
     <div class="calc-modal-body">
       <p style="font-size: 13.5px; color: #334155; margin-bottom: 12px;">
-        Mã bản dự tính của bạn: <strong id="saved_public_id" style="color: #00354f; font-size: 16px;">—</strong>
+        Mã bản dự tính của bạn: <strong id="saved_public_id" style="color: #004e7d; font-size: 16px;">—</strong>
       </p>
       <div class="form-group">
         <label class="form-label">Đường dẫn chia sẻ trực tuyến:</label>
