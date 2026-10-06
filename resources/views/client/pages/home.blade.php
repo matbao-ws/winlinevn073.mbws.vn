@@ -40,7 +40,7 @@
     width: 100%;
     min-height: 460px;
     background-size: cover;
-    background-position: right center;
+    background-position: right 42%;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
@@ -49,7 +49,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.90) 36%, rgba(255,255,255,0.52) 52%, rgba(255,255,255,0) 72%);
+    background: linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 32%, rgba(255,255,255,0.40) 48%, rgba(255,255,255,0) 64%);
   }
   .v8-hero .v8-container {
     position: relative;
@@ -112,7 +112,7 @@
   @media (max-width: 1024px) {
     .v8-hero-banner {
       min-height: 400px;
-      background-position: 75% center;
+      background-position: 70% 42%;
     }
     .v8-hero-title {
       font-size: 32px;
@@ -125,7 +125,7 @@
   @media (max-width: 768px) {
     .v8-hero-banner {
       min-height: 360px;
-      background-position: 70% center;
+      background-position: 70% 40%;
     }
     .v8-hero-overlay {
       background: linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.92) 65%, rgba(255,255,255,0.7) 100%);

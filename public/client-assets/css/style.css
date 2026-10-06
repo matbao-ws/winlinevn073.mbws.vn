@@ -1175,9 +1175,26 @@ footer {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
   nav.catnav {
-  background: #00354f;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
+    background: #00354f;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+  .catnav-inner {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none !important;
+    padding: 0 10px !important;
+    gap: 4px !important;
+  }
+  .catnav-inner::-webkit-scrollbar {
+    display: none !important;
+  }
+  .catnav-inner a.nav-top {
+    padding: 10px 12px !important;
+    font-size: 12.5px !important;
+    flex-shrink: 0 !important;
+  }
 
   .header-inner {
     padding: 8px 12px 10px !important;
