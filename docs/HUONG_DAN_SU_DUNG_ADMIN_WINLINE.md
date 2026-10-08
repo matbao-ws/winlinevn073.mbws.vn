@@ -7,7 +7,7 @@
 
 ---
 
-## MỤC LỤC CHI TIẾT (17 CHƯƠNG TOÀN DIỆN)
+## MỤC LỤC CHI TIẾT (18 CHƯƠNG TOÀN DIỆN)
 
 1. [Giới thiệu & Đăng nhập Bảo mật](#chuong-1-intro) - *TỔNG QUAN (OVERVIEW)*
 2. [Bảng Điều Khiển & Thống Kê Kinh Doanh (Dashboard)](#chuong-2-dashboard-view) - *TỔNG QUAN (OVERVIEW)*
@@ -26,6 +26,7 @@
 15. [Quản Lý Đa Ngôn Ngữ (Localization & Languages)](#chuong-15-languages-locales) - *CẤU HÌNH & HỆ THỐNG*
 16. [Nhật Ký Kiểm Toán & Truy Vết Bảo Mật (Activity Logs)](#chuong-16-audit-logs) - *CẤU HÌNH & HỆ THỐNG*
 17. [Công Cụ Tính Toán Lưu Lượng Quạt Storefront (HVAC Calculator)](#chuong-17-hvac-calculator) - *CÔNG CỤ KỸ THUẬT HVAC*
+18. [Cấu Hình Nút Liên Hệ Tư Vấn & Đội Ngũ Chuyên Viên (Floating Contact Widget)](#chuong-18-contact-widget) - *CẤU HÌNH & TƯ VẤN KHÁCH HÀNG*
 
 ---
 
@@ -536,3 +537,50 @@
 
 
 ---
+
+## CHƯƠNG 18: CẤU HÌNH NÚT LIÊN HỆ TƯ VẤN & ĐỘI NGŨ CHUYÊN VIÊN (FLOATING CONTACT WIDGET)
+<a id="chuong-18-contact-widget"></a>
+
+**Phân loại:** `CẤU HÌNH & TƯ VẤN KHÁCH HÀNG` | **Đặc tả nhãn:** `contact widget`
+
+**Mô tả tổng quan:** Quản lý toàn diện tiện ích Nút liên hệ nổi ở góc màn hình (Floating Contact Widget) hiển thị trên cả phiên bản máy tính (Desktop/PC) và điện thoại (Mobile). Cho phép quản trị viên tùy biến thông tin thương hiệu, giờ làm việc, vị trí góc hiển thị và quản lý danh sách chuyên viên tư vấn trực tuyến (Họ tên, Chức vụ, Số điện thoại gọi trực tiếp, Số Zalo và Ảnh đại diện) kèm tính năng Xem trước trực tiếp (Live Preview) theo thời gian thực.
+
+### 1. Quy trình thao tác chuẩn từng bước
+1. Đăng nhập vào trang quản trị Winline, chọn menu **Cấu hình** &rarr; **Nút liên hệ tư vấn** (`https://winline.vn/vi/admin/contact-widget`).
+2. Tại khối **Cài đặt chung Nút liên hệ**:
+   - Gạt công tắc **Bật widget** để kích hoạt hiển thị nút nổi trên toàn bộ website.
+   - Chọn **Vị trí hiển thị**: *Góc dưới bên phải* (mặc định) hoặc *Góc dưới bên trái*.
+   - Nhập **Tên thương hiệu Header** (VD: `WINLINE VIỆT NAM`), **Phụ đề** (VD: `Đội ngũ chuyên viên tư vấn`), **Nhãn nút nổi** (VD: `Tư vấn ngay`).
+   - Nhập **Thông tin giờ làm việc (Footer)** (VD: `8h00 - 17h30 (Thứ 2 đến Thứ 7)`).
+3. Tại khối **Danh sách Chuyên viên tư vấn**:
+   - Nhấn nút **+ Thêm chuyên viên** nếu cần bổ sung nhân sự tư vấn mới.
+   - Với mỗi nhân viên:
+     - Nhấn nút **Đổi ảnh** để tải lên ảnh chân dung đại diện (avatar) của nhân viên.
+     - Nhập **Họ và tên** (VD: `Kim Huệ`, `Phương Thảo`, `Ngọc Yến`).
+     - Nhập **Chức danh / Vai trò** (VD: `Bán hàng Winline`, `Bán hàng doanh nghiệp`).
+     - Nhập **Số điện thoại gọi** (VD: `0949.761.893`, `0963.230.665`, `0981.805.488`).
+     - Nhập **Số Zalo** (số điện thoại đăng ký tài khoản Zalo nhận tin nhắn).
+     - Gạt công tắc **Hiển thị** (Bật/Tắt) để cho phép hoặc tạm ẩn nhân viên đó ngoài website.
+     - Nhấn biểu tượng thùng rác màu đỏ để xóa bớt nhân viên nếu cần.
+4. Quan sát khung **Xem trước trực tiếp (Live Preview)** ở cột bên phải để kiểm tra giao diện popup và nút nổi hiển thị thực tế.
+5. Nhấn nút **Lưu cấu hình** để áp dụng thay đổi ngay lập tức lên website.
+
+### 2. Giao diện thực tế & Khoanh vùng chức năng (Screenshots)
+> 🌐 **Đường dẫn màn hình:** `https://winline.vn/vi/admin/contact-widget`
+![Giao diện thực tế Cấu Hình Nút Liên Hệ Tư Vấn & Đội Ngũ Chuyên Viên (Floating Contact Widget)](assets/screenshots/18_contact_widget_annotated.png)
+
+### 3. Bảng tra cứu hành động & Ký hiệu thao tác
+| Ký hiệu | Khu vực / Tên trường | Hướng dẫn thao tác & Lưu ý nghiệp vụ |
+| :---: | :--- | :--- |
+| **①** | **Cài đặt chung Nút liên hệ** | Bao gồm: Công tắc bật/tắt toàn bộ tiện ích widget trên website; Chọn vị trí góc hiển thị (Góc dưới phải / Góc dưới trái); Tùy chỉnh Tên thương hiệu Winline, Phụ đề lời chào, Nhãn hiển thị của nút tròn nổi và Thông tin khung giờ làm việc hiển thị ở chân bảng liên hệ. |
+| **②** | **Danh sách Chuyên viên tư vấn (Repeater)** | Cho phép quản lý danh sách đội ngũ nhân sự tư vấn bán hàng & kỹ thuật: Thêm mới chuyên viên linh hoạt; Tải lên ảnh đại diện hình tròn sắc nét; Nhập Họ tên, Chức vụ/Vai trò (Bán hàng Winline, Bán hàng doanh nghiệp...); Cấu hình Số điện thoại để khách bấm gọi trực tiếp (`tel:...`) và Số Zalo để khách bấm mở ứng dụng chat Zalo ngay lập tức (`https://zalo.me/...`); Công tắc bật/tắt hiển thị từng chuyên viên độc lập; Nút xóa chuyên viên. |
+| **③** | **Xem trước trực tiếp (Live Preview)** | Khung mô phỏng thời gian thực (Real-time Live Preview) thể hiện chính xác 100% hình ảnh nút liên hệ nổi và bảng popup mở rộng khi khách hàng click ngoài website. Khung xem trước tự động cập nhật ngay khi quản trị viên nhập liệu bất kỳ thông tin nào mà không cần tải lại trang. |
+
+### 4. Lưu ý nghiệp vụ quan trọng
+- 💡 **Đồng bộ tự động định dạng số liên hệ:** Khi nhập số điện thoại (dù có dấu chấm hay khoảng trắng như `0949.761.893`), hệ thống sẽ tự động làm sạch ký tự để link `tel:` và link `zalo.me/` hoạt động chuẩn xác 100% trên cả điện thoại và máy tính.
+- 💡 **Tối ưu trải nghiệm Mobile (Không che khuất thanh menu đáy):** Nút liên hệ nổi trên phiên bản di động được neo tự động phía trên thanh điều hướng dưới cùng (`mobile-bottom-bar`) và không chồng chéo với nút *Lên đầu trang*. Khi khách nhấp vào, bảng popup sẽ hiển thị dưới dạng Bottom Sheet thanh lịch, dễ thao tác một chạm.
+- 💡 **Mở tự động bằng liên kết (Deep-link):** Bất kỳ banner, nút kêu gọi hành động (CTA) hoặc chiến dịch quảng cáo nào gắn liên kết kèm `#tu-van` (VD: `https://winline.vn/vi#tu-van`) đều sẽ tự động kích hoạt bung bảng liên hệ tư vấn chuyên viên ngay khi khách vừa vào trang.
+
+
+---
+
