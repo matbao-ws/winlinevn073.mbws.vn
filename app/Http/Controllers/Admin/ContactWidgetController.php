@@ -27,7 +27,7 @@ class ContactWidgetController extends Controller
             'subtitle' => 'Đội ngũ chuyên viên tư vấn',
             'working_hours' => '8h00 - 17h30 (Thứ 2 đến Thứ 7)',
             'position' => 'bottom_right',
-            'badge_text' => 'Tư vấn ngay',
+            'badge_text' => 'Liên hệ',
             'consultants' => [
                 [
                     'id' => 'consultant_1',
@@ -144,7 +144,7 @@ class ContactWidgetController extends Controller
             'subtitle' => $validated['subtitle'] ?? 'Đội ngũ chuyên viên tư vấn',
             'working_hours' => $validated['working_hours'] ?? '8h00 - 17h30 (Thứ 2 đến Thứ 7)',
             'position' => $validated['position'] ?? 'bottom_right',
-            'badge_text' => $validated['badge_text'] ?? 'Tư vấn ngay',
+            'badge_text' => $validated['badge_text'] ?? 'Liên hệ',
             'consultants' => $processedConsultants,
         ];
 

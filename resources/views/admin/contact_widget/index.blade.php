@@ -187,30 +187,36 @@
         justify-content: flex-end;
     }
     .sim-launcher-btn {
-        width: 56px;
-        height: 56px;
+        width: 58px;
+        height: 58px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #0284c7 0%, #005b8e 100%);
+        background: linear-gradient(135deg, #0284c7 0%, #004e7d 100%);
         color: #ffffff;
         border: 2px solid #ffffff;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        box-shadow: 0 4px 14px rgba(0, 78, 125, 0.3);
         position: relative;
+        gap: 3px;
     }
     .sim-launcher-btn .sim-launcher-bubble {
         font-size: 18px;
         line-height: 1;
-        margin-bottom: 2px;
+        margin: 0;
     }
     .sim-launcher-btn .sim-launcher-label {
-        font-size: 9px;
-        font-weight: 700;
-        line-height: 1;
-        letter-spacing: 0.2px;
-        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: 0.1px;
+        text-transform: none !important;
+        white-space: nowrap !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 50px;
+        text-align: center;
     }
 </style>
 @endpush
@@ -305,8 +311,8 @@
                         <div class="col-md-6">
                             <label class="form-label fw-semibold text-dark" for="badge_text">Nhãn nút nổi</label>
                             <input type="text" class="form-control text-dark live-sync" id="badge_text" name="badge_text" 
-                                value="{{ old('badge_text', data_get($widgetSettings, 'badge_text', 'Tư vấn ngay')) }}" 
-                                placeholder="Tư vấn ngay">
+                                value="{{ old('badge_text', data_get($widgetSettings, 'badge_text', 'Liên hệ')) }}" 
+                                placeholder="Ví dụ: Liên hệ">
                         </div>
 
                         <div class="col-12">

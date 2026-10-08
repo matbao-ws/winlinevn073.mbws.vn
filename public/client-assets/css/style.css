@@ -3982,10 +3982,10 @@ footer.footer, footer.site-footer {
   width: 58px;
   height: 58px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0284c7 0%, #005b8e 100%);
+  background: linear-gradient(135deg, #0284c7 0%, #004e7d 100%);
   color: #ffffff;
   border: 2px solid #ffffff;
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 78, 125, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3993,35 +3993,49 @@ footer.footer, footer.site-footer {
   cursor: pointer;
   position: relative;
   outline: none;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   z-index: 10;
+  padding: 0;
+  box-sizing: border-box;
 }
 .fcw-launcher-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 78, 125, 0.4);
 }
 .fcw-launcher-btn .fcw-icon-open {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
+  width: 100%;
 }
 .fcw-launcher-btn .fcw-launcher-bubble {
   font-size: 18px;
   line-height: 1;
+  color: #ffffff;
 }
 .fcw-launcher-btn .fcw-launcher-label {
-  font-size: 9.5px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.2px;
-  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.1px;
+  color: #ffffff;
+  text-transform: none !important;
+  white-space: nowrap !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50px;
+  text-align: center;
+  display: block;
+  margin: 0;
+  padding: 0;
 }
 .fcw-launcher-btn .fcw-icon-close {
   display: none;
   font-size: 20px;
   line-height: 1;
+  color: #ffffff;
 }
 .floating-contact-widget.active .fcw-launcher-btn .fcw-icon-open {
   display: none;
@@ -4054,7 +4068,11 @@ footer.footer, footer.site-footer {
     font-size: 16px;
   }
   .fcw-launcher-btn .fcw-launcher-label {
-    font-size: 8.5px;
+    font-size: 10px;
+    font-weight: 600;
+    max-width: 46px;
+    white-space: nowrap !important;
+    text-transform: none !important;
   }
   .floating-back-to-top {
     bottom: calc(128px + env(safe-area-inset-bottom, 0px)) !important;

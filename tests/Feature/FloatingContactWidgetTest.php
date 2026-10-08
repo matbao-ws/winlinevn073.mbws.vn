@@ -119,7 +119,7 @@ class FloatingContactWidgetTest extends TestCase
                     'subtitle' => 'Đội ngũ chuyên viên tư vấn',
                     'working_hours' => '8h00 - 17h30 (Thứ 2 đến Thứ 7)',
                     'position' => 'bottom_right',
-                    'badge_text' => 'Tư vấn ngay',
+                    'badge_text' => 'Liên hệ',
                     'consultants' => [
                         [
                             'name' => 'Kim Huệ',
@@ -146,6 +146,7 @@ class FloatingContactWidgetTest extends TestCase
         $response = $this->get('/vi');
         $response->assertOk();
         $response->assertSee('floatingContactWidget');
+        $response->assertSee('Liên hệ');
         $response->assertSee('WINLINE VIỆT NAM');
         $response->assertSee('Kim Huệ');
         $response->assertSee('Bán hàng Winline');
