@@ -550,7 +550,7 @@
 2. Tại khối **Cài đặt chung Nút liên hệ**:
    - Gạt công tắc **Bật widget** để kích hoạt hiển thị nút nổi trên toàn bộ website.
    - Chọn **Vị trí hiển thị**: *Góc dưới bên phải* (mặc định) hoặc *Góc dưới bên trái*.
-   - Nhập **Tên thương hiệu Header** (VD: `WINLINE VIỆT NAM`), **Phụ đề** (VD: `Đội ngũ chuyên viên tư vấn`), **Nhãn nút nổi** (VD: `Tư vấn ngay`).
+   - Nhập **Tên thương hiệu Header** (VD: `WINLINE VIỆT NAM`), **Phụ đề** (VD: `Đội ngũ chuyên viên tư vấn`), **Nhãn nút nổi** (VD: `Liên hệ`).
    - Nhập **Thông tin giờ làm việc (Footer)** (VD: `8h00 - 17h30 (Thứ 2 đến Thứ 7)`).
 3. Tại khối **Danh sách Chuyên viên tư vấn**:
    - Nhấn nút **+ Thêm chuyên viên** nếu cần bổ sung nhân sự tư vấn mới.
