@@ -3993,14 +3993,13 @@ footer.footer, footer.site-footer {
   cursor: pointer;
   position: relative;
   outline: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   z-index: 10;
   padding: 0;
   box-sizing: border-box;
 }
 .fcw-launcher-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 78, 125, 0.4);
+  transform: none !important;
+  box-shadow: 0 4px 14px rgba(0, 78, 125, 0.3) !important;
 }
 .fcw-launcher-btn .fcw-icon-open {
   display: flex;
