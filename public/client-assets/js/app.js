@@ -1152,6 +1152,11 @@ function initFloatingContactWidget() {
   const widget = document.getElementById("floatingContactWidget");
   if (!widget) return;
 
+  // Auto-open if URL has hash or query param
+  if (window.location.hash === '#tu-van' || window.location.hash === '#lien-he-tu-van' || window.location.search.includes('open_contact=1')) {
+    setTimeout(() => toggleContactWidget(true), 200);
+  }
+
   // Close on Escape key
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && widget.classList.contains("active")) {
