@@ -27,6 +27,9 @@
         <i class="fas fa-chevron-up"></i>
     </button>
 
+    {{-- Nút Liên hệ nổi góc màn hình & Bảng tư vấn chuyên viên --}}
+    @include('client.partials.floating-contact-widget')
+
     @include('client.partials.admin-bar')
 
     <script src="{{ asset('client-assets/js/products-data.js') }}"></script>

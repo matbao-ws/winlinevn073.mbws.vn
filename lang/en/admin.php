@@ -773,6 +773,7 @@ return [
         'payment_settings' => 'Payment Settings',
         'feature_settings' => 'Feature Settings',
         'notification_settings' => 'Notification Settings',
+        'contact_widget' => 'Contact Widget',
         'activity_logs' => 'Activity Logs',
         'sales_channels' => 'Sales Channels',
         'media_library' => 'Media Library',

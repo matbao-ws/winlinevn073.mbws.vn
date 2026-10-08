@@ -141,6 +141,7 @@ class FoundationSeeder extends Seeder
                     'native_language_names' => true,
                 ],
             ],
+            'floating_contact_widget' => \App\Http\Controllers\Admin\ContactWidgetController::getDefaultSettings(),
         ];
 
         foreach ($settings as $key => $value) {

@@ -317,6 +317,11 @@
                                           <span class="icon-small"></span>{{ __('admin.sidebar.general_settings') }}
                                       </a>
                                   </li>
+                                  <li class="sidebar-item">
+                                      <a class="sidebar-link" href="{{ route('admin.contact-widget.index') }}">
+                                          <span class="icon-small"></span>{{ __('admin.sidebar.contact_widget') }}
+                                      </a>
+                                  </li>
                                   @endcan
                                   @if($sidebarFeatures->availableTo($sidebarUser, 'shipping') && $sidebarUser?->can('shipping.view'))
                                   <li class="sidebar-item">

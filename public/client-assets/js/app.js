@@ -931,6 +931,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileToggle();
   initSmartSearchController();
   initFloatingBackToTop();
+  initFloatingContactWidget();
 });
 
 // ==========================================
@@ -1131,4 +1132,50 @@ function initFloatingBackToTop() {
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+// 6. Floating Contact Widget Controller (Nút liên hệ góc & Bảng tư vấn chuyên viên)
+function toggleContactWidget(forceState) {
+  const widget = document.getElementById("floatingContactWidget");
+  if (!widget) return;
+  if (typeof forceState === "boolean") {
+    if (forceState) {
+      widget.classList.add("active");
+    } else {
+      widget.classList.remove("active");
+    }
+  } else {
+    widget.classList.toggle("active");
+  }
+}
+
+function initFloatingContactWidget() {
+  const widget = document.getElementById("floatingContactWidget");
+  if (!widget) return;
+
+  // Close on Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && widget.classList.contains("active")) {
+      toggleContactWidget(false);
+    }
+  });
+
+  // Close when clicking outside widget card & launcher
+  document.addEventListener("click", (e) => {
+    if (!widget.classList.contains("active")) return;
+    const card = document.getElementById("fcwCard");
+    const launcher = document.getElementById("fcwLauncherBtn");
+    const badge = widget.querySelector(".fcw-badge");
+    const backdrop = document.getElementById("fcwBackdrop");
+
+    if (backdrop && e.target === backdrop) {
+      toggleContactWidget(false);
+      return;
+    }
+
+    if (card && !card.contains(e.target) && launcher && !launcher.contains(e.target) && (!badge || !badge.contains(e.target))) {
+      toggleContactWidget(false);
+    }
+  });
+}
+
 

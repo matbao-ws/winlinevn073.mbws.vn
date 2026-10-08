@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Catalog\ProductController;
 use App\Http\Controllers\Admin\Catalog\ProductOptionController;
 use App\Http\Controllers\Admin\Catalog\ProductVariantController;
 use App\Http\Controllers\Admin\ContactSubmissionController;
+use App\Http\Controllers\Admin\ContactWidgetController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
@@ -170,6 +171,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('settings', [SettingController::class, 'index'])->middleware('can:settings.view')->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->middleware('can:settings.update')->name('settings.update');
+
+    Route::get('contact-widget', [ContactWidgetController::class, 'index'])->middleware('can:settings.view')->name('contact-widget.index');
+    Route::post('contact-widget', [ContactWidgetController::class, 'update'])->middleware('can:settings.update')->name('contact-widget.update');
 
     Route::get('notification-settings', [NotificationSettingController::class, 'index'])->middleware('can:settings.view')->name('notification-settings.index');
     Route::post('notification-settings', [NotificationSettingController::class, 'update'])->middleware('can:settings.update')->name('notification-settings.update');

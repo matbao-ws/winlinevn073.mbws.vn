@@ -3704,7 +3704,404 @@ footer.footer, footer.site-footer {
 }
 @media (max-width: 768px) {
   .floating-back-to-top {
-    bottom: 74px;
-    right: 18px;
+    bottom: calc(126px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 18px !important;
   }
 }
+
+/* 10. Floating Contact Widget (Nút liên hệ góc PC & Mobile mở rộng bảng tư vấn) */
+.floating-contact-widget {
+  position: fixed;
+  z-index: 9999;
+  font-family: inherit;
+}
+.floating-contact-widget.pos-right {
+  bottom: 28px;
+  right: 28px;
+}
+.floating-contact-widget.pos-left {
+  bottom: 28px;
+  left: 28px;
+}
+
+/* Backdrop for mobile / small screens */
+.fcw-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 20, 40, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+.floating-contact-widget.active .fcw-backdrop {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Expandable Card / Popup */
+.fcw-card {
+  position: absolute;
+  bottom: 70px;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0, 45, 90, 0.22), 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 78, 125, 0.15);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.95);
+  transform-origin: bottom right;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 9999;
+}
+.floating-contact-widget.pos-left .fcw-card {
+  left: 0;
+  right: auto;
+  transform-origin: bottom left;
+}
+.floating-contact-widget.pos-right .fcw-card {
+  right: 0;
+  left: auto;
+  transform-origin: bottom right;
+}
+.floating-contact-widget.active .fcw-card {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Card Header */
+.fcw-card-header {
+  background: linear-gradient(135deg, #004e7d 0%, #003758 100%);
+  color: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+.fcw-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.fcw-header-logo {
+  height: 28px;
+  max-width: 80px;
+  background: #ffffff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+.fcw-brand-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  line-height: 1.2;
+}
+.fcw-brand-sub {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 1px;
+}
+.fcw-btn-close {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.fcw-btn-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+/* Card Body */
+.fcw-card-body {
+  padding: 10px 14px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+.fcw-card-body::-webkit-scrollbar {
+  width: 5px;
+}
+.fcw-card-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.fcw-consultant-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 6px;
+  border-bottom: 1px dashed #e2e8f0;
+  gap: 10px;
+  transition: background 0.15s ease;
+  border-radius: 8px;
+}
+.fcw-consultant-item:last-child {
+  border-bottom: none;
+}
+.fcw-consultant-item:hover {
+  background: #f8fafc;
+}
+.fcw-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.fcw-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #004e7d;
+  box-shadow: 0 2px 6px rgba(0, 78, 125, 0.15);
+}
+.fcw-online-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  background: #10b981;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+.fcw-info {
+  flex: 1;
+  min-width: 0;
+}
+.fcw-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.3;
+}
+.fcw-role {
+  font-size: 11.5px;
+  color: #64748b;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fcw-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.fcw-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.fcw-btn-zalo {
+  background: #0068ff;
+  color: #ffffff !important;
+}
+.fcw-btn-zalo:hover {
+  background: #0056d6;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 104, 255, 0.35);
+}
+.fcw-btn-call {
+  background: #e45b00;
+  color: #ffffff !important;
+}
+.fcw-btn-call:hover {
+  background: #c94f00;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(228, 91, 0, 0.35);
+}
+.fcw-btn-icon {
+  font-size: 11px;
+}
+
+/* Card Footer */
+.fcw-card-footer {
+  background: #f8fafc;
+  border-top: 1px solid #edf2f7;
+  padding: 10px 16px;
+  font-size: 12px;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fcw-card-footer i {
+  color: #004e7d;
+  font-size: 13px;
+}
+
+/* Launcher Button */
+.fcw-launcher-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.floating-contact-widget.pos-left .fcw-launcher-wrap {
+  flex-direction: row-reverse;
+}
+.fcw-badge {
+  background: #ffffff;
+  color: #004e7d;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 78, 125, 0.18);
+  border: 1px solid rgba(0, 78, 125, 0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.fcw-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 78, 125, 0.25);
+}
+.fcw-badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: winlineBlink 1.5s infinite;
+}
+@keyframes winlineBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.fcw-launcher-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #004e7d 0%, #003656 100%);
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 78, 125, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  transition: all 0.25s ease;
+  z-index: 10;
+}
+.fcw-launcher-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 24px rgba(0, 78, 125, 0.55);
+}
+.fcw-launcher-btn .fcw-icon-close {
+  display: none;
+}
+.floating-contact-widget.active .fcw-launcher-btn .fcw-icon-open {
+  display: none;
+}
+.floating-contact-widget.active .fcw-launcher-btn .fcw-icon-close {
+  display: block;
+}
+
+/* Pulsing rings */
+.fcw-pulse-ring,
+.fcw-pulse-ring-2 {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 2px solid #004e7d;
+  opacity: 0.8;
+  animation: winlinePulse 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  pointer-events: none;
+}
+.fcw-pulse-ring-2 {
+  animation-delay: 0.6s;
+}
+.floating-contact-widget.active .fcw-pulse-ring,
+.floating-contact-widget.active .fcw-pulse-ring-2 {
+  display: none;
+}
+
+@keyframes winlinePulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.35); opacity: 0.3; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Back to Top button repositioning when contact widget is on the right */
+.floating-back-to-top {
+  bottom: 96px !important;
+  right: 34px !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .floating-contact-widget.pos-right {
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+    right: 14px;
+  }
+  .floating-contact-widget.pos-left {
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+    left: 14px;
+  }
+  .fcw-launcher-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 19px;
+  }
+  .fcw-badge {
+    display: none; /* Hide badge text on mobile to avoid clutter */
+  }
+  .floating-back-to-top {
+    bottom: calc(128px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 18px !important;
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 14px !important;
+  }
+  .fcw-card {
+    position: fixed;
+    bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+    left: 50% !important;
+    right: auto !important;
+    transform: translate(-50%, 20px) scale(0.95);
+    width: min(92vw, 360px);
+    max-height: 80vh;
+  }
+  .floating-contact-widget.active .fcw-card {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+

@@ -776,6 +776,7 @@ return [
         'payment_settings' => 'Cấu hình thanh toán',
         'feature_settings' => 'Cấu hình tính năng',
         'notification_settings' => 'Cấu hình thông báo',
+        'contact_widget' => 'Nút liên hệ tư vấn',
         'activity_logs' => 'Nhật ký hoạt động',
         'sales_channels' => 'Kênh bán hàng',
         'media_library' => 'Thư viện Media',
