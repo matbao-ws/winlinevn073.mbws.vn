@@ -38,18 +38,19 @@
     .sim-popup {
         background: #ffffff;
         border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 40, 80, 0.16);
+        box-shadow: 0 10px 30px rgba(0, 40, 80, 0.12);
         border: 1px solid #e2e8f0;
         overflow: hidden;
         margin-top: 14px;
     }
     .sim-header {
-        background: linear-gradient(135deg, #004e7d 0%, #003656 100%);
-        color: #ffffff;
-        padding: 14px 16px;
+        background: #ffffff;
+        color: #0f172a;
+        padding: 13px 16px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        border-bottom: 1px solid #edf2f7;
     }
     .sim-header .sim-brand {
         display: flex;
@@ -57,23 +58,22 @@
         gap: 10px;
     }
     .sim-header img.sim-logo {
-        height: 28px;
-        background: #fff;
-        padding: 3px 6px;
-        border-radius: 4px;
+        height: 26px;
+        object-fit: contain;
     }
     .sim-header .sim-brand-title {
-        font-size: 14px;
-        font-weight: 800;
-        letter-spacing: 0.5px;
+        font-size: 13.5px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        color: #005b8e;
         line-height: 1.2;
     }
     .sim-header .sim-brand-sub {
         font-size: 11px;
-        opacity: 0.85;
+        color: #64748b;
     }
     .sim-body {
-        padding: 12px;
+        padding: 6px 12px;
         max-height: 380px;
         overflow-y: auto;
     }
@@ -81,8 +81,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 8px;
-        border-bottom: 1px dashed #edf2f7;
+        padding: 10px 6px;
+        border-bottom: 1px solid #f1f5f9;
         gap: 10px;
     }
     .sim-item:last-child {
@@ -100,29 +100,29 @@
         flex-shrink: 0;
     }
     .sim-item-avatar {
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid #004e7d;
+        border: 1.5px solid #e2e8f0;
     }
     .sim-online-dot {
         position: absolute;
         bottom: 0;
         right: 0;
-        width: 10px;
-        height: 10px;
+        width: 9px;
+        height: 9px;
         background: #10b981;
         border-radius: 50%;
-        border: 2px solid #ffffff;
+        border: 1.5px solid #ffffff;
     }
     .sim-item-meta {
         overflow: hidden;
     }
     .sim-item-name {
         font-size: 13.5px;
-        font-weight: 700;
-        color: #1e293b;
+        font-weight: 600;
+        color: #0f172a;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -134,41 +134,47 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    .sim-item-phone {
+        font-size: 11px;
+        color: #0284c7;
+        font-weight: 500;
+        margin-top: 1px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
     .sim-item-actions {
         display: flex;
         gap: 6px;
         flex-shrink: 0;
     }
-    .sim-btn-zalo {
-        background: #0068ff;
-        color: #fff;
-        padding: 4px 9px;
-        border-radius: 6px;
-        font-size: 11px;
-        font-weight: 700;
-        text-decoration: none;
+    .sim-icon-box {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
         display: inline-flex;
         align-items: center;
-        gap: 4px;
+        justify-content: center;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.2s ease;
     }
-    .sim-btn-call {
-        background: #e45b00;
-        color: #fff;
-        padding: 4px 9px;
-        border-radius: 6px;
-        font-size: 11px;
-        font-weight: 700;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
+    .sim-box-zalo {
+        background: #f0f7ff;
+        color: #0068ff;
+        border: 1px solid #dbeafe;
+    }
+    .sim-box-call {
+        background: #fff7ed;
+        color: #ea580c;
+        border: 1px solid #fed7aa;
     }
     .sim-footer {
         background: #f8fafc;
-        border-top: 1px solid #e2e8f0;
-        padding: 10px 14px;
-        font-size: 12px;
-        color: #475569;
+        border-top: 1px solid #edf2f7;
+        padding: 8px 14px;
+        font-size: 11.5px;
+        color: #64748b;
         display: flex;
         align-items: center;
         gap: 6px;
@@ -177,32 +183,34 @@
     .sim-launcher {
         display: flex;
         align-items: center;
-        gap: 8px;
         margin-top: 16px;
         justify-content: flex-end;
     }
-    .sim-launcher-badge {
-        background: #ffffff;
-        color: #004e7d;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 700;
-        box-shadow: 0 4px 12px rgba(0, 78, 125, 0.15);
-        border: 1px solid #e2e8f0;
-    }
     .sim-launcher-btn {
-        width: 52px;
-        height: 52px;
+        width: 56px;
+        height: 56px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #004e7d 0%, #003656 100%);
+        background: linear-gradient(135deg, #0284c7 0%, #005b8e 100%);
         color: #ffffff;
+        border: 2px solid #ffffff;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
-        box-shadow: 0 6px 18px rgba(0, 78, 125, 0.4);
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
         position: relative;
+    }
+    .sim-launcher-btn .sim-launcher-bubble {
+        font-size: 18px;
+        line-height: 1;
+        margin-bottom: 2px;
+    }
+    .sim-launcher-btn .sim-launcher-label {
+        font-size: 9px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
     }
 </style>
 @endpush
@@ -437,7 +445,7 @@
                                 <div class="sim-brand-sub" id="simSubtitle">{{ data_get($widgetSettings, 'subtitle', 'Đội ngũ chuyên viên tư vấn') }}</div>
                             </div>
                         </div>
-                        <span class="text-white-50 fs-5" style="cursor: pointer;">&times;</span>
+                        <span class="text-secondary fs-5" style="cursor: pointer;">&times;</span>
                     </div>
 
                     <div class="sim-body" id="simConsultantsList">
@@ -452,9 +460,9 @@
 
                 <!-- Floating button launcher simulation -->
                 <div class="sim-launcher" id="simLauncher">
-                    <div class="sim-launcher-badge" id="simBadgeText">{{ data_get($widgetSettings, 'badge_text', 'Tư vấn ngay') }}</div>
                     <div class="sim-launcher-btn">
-                        <iconify-icon icon="solar:chat-round-dots-bold"></iconify-icon>
+                        <iconify-icon icon="solar:chat-round-dots-bold" class="sim-launcher-bubble"></iconify-icon>
+                        <span class="sim-launcher-label" id="simBadgeText">{{ data_get($widgetSettings, 'badge_text', 'Liên hệ') }}</span>
                     </div>
                 </div>
             </div>
@@ -591,11 +599,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="sim-item-meta">
                         <div class="sim-item-name">${name || 'Chuyên viên ' + (i+1)}</div>
                         <div class="sim-item-role">${role || 'Bán hàng Winline'}</div>
+                        ${phone ? `<div class="sim-item-phone"><iconify-icon icon="solar:phone-bold" style="font-size:10px;"></iconify-icon> ${phone}</div>` : ''}
                     </div>
                 </div>
                 <div class="sim-item-actions">
-                    <span class="sim-btn-zalo"><iconify-icon icon="solar:chat-line-bold"></iconify-icon> Zalo</span>
-                    <span class="sim-btn-call"><iconify-icon icon="solar:phone-calling-bold"></iconify-icon> Gọi</span>
+                    <span class="sim-icon-box sim-box-zalo" title="Chat Zalo"><iconify-icon icon="solar:chat-round-dots-bold"></iconify-icon></span>
+                    <span class="sim-icon-box sim-box-call" title="Gọi điện"><iconify-icon icon="solar:phone-calling-bold"></iconify-icon></span>
                 </div>
             `;
             simConsultantsList.appendChild(itemEl);

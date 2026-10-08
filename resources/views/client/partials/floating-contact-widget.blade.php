@@ -47,18 +47,19 @@
                     <div class="fcw-info">
                         <div class="fcw-name">{{ $consultant['name'] ?? 'Chuyên viên tư vấn' }}</div>
                         <div class="fcw-role">{{ $consultant['role'] ?? 'Bán hàng Winline' }}</div>
+                        @if(!empty($consultant['phone']))
+                        <div class="fcw-phone"><i class="fas fa-phone-alt"></i> {{ $consultant['phone'] }}</div>
+                        @endif
                     </div>
                     <div class="fcw-actions">
                         @if($cleanZalo)
-                        <a href="https://zalo.me/{{ $cleanZalo }}" target="_blank" rel="noopener noreferrer" class="fcw-action-btn fcw-btn-zalo" title="Chat Zalo với {{ $consultant['name'] }}">
-                            <span class="fcw-btn-icon"><i class="fas fa-comment-dots"></i></span>
-                            <span>Zalo</span>
+                        <a href="https://zalo.me/{{ $cleanZalo }}" target="_blank" rel="noopener noreferrer" class="fcw-action-icon fcw-action-zalo" title="Chat Zalo với {{ $consultant['name'] }}" aria-label="Chat Zalo">
+                            <i class="fas fa-comment-dots"></i>
                         </a>
                         @endif
                         @if($cleanPhone)
-                        <a href="tel:{{ $cleanPhone }}" class="fcw-action-btn fcw-btn-call" title="Gọi điện cho {{ $consultant['name'] }}">
-                            <span class="fcw-btn-icon"><i class="fas fa-phone-alt"></i></span>
-                            <span>Gọi</span>
+                        <a href="tel:{{ $cleanPhone }}" class="fcw-action-icon fcw-action-call" title="Gọi điện cho {{ $consultant['name'] }}" aria-label="Gọi điện">
+                            <i class="fas fa-phone-alt"></i>
                         </a>
                         @endif
                     </div>
@@ -77,19 +78,16 @@
         </div>
     </div>
 
-    {{-- Nút tròn liên hệ nổi góc màn hình --}}
+    {{-- Nút tròn liên hệ nổi góc màn hình (thiết kế tĩnh, thanh lịch, không nhấp nháy) --}}
     <div class="fcw-launcher-wrap">
-        @if(!empty($widget['badge_text']))
-        <div class="fcw-badge" onclick="toggleContactWidget()" role="button" tabindex="0">
-            <span class="fcw-badge-dot"></span>
-            <span>{{ $widget['badge_text'] }}</span>
-        </div>
-        @endif
         <button type="button" class="fcw-launcher-btn" id="fcwLauncherBtn" onclick="toggleContactWidget()" aria-label="Mở bảng hỗ trợ tư vấn">
-            <span class="fcw-pulse-ring"></span>
-            <span class="fcw-pulse-ring-2"></span>
-            <span class="fcw-icon-open"><i class="fas fa-headset"></i></span>
-            <span class="fcw-icon-close"><i class="fas fa-times"></i></span>
+            <span class="fcw-icon-open">
+                <i class="fas fa-comment-dots fcw-launcher-bubble"></i>
+                <span class="fcw-launcher-label">{{ !empty($widget['badge_text']) ? $widget['badge_text'] : 'Liên hệ' }}</span>
+            </span>
+            <span class="fcw-icon-close">
+                <i class="fas fa-times"></i>
+            </span>
         </button>
     </div>
 </div>
