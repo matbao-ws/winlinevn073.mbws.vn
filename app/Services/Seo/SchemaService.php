@@ -371,7 +371,7 @@ class SchemaService
         // 8. Reviews / AggregateRating (Only if actual approved reviews exist)
         $approvedReviews = \App\Models\Review::query()
             ->where('product_id', $product->id)
-            ->where('is_approved', true)
+            ->where('is_visible', true)
             ->get();
 
         if ($approvedReviews->count() > 0) {
@@ -390,7 +390,7 @@ class SchemaService
                     '@type' => 'Review',
                     'author' => [
                         '@type' => 'Person',
-                        'name' => $rev->author_name ?: 'Khách hàng',
+                        'name' => $rev->customer_name ?: 'Khách hàng',
                     ],
                     'datePublished' => $rev->created_at?->format('Y-m-d') ?: date('Y-m-d'),
                     'reviewBody' => $rev->comment ?: '',
