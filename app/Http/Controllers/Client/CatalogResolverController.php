@@ -37,12 +37,6 @@ class CatalogResolverController extends Controller
             'quat-hut-di-dong' => 'quat-hut-xach-tay',
             'quat-cay-cn-komasu-km750s' => 'quat-cay-cong-nghiep-komasu-km-750s',
             'quat-cat-gio-nanyoo-fm-1209x-2-y' => 'quat-cat-gio-nanyoo-fm-5509z-l-y',
-            'quat-tran-vinawind-5-canh-qt-1500x-dieu-khien-tu-xa' => 'quat-tran',
-            'quat-hop-vinawind-qh350lp' => 'quat-hop',
-            'quat-thong-gio-gan-tuong-tico-tc-20av6-1-chieu' => 'quat-thong-gio',
-            'quat-san-lo-senko-sl1830' => 'quat-san',
-            'dieu-hoa-di-dong-cong-nghiep-kyungjin-nd-9200' => 'may-lam-mat-cong-nghiep',
-            'quat-cat-gio-dung-kyungjin-kr-1000dc' => 'quat-cat-gio',
             'du-an' => 'gioi-thieu',
         ];
 
