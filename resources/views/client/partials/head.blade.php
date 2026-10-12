@@ -15,3 +15,6 @@
 
 <!-- Master Design System Stylesheet -->
 <link rel="stylesheet" href="{{ asset('client-assets/css/style.css') }}">
+
+{{-- Structured Data (Schema.org JSON-LD) --}}
+@stack('schema')

@@ -2,6 +2,10 @@
 
 @section('title', 'Winline.vn — Quạt điện, quạt công nghiệp chính hãng')
 
+@push('schema')
+{!! app(\App\Services\Seo\SchemaService::class)->forHome(app()->getLocale() ?: 'vi') !!}
+@endpush
+
 @push('styles')
 <style>
   :root {

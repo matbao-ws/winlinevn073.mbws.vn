@@ -2,6 +2,10 @@
 
 @section('title', ($post->title ?? 'Chi tiết bài viết') . ' | Tin tức Winline.vn')
 
+@push('schema')
+{!! app(\App\Services\Seo\SchemaService::class)->forArticle($post, app()->getLocale() ?: 'vi') !!}
+@endpush
+
 @push('styles')
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap");

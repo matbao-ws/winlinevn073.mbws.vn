@@ -12,6 +12,10 @@
 @endphp
 @section("title", $pageTitle)
 
+@push('schema')
+{!! app(\App\Services\Seo\SchemaService::class)->forCategory($currentCategory, $products, $currentBrand, app()->getLocale() ?: 'vi') !!}
+@endpush
+
 @section("content")
 <div class="product-listing-page">
   {{-- Breadcrumb --}}

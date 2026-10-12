@@ -2,6 +2,10 @@
 
 @section('title', 'Tin tức & Cẩm nang Kỹ thuật HVAC | Winline.vn')
 
+@push('schema')
+{!! app(\App\Services\Seo\SchemaService::class)->forNewsIndex($posts, null, app()->getLocale() ?: 'vi') !!}
+@endpush
+
 @push('styles')
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap");
