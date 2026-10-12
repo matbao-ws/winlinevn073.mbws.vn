@@ -78,7 +78,7 @@ class ImportWinlineProductsCommand extends Command
 
                 // 1. Resolve or create Brand
                 $rawVendor = trim($raw['vendor'] ?? '');
-                $brand = $this->resolveBrand($rawVendor, $brandsCache, $slugService);
+                $brand = $this->resolveBrand($rawVendor, $name, $brandsCache, $slugService);
 
                 // 2. Resolve Category
                 $categoryId = $this->resolveCategoryId($raw);
@@ -118,10 +118,13 @@ class ImportWinlineProductsCommand extends Command
                     $compareAtPrice = 0;
                 }
 
-                // Find existing product by slug or sku
+                // Find existing product strictly by slug (do not match by SKU to avoid merging distinct color products)
                 $product = Product::where('slug', $slug)->first();
-                if (! $product) {
-                    $product = Product::where('sku', $sku)->first();
+
+                // Ensure SKU is unique if another product already uses it
+                $existingWithSku = Product::where('sku', $sku)->first();
+                if ($existingWithSku && (! $product || $existingWithSku->id !== $product->id)) {
+                    $sku = $sku . '-' . ($raw['id'] ?? Str::slug($slug));
                 }
 
                 $isNew = ! $product;
@@ -216,12 +219,9 @@ class ImportWinlineProductsCommand extends Command
         return self::SUCCESS;
     }
 
-    private function resolveBrand(?string $rawVendor, array &$cache, LocalizedSlugService $slugService): ?Brand
+    private function resolveBrand(?string $rawVendor, string $productName, array &$cache, LocalizedSlugService $slugService): ?Brand
     {
         $rawVendor = trim($rawVendor ?? '');
-        if (! $rawVendor) {
-            return null;
-        }
 
         $normalizedMap = [
             'komasu' => 'Komasu',
@@ -247,6 +247,19 @@ class ImportWinlineProductsCommand extends Command
             'ac' => 'AC',
             'dreamer' => 'Dreamer',
         ];
+
+        if (! $rawVendor) {
+            $lowerName = mb_strtolower($productName, 'UTF-8');
+            foreach ($normalizedMap as $kw => $canonical) {
+                if (str_contains($lowerName, $kw)) {
+                    $rawVendor = $canonical;
+                    break;
+                }
+            }
+            if (! $rawVendor) {
+                return null;
+            }
+        }
 
         $lowerKey = mb_strtolower($rawVendor, 'UTF-8');
         $canonicalName = $normalizedMap[$lowerKey] ?? ucwords($rawVendor);
